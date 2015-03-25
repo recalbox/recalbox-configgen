@@ -7,13 +7,13 @@ import os.path
 import unittest
 import shutil
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import settings.libretroSettings as libretroSettings
 
-shutil.copyfile("resources/retroarchcustom.cfg.origin", "resources/retroarchcustom.cfg")
+shutil.copyfile("../resources/retroarchcustom.cfg.origin", "../resources/retroarchcustom.cfg")
 
 # Injecting test recalbox.conf
-libretroSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/retroarchcustom.cfg"))
+libretroSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/retroarchcustom.cfg"))
 
 
 class TestLibretroSettings(unittest.TestCase): 

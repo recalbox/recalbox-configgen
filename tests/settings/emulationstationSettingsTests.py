@@ -7,11 +7,11 @@ import os.path
 import unittest
 
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import settings.emulationstationSettings as esSettings
 
 # Injecting test es_input.cfg
-esSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/es_settings.cfg"))
+esSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/es_settings.cfg"))
 
 
 class TestEmulationstationSettings(unittest.TestCase): 

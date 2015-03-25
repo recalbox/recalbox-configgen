@@ -4,11 +4,6 @@ settingsRoot = "/recalbox/configs/retroarch"
 settingsFileOrigin = settingsRoot + "/retroarchcustom.cfg.origin"
 settingsFile = settingsRoot + "/retroarchcustom.cfg"
 
-# Configure and run retroarch
-# Main entry of the module
-def run(system, videoConfig, playersControllers) :
-    
-
 
 # Map an emulationstation button name to the corresponding retroarch name
 retroarchbtns = { 'a' : 'a', 'b' : 'b', 'x' : 'x', 'y' : 'y', \

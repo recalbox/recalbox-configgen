@@ -7,17 +7,17 @@ import os.path
 import unittest
 import shutil
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.." )))
 
-import generators.libretroGenerator as libretroGen
+import generators.libretro.libretroControllers as libretroControllers
 import controllersConfig as controllersConfig
 
-shutil.copyfile("resources/retroarchcustom.cfg.origin", "resources/retroarchroot/retroarchcustom.cfg.origin")
-shutil.copyfile("resources/es_input.cfg.origin", "resources/es_input.cfg")
+shutil.copyfile("../../resources/retroarchcustom.cfg.origin", "tmp/retroarchcustom.cfg.origin")
+shutil.copyfile("../../resources/es_input.cfg.origin", "tmp/es_input.cfg")
 # Injecting test recalbox.conf
-libretroGen.settingsRoot = os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/retroarchroot"))
+libretroControllers.settingsRoot = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp"))
 # Injecting test es_input
-controllersConfig.esInputs = os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/es_input.cfg"))
+controllersConfig.esInputs = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_input.cfg"))
 
 # Test objects
 basicInputs1 = { 'a' : controllersConfig.Input("a","button","10","1") }
@@ -26,16 +26,16 @@ PS3UUID = "060000004c0500006802000000010000"
 GPIOUUID = "15000000010000000100000000010000"
 
 
-class TestLibretroGenerator(unittest.TestCase): 
+class TestLibretroController(unittest.TestCase): 
     def test_generate_simple_controller(self):
-    	config = libretroGen.generateControllerConfig(basicController1)
+    	config = libretroControllers.generateControllerConfig(basicController1)
         self.assertTrue('input_device = "Joypad1RealName"' in config)
         self.assertTrue('input_driver = "udev"' in config)
         self.assertTrue('input_a_btn = 10' in config)
 
     def test_generate_ps3_controller_buttons(self):
 	controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0, "p3controller", -1, 0, "p4controller")
-    	config = libretroGen.generateControllerConfig(controllers[1])
+    	config = libretroControllers.generateControllerConfig(controllers[1])
         self.assertTrue('input_device = "p1controller"' in config)
         self.assertTrue('input_driver = "udev"' in config)
         self.assertTrue('input_select_btn = 0' in config)
@@ -50,7 +50,7 @@ class TestLibretroGenerator(unittest.TestCase):
 
     def test_generate_ps3_controller_joysticks(self):
 	controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0, "p3controller", -1, 0, "p4controller")
-    	config = libretroGen.generateControllerConfig(controllers[1])
+    	config = libretroControllers.generateControllerConfig(controllers[1])
         self.assertTrue('input_device = "p1controller"' in config)
         self.assertTrue('input_driver = "udev"' in config)
         self.assertTrue('input_l_y_plus_axis = +1' in config)
@@ -60,7 +60,7 @@ class TestLibretroGenerator(unittest.TestCase):
 
     def test_generate_joystick_as_directions(self):
 	controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0, "p3controller", -1, 0, "p4controller")
-    	config = libretroGen.generateControllerConfig(controllers[1])
+    	config = libretroControllers.generateControllerConfig(controllers[1])
         self.assertTrue('input_device = "p1controller"' in config)
         self.assertTrue('input_up_axis = -1' in config)
         self.assertTrue('input_down_axis = +1' in config)
@@ -69,31 +69,31 @@ class TestLibretroGenerator(unittest.TestCase):
 
     def test_generate_specials(self):
 	controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0, "p3controller", -1, 0, "p4controller")
-    	config = libretroGen.generateControllerConfig(controllers[1])
+    	config = libretroControllers.generateControllerConfig(controllers[1])
 	print config
         self.assertTrue('input_exit_emulator_btn = 7' in config)
 
 class TestLibretroGeneratorGetValue(unittest.TestCase):
     def test_on_button(self):
-        val = libretroGen.getConfigValue(controllersConfig.Input("a","button","10","1"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("a","button","10","1"))
 	self.assertEquals("10", val)
     	
     def test_on_axis(self):
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","axis","10","1"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","axis","10","1"))
 	self.assertEquals("+10", val)
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","axis","10","-1"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","axis","10","-1"))
 	self.assertEquals("-10", val)
 
     def test_on_hat(self):
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","hat","2","1"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","hat","2","1"))
 	self.assertEquals("h2up", val)
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","hat","3","8"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","hat","3","8"))
 	self.assertEquals("h3left", val)
 
     def test_on_key(self):
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","key","2","1"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","key","2","1"))
 	self.assertEquals("2", val)
-        val = libretroGen.getConfigValue(controllersConfig.Input("down","key","3","8"))
+        val = libretroControllers.getConfigValue(controllersConfig.Input("down","key","3","8"))
 	self.assertEquals("3", val)
 
 

@@ -7,13 +7,13 @@ import os.path
 import unittest
 import shutil
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import settings.recalboxSettings as recalSettings
 
-shutil.copyfile("resources/recalbox.conf.origin", "resources/recalbox.conf")
+shutil.copyfile("../resources/recalbox.conf.origin", "../resources/recalbox.conf")
 
 # Injecting test recalbox.conf
-recalSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/recalbox.conf"))
+recalSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/recalbox.conf"))
 
 
 class TestRecalboxSettings(unittest.TestCase): 

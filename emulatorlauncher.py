@@ -10,8 +10,9 @@ import sys
 import settings.emulationstationSettings as esSettings
 import settings.recalboxSettings as recalSettings
 import settings.libretroSettings as libretroSettings
-import generators.libretroGenerator as libretroGen
+import generators.libretro.libretroGenerator as libretroGen
 import controllersConfig as controllers
+import utils.runner
 
 parser = argparse.ArgumentParser(description='emulator-launcher script')
 parser.add_argument("-system", help="select the system to launch", type=str, required=True)
@@ -34,29 +35,22 @@ args = parser.parse_args()
 
 # List libretro with their cores, and default video modes
 libretro = dict()
-libretro["psx"] = {'video_mode': 4, 'core': "pcsx_rearmed"}
-libretro["snes"] = {'video_mode': 4, 'core': "pocketsnes"}
+libretro["psx"] = {'name' : 'psx', 'video_mode': 4, 'core': "pcsx_rearmed"}
+libretro["snes"] = {'name' : 'snes', 'video_mode': 4, 'core': "pocketsnes"}
 
 
 system = args.system
 
+playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid, args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index, args.p4guid, args.p4name)
 
-def loadEnvConfig(system) :
-	smooth = esSettings.load("Smooth")
-	shaders = esSettings.load("Shaders")
-	ratio = esSettings.load("GameRatio")
-	video_mode = recalSettings.load(system+"_video_mode")
-	custom_emulator = recalSettings.load(system+"_emulator")
-	if shaders == "true" :
-		smooth = false
-	return { 'smooth' : smooth, 'shaders' : shaders, 'ratio' : ratio, 'video_mode' : video_mode,\
-		 'custom_emulator' : custom_emulator } 
-	
 
-envConfig = loadEnvConfig(system)
-playersControllers = controllers.loadControllersConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid, args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index, args.p4guid, args.p4name)
-
+class Command : 
+    def __init__(self, videoMode, commandline):
+        self.videoMode = videoMode
+        self.commandLine = commandLine
 
 # Main Program
+# A generator ill configure its emulator, and return a command
 if system in libretro :
-	libretroGen.run(libretro[system], envConfig, playersControllers)
+	command = libretroGen.run(libretro[system], playersControllers)
+	runner.run(command)	
