@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<inputList>
+        <inputConfig type="joystick" deviceName="PLAYSTATION(R)3 Controller (00:8B:F0:FA:63:25)" deviceGUID="060000004c0500006802000000010000">
+                <input name="a" type="button" id="13" value="1" />
+                <input name="b" type="button" id="14" value="1" />
+        </inputConfig>
+	<!-- XBOX WIRED NO XBOXDRV -->
+	<inputConfig type="joystick" deviceName="Microsoft X-Box 360 pad" deviceGUID="030000005e0400008e02000014010000">
+		<input name="a" type="button" id="1" value="1" />
+		<input name="b" type="button" id="0" value="1" />
+	</inputConfig>
+	<!-- XBOX WIRELESS NO XBOXDRV -->
+</inputList>
