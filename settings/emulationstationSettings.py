@@ -14,4 +14,16 @@ def load(name, default=None):
     return default			
 
 def save(name,value):
-    os.system("sed -i 's|name=\""+name+"\" value=\".*\"|name=\""+name+"\" value=\""+value+"\"|g' "+settingsFile)
+    if load(name) is not None :
+        os.system("sed -i 's|name=\""+name+"\" value=\".*\"|name=\""+name+"\" value=\""+value+"\"|g' "+settingsFile)
+    else :
+	type = "string"
+	try:
+            int(name)
+	    type = "int"
+    	except ValueError:
+	    if name is "true" or name is "false":
+		type = "bool"
+        with open(settingsFile, "a") as myfile:
+    	    myfile.write('<{} name="{}" value="{}" />\n'.format(type, name, value))
+

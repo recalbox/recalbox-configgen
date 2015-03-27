@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+import sys
+import os
+
+sys.path.append(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../.." )))
+
+import settings.libretroSettings as libretroSettings
 
 settingsRoot = "/recalbox/configs/retroarch"
 settingsFileOrigin = settingsRoot + "/retroarchcustom.cfg.origin"
@@ -79,3 +86,17 @@ def getConfigValue(input):
         return "h"+input.id+retroarchhats[input.value]
     if input.type == "key":
         return input.id
+
+
+# Create an array of indexed, depending on configuration and system available controllers
+def getIndexes(controllers): 
+    used = dict()
+    for player in controllers :
+        controller = controllers[player]
+        used[player] = controller.index
+    return used
+
+def writeIndexes(controllers): 
+    for player in controllers :
+        controller = controllers[player]
+	libretroSettings.save("input_player{}_joypad_index".format(player), controller.index) 

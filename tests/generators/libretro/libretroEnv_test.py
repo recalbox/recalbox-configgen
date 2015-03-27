@@ -17,9 +17,12 @@ import settings.libretroSettings as libretroSettings
 import generators.libretro.libretroEnv as libretroEnv
 
 # Cloning config files
-shutil.copyfile("../../resources/retroarchcustom.cfg.origin", "tmp/retroarchcustom.cfg.origin")
-shutil.copyfile("../../resources/recalbox.conf.origin", "tmp/recalbox.conf")
-shutil.copyfile("../../resources/es_settings.cfg.origin", "tmp/es_settings.cfg")
+shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/retroarchcustom.cfg.origin")), \
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg")))
+shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/recalbox.conf.origin")), \
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/recalbox.conf")))
+shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/es_settings.cfg.origin")), \
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_settings.cfg")))
 
 # Injecting test files
 libretroEnv.esSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_settings.cfg"))

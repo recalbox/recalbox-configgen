@@ -5,16 +5,22 @@ import os
 import sys
 import os.path
 import unittest
+import shutil
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+
 import settings.emulationstationSettings as esSettings
 
+shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/es_settings.cfg.origin")), \
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_settings.cfg")))
+
+
 # Injecting test es_input.cfg
-esSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/es_settings.cfg"))
+esSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_settings.cfg"))
 
 
-class TestEmulationstationSettings(unittest.TestCase): 
+class TestEmulationstationSettings(unittest.TestCase):
     def test_load_empty_value_should_return_none(self):
         name = "I dont exists"
         loaded = esSettings.load(name)
@@ -34,7 +40,16 @@ class TestEmulationstationSettings(unittest.TestCase):
         name = "Smooth"
         esSettings.save(name, "false")
         loaded = esSettings.load(name)
-	self.assertEquals("false", loaded)
+        self.assertEquals("false", loaded)
+        esSettings.save(name, "true")
+        loaded = esSettings.load(name)
+        self.assertEquals("true", loaded)
+
+    def test_write_new_value(self):
+        name = "UnexistingVal"
+        esSettings.save(name, "false")
+        loaded = esSettings.load(name)
+        self.assertEquals("false", loaded)
         esSettings.save(name, "true")
         loaded = esSettings.load(name)
         self.assertEquals("true", loaded)

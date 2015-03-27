@@ -14,10 +14,12 @@ def load(name, default=None):
     return default
 
 def save(name,value):
-    print "sed -i 's|^.?"+name+"=.*|"+name+"="+value+"|g' "+ settingsFile
     os.system("sed -i 's|^.*"+name+"=.*|"+name+"="+value+"|g' "+ settingsFile)
+    if load(name) is None:
+        with open(settingsFile, "a") as settings:
+            settings.write("{}={}".format(name, value))
+
 
 def disable(name):
     #        settings=`cat "$es_settings" | sed -n "s/.*name=\"${varname}\" value=\"\(.*\)\".*/\1/p"`
     os.system("sed -i \"s|^.*\("+name+"=.*\)|;\\1|g\" "+ settingsFile)
-
