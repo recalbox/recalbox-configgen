@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import re
 import os
 import sys
 import os.path
@@ -12,6 +11,7 @@ sys.path.append(
 
 import generators.libretro.libretroControllers as libretroControllers
 import controllersConfig as controllersConfig
+
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/retroarchcustom.cfg.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg.origin")))
 

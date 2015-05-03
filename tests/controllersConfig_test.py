@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import re
 import os
 import sys
 import os.path
@@ -33,7 +32,8 @@ class TestControllersConfig(unittest.TestCase):
 
     def test_associate_controllers_with_players_with_sameuuid(self):
         uuid = "060000004c0500006802000000010000"
-        players = controllersConfig.loadControllerConfig("-1", uuid, "p1controller", "-1", uuid, "p2controller", "-1", uuid,
+        players = controllersConfig.loadControllerConfig("-1", uuid, "p1controller", "-1", uuid, "p2controller", "-1",
+                                                         uuid,
                                                          "p3controller", "-1", uuid, "p4controller")
         self.assertEquals(4, len(players))
         self.assertEquals(uuid, players["1"].guid)
@@ -57,7 +57,8 @@ class TestControllersConfig(unittest.TestCase):
         self.c_ = "060000004c0500006802000000010000"
 
         uuid1 = self.c_
-        players = controllersConfig.loadControllerConfig("0", uuid1, "p1controller", "-1", "FAKEUUID", "DEFAULTNAME", "-1",
+        players = controllersConfig.loadControllerConfig("0", uuid1, "p1controller", "-1", "FAKEUUID", "DEFAULTNAME",
+                                                         "-1",
                                                          "FAKEUUID", "DEFAULTNAME", "-1", "FAKEUUID", "DEFAULTNAME")
 
         self.assertEquals(1, len(players))

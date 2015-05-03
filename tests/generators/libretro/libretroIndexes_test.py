@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import re
 import os
 import sys
 import os.path
@@ -60,13 +59,6 @@ class TestLibretro4ControllerIndex(unittest.TestCase):
         self.assertEquals(libretroSettings.load("input_player2_joypad_index"), "2")
         self.assertEquals(libretroSettings.load("input_player3_joypad_index"), "3")
 
-    def test_last_controller(self):
-        val = libretroControllers.writeIndexes(controllers2weird)
-        val = libretroControllers.getIndexes(controllers4)
-
-    def test_mixed_controller(self):
-        val = libretroControllers.writeIndexes(controllers2weird)
-        val = libretroControllers.getIndexes(controllers4)
 
 
 if __name__ == '__main__':
