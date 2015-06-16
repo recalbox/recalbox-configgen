@@ -68,6 +68,17 @@ class TestRecalboxSettings(unittest.TestCase):
         loaded = recalSettings.load(name)
         self.assertEquals("thehellovalue", loaded)
 
+    def test_load_dict(self):
+        name = "snes"
+        loaded = recalSettings.loadAll(name)
+        self.assertEquals(4, len(loaded))
+        self.assertEquals('myshaderfile.gplsp', loaded["shaders"])
+
+    def test_ratio_with_slash(self):
+        name = "nes.ratio"
+        loaded = recalSettings.load(name)
+        self.assertEquals("16/9", loaded)
+
 
 if __name__ == '__main__':
     unittest.main()
