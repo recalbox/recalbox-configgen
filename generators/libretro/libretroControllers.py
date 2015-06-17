@@ -3,14 +3,11 @@ import sys
 import os
 
 sys.path.append(
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 import settings.libretroSettings as libretroSettings
 
-settingsRoot = "/recalbox/configs/retroarch"
-settingsFileOrigin = settingsRoot + "/retroarchcustom.cfg.origin"
-settingsFile = settingsRoot + "/retroarchcustom.cfg"
-
+settingsRoot = '/recalbox/configs/retroarch'
 
 # Map an emulationstation button name to the corresponding retroarch name
 retroarchbtns = {'a': 'a', 'b': 'b', 'x': 'x', 'y': 'y', \
@@ -34,58 +31,67 @@ retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot
                      'b': 'menu_toggle', 'start': 'exit_emulator', 'up': 'state_slot_increase', \
                      'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward'}
 
+# Write a configuration for a specified controller
+def writeControllersConfig(system,controllers):
+    writeIndexes(controllers)
 
+    for controller in controllers :
+        writeControllerConfig(controllers[controller])
+    writeHotKeyConfig(controllers)
+
+def writeHotKeyConfig(controllers):
+    if '1' in controllers :
+        libretroSettings.save('input_enable_hotkey_btn', controllers['1'].inputs['hotkey'].id)
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller):
-    configFile = settingsRoot + "/inputs/" + controller.realName + ".cfg"
-    f = open(configFile, 'w')
+    configFile = settingsRoot + '/inputs/' + controller.realName + '.cfg'
     generatedConfig = generateControllerConfig(controller)
-    f.write(generatedConfig)
-    f.close()
-
+    with open(configFile, 'w+') as f :
+        for key in generatedConfig :
+            f.write('{} = {}\n'.format(key , generatedConfig[key]))
 
 # Create a configuration file for a given controller
 def generateControllerConfig(controller):
-    config = 'input_device = "%s"\n' % controller.realName
-    config += 'input_driver = "udev"\n'
+    config = dict()
+    config['input_device'] = '"%s"' % controller.realName
+    config['input_driver'] = '"udev"'
     for btnkey in retroarchbtns:
         btnvalue = retroarchbtns[btnkey]
         if btnkey in controller.inputs:
             input = controller.inputs[btnkey]
-            config += "input_%s_%s = %s\n" % (btnvalue, typetoname[input.type], getConfigValue(input))
+            config['input_%s_%s' % (btnvalue, typetoname[input.type])] = getConfigValue(input)
     for dirkey in retroarchdirs:
         dirvalue = retroarchdirs[dirkey]
         if dirkey in controller.inputs:
             input = controller.inputs[dirkey]
-            config += "input_%s_%s = %s\n" % (dirvalue, typetoname[input.type], getConfigValue(input))
+            config['input_%s_%s' % (dirvalue, typetoname[input.type])] = getConfigValue(input)
     for jskey in retroarchjoysticks:
         jsvalue = retroarchjoysticks[jskey]
         if jskey in controller.inputs:
             input = controller.inputs[jskey]
-            getConfigValue(input)
-            config += "input_%s_minus_axis = %s\n" % (jsvalue, "-" + input.id)
-            config += "input_%s_plus_axis = %s\n" % (jsvalue, "+" + input.id)
+            config['input_%s_minus_axis' % jsvalue ] = '-%s' % input.id
+            config['input_%s_plus_axis' % jsvalue ] = '+%s' % input.id
     for specialkey in retroarchspecials:
         specialvalue = retroarchspecials[specialkey]
         if specialkey in controller.inputs:
             input = controller.inputs[specialkey]
-            config += "input_%s_%s = %s\n" % (specialvalue, typetoname[input.type], getConfigValue(input))
+            config['input_%s_%s' %  (specialvalue, typetoname[input.type])] = getConfigValue(input)
     return config
 
 
-# Returns the value to put in retroarch config file, depending on the type
+# Returns the value to write in retroarch config file, depending on the type
 def getConfigValue(input):
-    if input.type == "button":
+    if input.type == 'button':
         return input.id
-    if input.type == "axis":
-        if input.value == "-1":
-            return "-%s" % input.id
+    if input.type == 'axis':
+        if input.value == '-1':
+            return '-%s' % input.id
         else:
-            return "+%s" % input.id
-    if input.type == "hat":
-        return "h" + input.id + hatstoname[input.value]
-    if input.type == "key":
+            return '+%s' % input.id
+    if input.type == 'hat':
+        return 'h' + input.id + hatstoname[input.value]
+    if input.type == 'key':
         return input.id
 
 
@@ -93,14 +99,14 @@ def getConfigValue(input):
 def writeIndexes(controllers):
     for player in controllers:
         controller = controllers[player]
-        libretroSettings.save("input_player{}_joypad_index".format(player), controller.index)
+        libretroSettings.save('input_player{}_joypad_index'.format(player), controller.index)
 
 
 # return the retroarch analog_dpad_mode
 def getAnalogMode(controller):
     for dirkey in retroarchdirs:
         if dirkey in controller.inputs:
-            if controller.inputs[dirkey].type is "button" or controller.inputs[dirkey].type is "hat" :
-                return "1"
-    return "0"
+            if controller.inputs[dirkey].type is 'button' or controller.inputs[dirkey].type is 'hat':
+                return '1'
+    return '0'
 

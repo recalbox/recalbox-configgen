@@ -22,7 +22,7 @@ def load(name, default=None):
 def save(name, value):
     os.system("sed -i \"s|#\?" + name + " \?=.*|" + name + " = " + value + "|g\" " + settingsFile)
     if load(name) is None:
-        with open(settingsFile, "a") as settings:
+        with open(settingsFile, "a+") as settings:
             settings.write("{} = {}\n".format(name, value))
 
 

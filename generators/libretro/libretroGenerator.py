@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-import Command;
+import Command
+import libretroControllers
+
 
 settingsRoot = "/recalbox/configs/retroarch"
 settingsFileOrigin = settingsRoot + "/retroarchcustom.cfg.origin"
@@ -28,17 +30,17 @@ class LibretroCore():
 # Main entry of the module
 # Configure retroarch and return a command
 def generate(system, playersControllers):
-    # Write controllers configuration files
-    # write options in retroarchcustom from env
-    # set videomode
-    # launch the emulator
-    # video mode default
-    print 'ok'
-    if not system.config["configfile"]:
-        # and system.config['configfile'] is not None :
-        system.config['configfile'] = settingsFile
 
+    # Settings recalbox default config file if no user defined one
+    if not system.config["configfile"]:
+        # Using recalbox config file
+        system.config['configfile'] = settingsFile
+        # Write controllers configuration files
+        libretroControllers.writeControllersConfig(system, playersControllers)
+
+    # Retroarch core on the filesystem
     retroarchCore = retroarchCores + system.config['core'] + ".so"
 
+    # the command to run
     commandline = "{} -L {} --config {}".format(retroarchBin, retroarchCore, system.config['configfile'])
     return Command.Command(videomode=system.config['videomode'], commandline=commandline)

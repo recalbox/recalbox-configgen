@@ -5,7 +5,7 @@ import sys
 import os.path
 import unittest
 import shutil
-
+import controllersConfig
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
@@ -36,25 +36,24 @@ libretroConfig.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
 # test Systems
 snes = libretroGen.LibretroCore(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
                                 rewind='false')
-nes = libretroGen.LibretroCore(name='nes', videomode='4', core='pocketsnes', shaders='', ratio='16/9', smooth='1',
-                               rewind='false')
-nes43 = libretroGen.LibretroCore(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='4/3',
-                                 smooth='1', rewind='false')
-nesauto = libretroGen.LibretroCore(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp',
-                                   ratio='auto', smooth='1', rewind='true')
+nes = libretroGen.LibretroCore(name='nes', videomode='6', core='catsfc', shaders='', ratio='16/9', smooth='1',
+                               rewind='false', configfile='/myconfigfile.cfg')
+
+# test inputs
+basicInputs1 = {'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
+basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", "0", "Joypad1RealName", basicInputs1)
 
 class TestLibretroGenerator(unittest.TestCase):
     def test_generate_system_no_custom_settings(self):
         command = libretroGen.generate(snes, dict())
-
         self.assertEquals(command.videomode, '4')
-        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/pocketsnes.so --config /home/matthieu/dev/recalbox-configgen/tests/generators/libretro/tmp/retroarchcustom.cfg')
+        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/pocketsnes.so --config '+RETROARCH_CUSTOM_CFG_FILE)
 
-    def test_generate_system_no_custom_settings(self):
-        command = libretroGen.generate(snes, dict())
-    
-        self.assertEquals(command.videomode, '4')
-        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/pocketsnes.so --config /home/matthieu/dev/recalbox-configgen/tests/generators/libretro/tmp/retroarchcustom.cfg')
+    def test_generate_system_custom_settings(self):
+        command = libretroGen.generate(nes, dict())
+        self.assertEquals(command.videomode, '6')
+        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/catsfc.so --config /myconfigfile.cfg')
+
 
 
 if __name__ == '__main__':
