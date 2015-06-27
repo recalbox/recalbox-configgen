@@ -7,6 +7,7 @@ import unittest
 import shutil
 import controllersConfig
 import time
+from Emulator import Emulator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
@@ -34,9 +35,9 @@ libretroGen.libretroSettings.settingsFileOriginal = RETROARCH_ORIGIN_CFG_FILE
 libretroConfig.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
 
 # test Systems
-snes = libretroGen.LibretroCore(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
+snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
                                 rewind='false')
-nes = libretroGen.LibretroCore(name='nes', videomode='6', core='catsfc', shaders='', ratio='16/9', smooth='1',
+nes = Emulator(name='nes', videomode='6', core='catsfc', shaders='', ratio='16/9', smooth='1',
                                rewind='false', configfile='/myconfigfile.cfg')
 
 # test inputs
@@ -51,12 +52,12 @@ class TestLibretroGenerator(unittest.TestCase):
         command = libretroGen.generate(snes, rom, dict())
         self.assertEquals(command.videomode, '4')
         self.assertEquals(command.commandline,
-                          'retroarch -L /usr/lib/libretro/pocketsnes_libretro.so --config ' + RETROARCH_CUSTOM_CFG_FILE + " MyRom.nes")
+                          'retroarch -L \"/usr/lib/libretro/pocketsnes_libretro.so\" --config \"' + RETROARCH_CUSTOM_CFG_FILE + "\" \"MyRom.nes\"")
 
     def test_generate_system_custom_settings(self):
         command = libretroGen.generate(nes, rom, dict())
         self.assertEquals(command.videomode, '6')
-        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/catsfc_libretro.so --config /myconfigfile.cfg MyRom.nes')
+        self.assertEquals(command.commandline, 'retroarch -L \"/usr/lib/libretro/catsfc_libretro.so\" --config \"/myconfigfile.cfg\" \"MyRom.nes\"')
 
     def test_copy_original_file(self):
         libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE

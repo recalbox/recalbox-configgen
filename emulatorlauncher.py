@@ -4,10 +4,13 @@
 
 import argparse
 
+from Emulator import Emulator
+import generators
 import generators.libretro.libretroGenerator as libretroGen
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
 import utils.runner as runner
+
 
 parser = argparse.ArgumentParser(description='emulator-launcher script')
 parser.add_argument("-p1index", help="player1 controller index", type=int, required=False)
@@ -28,39 +31,42 @@ parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
 args = parser.parse_args()
 
 
-# List libretro with their cores, and default video modes
+generators = {
+    'libretro': generators.libretro.libretroGenerator.generate
+}
 
-libretro = dict()
-libretro["psx"] = libretroGen.LibretroCore(name='psx', videomode='4', core='pcsx_rearmed', shaders='', ratio='auto',
-                                           smooth='1', rewind='0')
-libretro["snes"] = libretroGen.LibretroCore(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto',
-                                            smooth='1', rewind='0')
-libretro["nes"] = libretroGen.LibretroCore(name='nes', videomode='4', core='pocketsnes', shaders='', ratio='auto',
-                                            smooth='1', rewind='0')
+# List emulators with their cores
+emulators = dict()
+emulators["psx"] = Emulator(name='psx', core='pcsx_rearmed', emulator='libretro')
+emulators["snes"] = Emulator(name='snes', core='pocketsnes', emulator='libretro')
+emulators["nes"] = Emulator(name='nes', core='', emulator='libretro')
+emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
+emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 
-systemName = args.system
+
 
 # Read the controller configuration
 playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid,
                                                       args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index,
                                                       args.p4guid, args.p4name)
 
+systemName = args.system
+
+# Load recalbox.conf configuration
+recalFileSettings = recalSettings.loadAll(systemName)
+
 # Main Program
 # A generator will configure its emulator, and return a command
-if systemName in libretro:
-    system = libretro[systemName]
+if systemName in emulators :
+    system = emulators[systemName]
     # Get the default configuration of the core
     systemSettings = system.config
-    # Get the recalbox.conf global configuration
-    recalFileSettings = recalSettings.loadAll("global")
     # Get the recalbox.conf core configuration
     coreSettings = recalSettings.loadAll(system.name)
-
     # Override the default config with the global one
     systemSettings.update(recalFileSettings)
     # Override the config with the core specific one
     systemSettings.update(coreSettings)
 
-    # Create the retroarch config file, the controllers
-    command = libretroGen.generate(system, rom, playersControllers)
+    command = generators[system.name].generate(system, args.rom, playersControllers)
     runner.runCommand(command)

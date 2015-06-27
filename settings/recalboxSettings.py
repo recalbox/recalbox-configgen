@@ -1,8 +1,14 @@
 #!/usr/bin/env python
+import sys
+import os
+if __name__ == '__main__':
+    sys.path.append(
+        os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 
 import re
-import os
+import argparse
 import recalboxFiles
+
 settingsFile = recalboxFiles.recalboxConf
 
 
@@ -35,3 +41,19 @@ def loadAll(name):
             if m:
                 res[m.group(1)] = m.group(2);
     return res
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='recalbox-config script')
+    parser.add_argument("-command", help="load, save or disable", type=str, required=True)
+    parser.add_argument("-key", help="key to load", type=str, required=True)
+    parser.add_argument("-value", help="if command = save value to save", type=str, required=False)
+    args = parser.parse_args()
+
+    if args.command == "save" :
+        save(args.key, args.value)
+    if args.command == "load" :
+        loaded = load(args.key)
+        if loaded is not None:
+            sys.stdout.write(loaded)
+    if args.command == "disable" :
+        disable(args.key)

@@ -12,19 +12,7 @@ shadersRoot = recalboxFiles.shadersRoot
 retroarchBin = recalboxFiles.retroarchBin
 retroarchCores = recalboxFiles.retroarchCores
 shadersExt = '.gplsp'
-libretroExt =  '_libretro.so'
-
-class LibretroCore():
-    def __init__(self, name, videomode, core, shaders, ratio, smooth, rewind, configfile=None):
-        self.name = name
-        self.config = dict()
-        self.config['videomode'] = videomode
-        self.config['core'] = core
-        self.config['shaders'] = shaders
-        self.config['ratio'] = ratio
-        self.config['smooth'] = smooth
-        self.config['rewind'] = rewind
-        self.config['configfile'] = configfile
+libretroExt = '_libretro.so'
 
 
 # Main entry of the module
@@ -45,5 +33,5 @@ def generate(system, rom, playersControllers):
     retroarchCore = retroarchCores + system.config['core'] + libretroExt
 
     # the command to run
-    commandline = '{} -L {} --config {} {}'.format(retroarchBin, retroarchCore, system.config['configfile'], rom)
+    commandline = '{} -L "{}" --config "{}" "{}"'.format(retroarchBin, retroarchCore, system.config['configfile'], rom)
     return Command.Command(videomode=system.config['videomode'], commandline=commandline)
