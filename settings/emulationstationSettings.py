@@ -2,8 +2,8 @@
 
 import re
 import os
-
-settingsFile = "/root/.emulationstation/es_settings.cfg"
+import recalboxFiles
+settingsFile = recalboxFiles.esSettings
 
 
 def load(name, default=None):

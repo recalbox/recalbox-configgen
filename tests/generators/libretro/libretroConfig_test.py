@@ -87,12 +87,12 @@ class TestLibretroConfig(unittest.TestCase):
 
     def test_write_config_to_file(self):
         retroconf = libretroConfig.createLibretroConfig(nesauto)
-        libretroConfig.writeLibretroConfig(retroconf)
+        libretroConfig.writeLibretroConfigToFile(retroconf)
         self.assertEquals(libretroSettings.load('rewind_enable'), 'true')
 
     def test_write_config_to_file_shaders(self):
         retroconf = libretroConfig.createLibretroConfig(nes43)
-        libretroConfig.writeLibretroConfig(retroconf)
+        libretroConfig.writeLibretroConfigToFile(retroconf)
         self.assertEquals(libretroSettings.load('rewind_enable'), 'false')
         self.assertEquals(libretroSettings.load('video_shader'), 'myshaders.gpslp')
         self.assertEquals(libretroSettings.load('video_shader_enable'), 'true')

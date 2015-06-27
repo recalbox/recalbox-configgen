@@ -19,6 +19,10 @@ def defined(key, dict):
 
 ratioIndexes = {'16/9': '1', '4/3': '0'}
 
+def writeLibretroConfig(system):
+    writeLibretroConfigToFile(createLibretroConfig(system))
+
+
 # take a system, and returns a dict of retroarch.cfg compatible parameters
 def createLibretroConfig(system):
     retroarchConfig = dict()
@@ -48,6 +52,6 @@ def createLibretroConfig(system):
 
     return retroarchConfig
 
-def writeLibretroConfig(config):
+def writeLibretroConfigToFile(config):
     for setting in config:
         libretroSettings.save(setting, config[setting])

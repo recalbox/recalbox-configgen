@@ -6,6 +6,6 @@ import videoMode
 
 # Set a specific video mode
 def runCommand(command):
-    videoMode.setVideoMode(command.video_mode)
-    os.open(command.commandLine)
+    videoMode.setVideoMode(command.videomode)
+    os.system(command.commandline)
     videoMode.setPreffered()

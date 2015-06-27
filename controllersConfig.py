@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import xml.etree.ElementTree as ET
-
-esInputs = "/root/.emulationstation/es_input.cfg"
+import recalboxFiles
+esInputs = recalboxFiles.esInputs
 
 
 class Input:

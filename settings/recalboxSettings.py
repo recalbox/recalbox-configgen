@@ -2,8 +2,8 @@
 
 import re
 import os
-
-settingsFile = "/recalbox/share/system/recalbox.conf"
+import recalboxFiles
+settingsFile = recalboxFiles.recalboxConf
 
 
 def load(name, default=None):
@@ -24,7 +24,7 @@ def save(name, value):
 
 def disable(name):
     # settings=`cat "$es_settings" | sed -n "s/.*name=\"${varname}\" value=\"\(.*\)\".*/\1/p"`
-    os.system("sed -i \"s|^.*\(" + name + "=.*\)|;\\1|g\" " + settingsFile)
+    os.system("sed -i \"s|^.*\({}=.*\)|;\\1|g\" {}".format(name,settingsFile))
 
 
 def loadAll(name):

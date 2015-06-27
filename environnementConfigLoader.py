@@ -11,7 +11,7 @@ def loadEnvConfig(system):
     video_mode = recalSettings.load(system + "_video_mode")
     custom_emulator = recalSettings.load(system + "_emulator")
     if shaders == "true":
-        smooth = false
+        smooth = False
     return {'smooth': smooth, 'shaders': shaders, 'ratio': ratio, 'video_mode': video_mode, \
             'custom_emulator': custom_emulator}
 

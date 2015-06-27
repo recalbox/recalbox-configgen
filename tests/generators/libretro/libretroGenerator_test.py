@@ -6,6 +6,7 @@ import os.path
 import unittest
 import shutil
 import controllersConfig
+import time
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
@@ -13,7 +14,6 @@ sys.path.append(
 import generators.libretro.libretroConfig as libretroConfig
 import generators.libretro.libretroGenerator as libretroGen
 
-import settings.libretroSettings as libretroSettings
 
 RETROARCH_ORIGIN_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustomorigin.cfg'))
 RETROARCH_CUSTOM_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustom.cfg'))
@@ -27,10 +27,10 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../r
 
 
 # Injecting test files
-libretroGen.settingsFileOrigin = RETROARCH_ORIGIN_CFG_FILE
 libretroGen.settingsFile = RETROARCH_CUSTOM_CFG_FILE
+libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
+libretroGen.libretroSettings.settingsFileOriginal = RETROARCH_ORIGIN_CFG_FILE
 
-libretroSettings.settingsFile  = RETROARCH_CUSTOM_CFG_FILE
 libretroConfig.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
 
 # test Systems
@@ -53,6 +53,13 @@ class TestLibretroGenerator(unittest.TestCase):
         command = libretroGen.generate(nes, dict())
         self.assertEquals(command.videomode, '6')
         self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/catsfc.so --config /myconfigfile.cfg')
+
+    def test_copy_original_file(self):
+        libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
+        os.remove(RETROARCH_CUSTOM_CFG_FILE)
+        time.sleep(1)
+        command = libretroGen.generate(snes, dict())
+        self.assertTrue(os.path.isfile(RETROARCH_CUSTOM_CFG_FILE))
 
 
 

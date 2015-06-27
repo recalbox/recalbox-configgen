@@ -3,10 +3,14 @@ import os
 
 # Set a specific video mode
 def setVideoMode(index, mode="CEA", drive="HDMI"):
-    os.open("tvservice -e '%s %s %s'" % (mode, index, drive))
+    os.system("tvservice -e '%s %s %s'" % (mode, index, drive))
 
+# Set a specific video mode
+def isSupported(index, mode="CEA", drive="HDMI"):
+   # todo
+    return False
 
 # Switch to prefered mode
 def setPreffered():
-    os.open("tvservice -p")
+    os.system("tvservice -p")
 
