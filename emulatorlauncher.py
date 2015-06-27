@@ -62,5 +62,5 @@ if systemName in libretro:
     systemSettings.update(coreSettings)
 
     # Create the retroarch config file, the controllers
-    command = libretroGen.generate(system, playersControllers)
+    command = libretroGen.generate(system, rom, playersControllers)
     runner.runCommand(command)

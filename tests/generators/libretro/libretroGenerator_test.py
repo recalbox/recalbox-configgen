@@ -43,24 +43,27 @@ nes = libretroGen.LibretroCore(name='nes', videomode='6', core='catsfc', shaders
 basicInputs1 = {'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
 basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", "0", "Joypad1RealName", basicInputs1)
 
+rom = "MyRom.nes"
+
+
 class TestLibretroGenerator(unittest.TestCase):
     def test_generate_system_no_custom_settings(self):
-        command = libretroGen.generate(snes, dict())
+        command = libretroGen.generate(snes, rom, dict())
         self.assertEquals(command.videomode, '4')
-        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/pocketsnes.so --config '+RETROARCH_CUSTOM_CFG_FILE)
+        self.assertEquals(command.commandline,
+                          'retroarch -L /usr/lib/libretro/pocketsnes_libretro.so --config ' + RETROARCH_CUSTOM_CFG_FILE + " MyRom.nes")
 
     def test_generate_system_custom_settings(self):
-        command = libretroGen.generate(nes, dict())
+        command = libretroGen.generate(nes, rom, dict())
         self.assertEquals(command.videomode, '6')
-        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/catsfc.so --config /myconfigfile.cfg')
+        self.assertEquals(command.commandline, 'retroarch -L /usr/lib/libretro/catsfc_libretro.so --config /myconfigfile.cfg MyRom.nes')
 
     def test_copy_original_file(self):
         libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
         os.remove(RETROARCH_CUSTOM_CFG_FILE)
         time.sleep(1)
-        command = libretroGen.generate(snes, dict())
+        command = libretroGen.generate(snes, rom, dict())
         self.assertTrue(os.path.isfile(RETROARCH_CUSTOM_CFG_FILE))
-
 
 
 if __name__ == '__main__':
