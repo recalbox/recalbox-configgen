@@ -2,10 +2,8 @@ import generators
 
 
 class Emulator():
-    def __init__(self, name, core, emulator):
-        self.__init__(name, '4', core, '', 'auto', '1', '0', emulator=emulator)
 
-    def __init__(self, name, videomode, core, shaders, ratio, smooth, rewind, configfile=None, emulator="libretro"):
+    def __init__(self, name, emulator, core='', videomode='4', shaders='', ratio='auto', smooth='1', rewind='0', configfile=None):
         self.name = name
         self.config = dict()
         self.config['videomode'] = videomode

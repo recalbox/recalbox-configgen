@@ -36,9 +36,9 @@ libretroConfig.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
 
 # test Systems
 snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
-                                rewind='false')
+                                rewind='false', emulator='libretro')
 nes = Emulator(name='nes', videomode='6', core='catsfc', shaders='', ratio='16/9', smooth='1',
-                               rewind='false', configfile='/myconfigfile.cfg')
+                               rewind='false', configfile='/myconfigfile.cfg', emulator='libretro')
 
 # test inputs
 basicInputs1 = {'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}

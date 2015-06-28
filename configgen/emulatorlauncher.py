@@ -37,9 +37,9 @@ generators = {
 
 # List emulators with their cores
 emulators = dict()
-emulators["psx"] = Emulator(name='psx', core='pcsx_rearmed', emulator='libretro')
-emulators["snes"] = Emulator(name='snes', core='pocketsnes', emulator='libretro')
-emulators["nes"] = Emulator(name='nes', core='', emulator='libretro')
+emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')
+emulators["snes"] = Emulator(name='snes', emulator='libretro', core='pocketsnes')
+emulators["nes"] = Emulator(name='nes', emulator='libretro')
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 
@@ -68,5 +68,5 @@ if systemName in emulators :
     # Override the config with the core specific one
     systemSettings.update(coreSettings)
 
-    command = generators[system.name].generate(system, args.rom, playersControllers)
+    command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
     runner.runCommand(command)
