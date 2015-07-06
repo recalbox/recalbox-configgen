@@ -6,6 +6,7 @@ import argparse
 
 from Emulator import Emulator
 import generators
+from generators.libretro import LibretroGenerator
 import generators.libretro.libretroGenerator as libretroGen
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
@@ -31,7 +32,7 @@ parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
 args = parser.parse_args()
 
 generators = {
-    'libretro': generators.libretro.libretroGenerator.generate
+    'libretro': LibretroGenerator()
 }
 
 # List emulators with their cores
@@ -54,7 +55,7 @@ emulators["segacd"] = Emulator(name='segacd', emulator='libretro', core='picodri
 # Arcade
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='imame4all')
-#emulators["fba"] = Emulator(name='fba', emulator='fba2x')
+emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 emulators["fbalibretro"] = Emulator(name='fba', emulator='libretro', core='fba')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
@@ -96,6 +97,6 @@ if systemName in emulators:
     # Override the config with the core specific one
     systemSettings.update(coreSettings)
 
-    command = generators[system.config['emulator']](system, args.rom, playersControllers)
+    command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
     runner.runCommand(command)
     time.sleep(1)

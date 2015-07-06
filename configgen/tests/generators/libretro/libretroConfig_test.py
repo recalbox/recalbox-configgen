@@ -13,8 +13,8 @@ sys.path.append(
 
 import generators.libretro.libretroConfig as libretroConfig
 import generators.libretro.libretroGenerator as libretroGen
+import settings.unixSettings as unixSettings
 import settings.recalboxSettings as recalSettings
-import settings.libretroSettings as libretroSettings
 
 retroarchcustomFile = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustom.cfg'))
 recalboxConfFile = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/recalbox.conf'))
@@ -27,9 +27,7 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../r
 
 
 
-# Injecting test files
-recalSettings.settingsFile = recalboxConfFile
-libretroConfig.libretroSettings.settingsFile = retroarchcustomFile
+libretroSettings = unixSettings.UnixSettings(retroarchcustomFile)
 
 # test Systems
 snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2', rewind='false', emulator='libretro')
@@ -39,6 +37,10 @@ nesauto = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshad
 
 
 class TestLibretroConfig(unittest.TestCase):
+    def setUp(self):
+        # Injecting test file
+        recalSettings.settingsFile = recalboxConfFile
+        libretroConfig.libretroSettings = libretroSettings
 
     def test_smooth_override_defaut_and_global(self):
         settings = snes.config

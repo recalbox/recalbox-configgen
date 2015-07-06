@@ -7,13 +7,16 @@ import unittest
 import shutil
 import controllersConfig
 import time
+import settings.unixSettings as unixSettings
+
 from Emulator import Emulator
+from generators.libretro.libretroGenerator import LibretroGenerator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
 import generators.libretro.libretroConfig as libretroConfig
-import generators.libretro.libretroGenerator as libretroGen
+import generators.libretro.libretroGenerator as libretroGenerator
 
 
 RETROARCH_ORIGIN_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustomorigin.cfg'))
@@ -28,11 +31,10 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../r
 
 
 # Injecting test files
-libretroGen.settingsFile = RETROARCH_CUSTOM_CFG_FILE
-libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
-libretroGen.libretroSettings.settingsFileOriginal = RETROARCH_ORIGIN_CFG_FILE
+libretroGenerator.recalboxFiles.retroarchCustom = RETROARCH_CUSTOM_CFG_FILE
+libretroGenerator.recalboxFiles.retroarchCustomOrigin = RETROARCH_ORIGIN_CFG_FILE
 
-libretroConfig.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
+libretroConfig.libretroSettings = unixSettings.UnixSettings(RETROARCH_CUSTOM_CFG_FILE, separator=' ')
 
 # test Systems
 snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
@@ -46,7 +48,7 @@ basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", "0"
 
 rom = "MyRom.nes"
 
-
+libretroGen = LibretroGenerator()
 class TestLibretroGenerator(unittest.TestCase):
     def test_generate_system_no_custom_settings(self):
         command = libretroGen.generate(snes, rom, dict())
@@ -60,7 +62,6 @@ class TestLibretroGenerator(unittest.TestCase):
         self.assertEquals(command.commandline, 'retroarch -L \"/usr/lib/libretro/catsfc_libretro.so\" --config \"/myconfigfile.cfg\" \"MyRom.nes\"')
 
     def test_copy_original_file(self):
-        libretroGen.libretroSettings.settingsFile = RETROARCH_CUSTOM_CFG_FILE
         os.remove(RETROARCH_CUSTOM_CFG_FILE)
         time.sleep(1)
         command = libretroGen.generate(snes, rom, dict())

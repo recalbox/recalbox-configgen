@@ -10,7 +10,7 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 import generators.libretro.libretroControllers as libretroControllers
-import settings.libretroSettings as libretroSettings
+import settings.unixSettings as unixSettings
 import controllersConfig as controllersConfig
 
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/retroarchcustom.cfg.origin")), \
@@ -22,10 +22,11 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../r
 libretroControllers.settingsRoot = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp"))
 # Injecting test es_input
 controllersConfig.esInputs = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_input.cfg"))
+
 # Injecting test retroarch.conf
-libretroSettings.settingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg"))
-libretroControllers.libretroSettings.settingsFile = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg"))
+libretroSettingsFile = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg"))
+libretroSettings = unixSettings.UnixSettings(libretroSettingsFile)
+libretroControllers.libretroSettings = libretroSettings
 
 # Test objects
 basicInputs1 = {'a': controllersConfig.Input("a", "button", "10", "1")}

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 import sys
 import os
-import settings.fbasettings as fbasettings
+import recalboxFiles
+from settings.unixSettings import UnixSettings
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
+fbaSettings = UnixSettings(recalboxFiles.fbaCustom)
 
 # return true if the option is considered enabled (for boolean options)
 def enabled(key, dict):
@@ -17,41 +19,35 @@ def defined(key, dict):
     return key in dict and isinstance(dict[key], str) and len(dict[key]) > 0
 
 
-ratioIndexes = {'16/9': '1', '4/3': '0'}
+ratioIndexes = {'16/9': '0', '4/3': '1'}
 
-def writeLibretroConfig(system):
-    writeLibretroConfigToFile(createLibretroConfig(system))
+
+def writeFBAConfig(system):
+    writeFBAConfigToFile(createFBAConfig(system))
 
 
 # take a system, and returns a dict of retroarch.cfg compatible parameters
-def createLibretroConfig(system):
-    retroarchConfig = dict()
+def createFBAConfig(system):
+    fbaConfig = dict()
     recalboxConfig = system.config
     if enabled('smooth', recalboxConfig):
-        retroarchConfig['video_smooth'] = 'true'
+        fbaConfig['DisplaySmoothStretch'] = '1'
     else:
-        retroarchConfig['video_smooth'] = 'false'
-
-    if defined('shaders', recalboxConfig):
-        retroarchConfig['video_shader'] = recalboxConfig['shaders']
-        retroarchConfig['video_shader_enable'] = 'true'
-        retroarchConfig['video_smooth'] = 'false'
-    else:
-        retroarchConfig['video_shader_enable'] = 'false'
+        fbaConfig['DisplaySmoothStretch'] = '0'
 
     if defined('ratio', recalboxConfig) and recalboxConfig['ratio'] in ratioIndexes:
-        retroarchConfig['aspect_ratio_index'] = ratioIndexes[recalboxConfig['ratio']]
-        retroarchConfig['video_aspect_ratio_auto'] = 'false'
+        fbaConfig['MaintainAspectRatio'] = ratioIndexes[recalboxConfig['ratio']]
     else:
-        retroarchConfig['video_aspect_ratio_auto'] = 'true'
+        fbaConfig['MaintainAspectRatio'] = '1'
 
-    if enabled('rewind', recalboxConfig):
-        retroarchConfig['rewind_enable'] = 'true'
-    else:
-        retroarchConfig['rewind_enable'] = 'false'
+    if defined('shaders', recalboxConfig) and recalboxConfig['shaders'] == 'scanlines':
+        fbaConfig['DisplayEffect'] = '1'
+    else :
+        fbaConfig['DisplayEffect'] = '0'
 
-    return retroarchConfig
+    return fbaConfig
 
-def writeLibretroConfigToFile(config):
+
+def writeFBAConfigToFile(config):
     for setting in config:
-        libretroSettings.save(setting, config[setting])
+        fbaSettings.save(setting, config[setting])

@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 import sys
 import os
-import settings.libretroSettings as libretroSettings
+import recalboxFiles
+import settings
+from settings.unixSettings import UnixSettings
+
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
+libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
 
 # return true if the option is considered enabled (for boolean options)
 def enabled(key, dict):

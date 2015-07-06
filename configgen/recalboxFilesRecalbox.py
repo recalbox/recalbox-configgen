@@ -10,4 +10,5 @@ retroarchCustomOrigin = retroarchRoot + "/retroarchcustom.cfg.origin"
 retroarchBin = "retroarch"
 retroarchCores = "/usr/lib/libretro/"
 shadersRoot = "/recalbox/share/shaders/presets/"
-
+shadersExt = '.gplsp'
+libretroExt = '_libretro.so'

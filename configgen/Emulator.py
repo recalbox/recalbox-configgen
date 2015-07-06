@@ -1,6 +1,3 @@
-import generators
-
-
 class Emulator():
 
     def __init__(self, name, emulator, core='', videomode='4', shaders='', ratio='auto', smooth='1', rewind='0', configfile=None):
