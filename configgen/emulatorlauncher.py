@@ -6,8 +6,8 @@ import argparse
 
 from Emulator import Emulator
 import generators
-from generators.libretro import LibretroGenerator
-import generators.libretro.libretroGenerator as libretroGen
+from generators.libretro.libretroGenerator import LibretroGenerator
+
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
 import utils.runner as runner
@@ -35,7 +35,7 @@ generators = {
     'libretro': LibretroGenerator()
 }
 
-# List emulators with their cores
+# List emulators with their cores rest mupen64, scummvm
 emulators = dict()
 # Nintendo
 emulators["snes"] = Emulator(name='snes', emulator='libretro', core='pocketsnes')
@@ -64,9 +64,9 @@ emulators["vectrex"] = Emulator(name='vectrex', emulator='libretro', core='vecx'
 emulators["lynx"] = Emulator(name='lynx', emulator='libretro', core='mednafen_lynx')
 emulators["lutro"] = Emulator(name='lutro', emulator='libretro', core='lutro')
 emulators["wswan"] = Emulator(name='wswan', emulator='libretro', core='mednafen_wswan')
-emulators["pcengine"] = Emulator(name='pcengine', emulator='libretro', core='pce')
-emulators["supergrafx"] = Emulator(name='supergrafx', emulator='libretro', core='mednafen_supergrafx')
+emulators["pcengine"] = Emulator(name='pcengine', emulator='libretro', core='mednafen_supergrafx')
 emulators["atari2600"] = Emulator(name='atari2600', emulator='libretro', core='stella')
+emulators["atari7800"] = Emulator(name='atari7800', emulator='libretro', core='prosystem')
 emulators["msx"] = Emulator(name='msx', emulator='libretro', core='fmsx')
 emulators["prboom"] = Emulator(name='prboom', emulator='libretro', core='prboom')
 emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')

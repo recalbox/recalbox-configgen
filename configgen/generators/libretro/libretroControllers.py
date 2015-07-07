@@ -5,10 +5,10 @@ import os
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-import settings.unixSettings as unixSettings
+from settings.unixSettings import UnixSettings
 import recalboxFiles
 
-libretroSettings = unixSettings.UnixSettings(recalboxFiles.retroarchCustom)
+libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
 
 settingsRoot = recalboxFiles.retroarchRoot
 
