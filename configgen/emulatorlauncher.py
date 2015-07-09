@@ -81,21 +81,16 @@ playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid,
 
 systemName = args.system
 
-# Load recalbox.conf configuration
-recalFileSettings = recalSettings.loadAll(systemName)
-
 # Main Program
 # A generator will configure its emulator, and return a command
 if systemName in emulators:
     system = emulators[systemName]
     # Get the default configuration of the core
     systemSettings = system.config
-    # Get the recalbox.conf core configuration
-    coreSettings = recalSettings.loadAll(system.name)
-    # Override the default config with the global one
-    systemSettings.update(recalFileSettings)
+    # Override the config with the global one
+    systemSettings.update(recalSettings.loadAll('global'))
     # Override the config with the core specific one
-    systemSettings.update(coreSettings)
+    systemSettings.update(recalSettings.loadAll(system.name))
 
     command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
     runner.runCommand(command)
