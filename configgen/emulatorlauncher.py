@@ -42,8 +42,9 @@ emulators["snes"] = Emulator(name='snes', emulator='libretro', core='pocketsnes'
 emulators["nes"] = Emulator(name='nes', emulator='libretro', core='fceunext')
 #emulators["n64"] = Emulator(name='n64', emulator='mupen64plus')
 emulators["gba"] = Emulator(name='gba', emulator='libretro', core='gpsp')
+emulators["gb"] = Emulator(name='gb', emulator='libretro', core='gambatte')
 emulators["gbc"] = Emulator(name='gbc', emulator='libretro', core='gambatte')
-emulators["fds"] = Emulator(name='gbc', emulator='libretro', core='nestopia')
+emulators["fds"] = Emulator(name='fds', emulator='libretro', core='nestopia')
 emulators["virtualboy"] = Emulator(name='virtualboy', emulator='libretro', core='vb')
 # Sega
 emulators["sg1000"] = Emulator(name='sg1000', emulator='libretro', core='genesisplusgx')
@@ -56,7 +57,7 @@ emulators["segacd"] = Emulator(name='segacd', emulator='libretro', core='picodri
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='imame4all')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
-emulators["fbalibretro"] = Emulator(name='fba', emulator='libretro', core='fba')
+emulators["fbalibretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
 emulators["gw"] = Emulator(name='gw', emulator='libretro', core='gw')
