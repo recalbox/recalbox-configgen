@@ -21,7 +21,7 @@ retroarchbtns = {'a': 'a', 'b': 'b', 'x': 'x', 'y': 'y', \
 retroarchdirs = {'up': 'up', 'down': 'down', 'left': 'left', 'right': 'right'}
 
 # Map an emulationstation joystick to the corresponding retroarch
-retroarchjoysticks = {'joystickup': 'l_y', 'joystickleft': 'l_x'}
+retroarchjoysticks = {'joystick1up': 'l_y', 'joystick1left': 'l_x','joystick2up': 'r_y', 'joystick2left': 'r_x'}
 
 # Map an emulationstation input type to the corresponding retroarch type
 typetoname = {'button': 'btn', 'hat': 'btn', 'axis': 'axis', 'key': 'key'}
@@ -38,7 +38,7 @@ retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot
 def writeControllersConfig(system, controllers):
     writeIndexes(controllers)
     for controller in controllers:
-        writeControllerConfig(controllers[controller])
+        writeControllerConfig(controllers[controller],controller, system)
     writeHotKeyConfig(controllers)
 
 
@@ -49,13 +49,13 @@ def writeHotKeyConfig(controllers):
 
 
 # Write a configuration for a specified controller
-def writeControllerConfig(controller):
+def writeControllerConfig(controller,playerIndex, system):
     configFile = settingsRoot + '/inputs/' + controller.realName + '.cfg'
     generatedConfig = generateControllerConfig(controller)
     with open(configFile, 'w+') as f:
         for key in generatedConfig:
             f.write('{} = {}\n'.format(key, generatedConfig[key]))
-
+    libretroSettings.save('input_player{}_analog_dpad_mode'.format(playerIndex), getAnalogMode(controller, system))
 
 # Create a configuration file for a given controller
 def generateControllerConfig(controller):
@@ -108,11 +108,11 @@ def writeIndexes(controllers):
         libretroSettings.save('input_player{}_joypad_index'.format(player), controller.index)
 
 
-# TODO set analog dpad from system
 # return the retroarch analog_dpad_mode
-def getAnalogMode(controller):
-    for dirkey in retroarchdirs:
-        if dirkey in controller.inputs:
-            if controller.inputs[dirkey].type is 'button' or controller.inputs[dirkey].type is 'hat':
-                return '1'
+def getAnalogMode(controller, system):
+    if system.name != "psx" :
+        for dirkey in retroarchdirs:
+            if dirkey in controller.inputs:
+                if controller.inputs[dirkey].type is 'button' or controller.inputs[dirkey].type is 'hat':
+                    return '1'
     return '0'

@@ -25,7 +25,7 @@ class TestControllersConfig(unittest.TestCase):
         controllers = controllersConfig.loadAllControllersConfig()
         controller = controllers['060000004c0500006802000000010000']
         self.assertEquals("button", controller.inputs["a"].type)
-        self.assertEquals("axis", controller.inputs["joystickup"].type)
+        self.assertEquals("axis", controller.inputs["joystick1up"].type)
         self.assertEquals("1", controller.inputs["a"].value)
         self.assertEquals("13", controller.inputs["a"].id)
 
