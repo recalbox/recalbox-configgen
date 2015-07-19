@@ -95,6 +95,13 @@ class TestLibretroController(unittest.TestCase):
             for line in controllerFile:
                 lines.append(line)
             self.assertTrue('input_l2_btn = 8\n' in lines)
+        self.assertTrue(libretroControllers.libretroSettings.load("input_player1_analog_dpad_mode"), "1")
+
+    def test_write_only_joystick_controller(self):
+        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0,
+                                                             "p3controller", -1, 0, "p4controller")
+        config = libretroControllers.writeControllerConfig(controllers["1"], "1", snes)
+        self.assertTrue(libretroControllers.libretroSettings.load("input_player1_analog_dpad_mode"), "0")
 
     def test_write_hotkey(self):
         command = libretroControllers.writeHotKeyConfig({'1': basicController1})
