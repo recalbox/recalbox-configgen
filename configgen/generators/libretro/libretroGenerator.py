@@ -17,7 +17,7 @@ class LibretroGenerator(Generator):
             # Using recalbox config file
             system.config['configfile'] = recalboxFiles.retroarchCustom
             # Create retroarchcustom.cfg if does not exists
-            if not os.path.isfile(recalboxFiles.retroarchCustomOrigin):
+            if not os.path.isfile(recalboxFiles.retroarchCustom):
                 shutil.copyfile(recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom)
             #  Write controllers configuration files
             libretroControllers.writeControllersConfig(system, playersControllers)
