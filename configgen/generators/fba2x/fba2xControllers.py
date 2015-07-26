@@ -47,7 +47,8 @@ def generateControllerConfig(player, controller, special6=False):
         dirvalue = fbadirs[dirkey]
         if dirkey in controller.inputs:
             input = controller.inputs[dirkey]
-            config['{}_{}'.format(dirvalue, player)] = input.id
+            if  input.type != 'hat':
+                config['{}_{}'.format(dirvalue, player)] = input.id
 
     for axis in fbaaxis:
         axisvalue = fbaaxis[axis]
