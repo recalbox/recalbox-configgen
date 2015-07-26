@@ -5,6 +5,8 @@ import recalboxFiles
 import libretroConfig
 import shutil
 from generators.Generator import Generator
+import os.path
+
 
 class LibretroGenerator(Generator):
     # Main entry of the module
@@ -15,7 +17,8 @@ class LibretroGenerator(Generator):
             # Using recalbox config file
             system.config['configfile'] = recalboxFiles.retroarchCustom
             # Create retroarchcustom.cfg if does not exists
-            shutil.copyfile(recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom)
+            if not os.path.isfile(recalboxFiles.retroarchCustomOrigin):
+                shutil.copyfile(recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom)
             #  Write controllers configuration files
             libretroControllers.writeControllersConfig(system, playersControllers)
             # Write configuration to retroarchcustom.cfg

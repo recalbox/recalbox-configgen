@@ -1,5 +1,5 @@
 [Graphics]
-DisplaySmoothStretch=0
+DisplaySmoothStretch=1
 DisplayEffect=0
 DisplayBorder=0
 MaintainAspectRatio=1
@@ -8,7 +8,3 @@ RotateScreen=0
 [Sound]
 
 [Joystick]
-SDLID_1=-1
-SDLID_2=-1
-SDLID_3=-1
-SDLID_4=-1

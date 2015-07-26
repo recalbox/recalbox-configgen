@@ -104,6 +104,8 @@ def getConfigValue(input):
 
 # Write indexes for configured controllers
 def writeIndexes(controllers):
+    for player in range(1,5):
+        libretroSettings.disable('input_player{}_joypad_index'.format(player))
     for player in controllers:
         controller = controllers[player]
         libretroSettings.save('input_player{}_joypad_index'.format(player), controller.index)

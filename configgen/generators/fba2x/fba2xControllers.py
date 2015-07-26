@@ -21,89 +21,71 @@ fba6bnts = {'a': 'L', 'b': 'Y', 'x': 'X', 'y': 'A', \
 
 # Map an emulationstation direction to the corresponding fba2x
 fbadirs = {'up': 'UP', 'down': 'DOWN', 'left': 'LEFT', 'right': 'RIGHT'}
-fbaaxis = {'up': 'UD', 'down': 'UD', 'left': 'LR', 'right': 'LR'}
-fbaHatToAxis = {'1' : 'UD', '2' : 'LR', '4' : 'UD', '8' : 'LR'}
-
-# Map an emulationstation joystick to the corresponding fba2x
-retroarchjoysticks = {'joystickup': 'l_y', 'joystickleft': 'l_x'}
-
-# Map an emulationstation input type to the corresponding retroarch type
-typetoname = {'button': 'btn', 'hat': 'btn', 'axis': 'axis', 'key': 'key'}
-
-# Map an emulationstation input hat to the corresponding retroarch hat value
-hatstoname = {'1': 'up', '2': 'right', '4': 'down', '8': 'left'}
+fbaaxis = {'joystick1up': 'JA_UD', 'joystick1left': 'JA_LR'}
+fbaHatToAxis = {'1': 'UP', '2': 'LR', '4': 'UD', '8': 'LR'}
 
 # Map buttons to the corresponding fba2x specials keys
 fbaspecials = {'start': 'QUIT', 'hotkey': 'HOTKEY'}
 
-# Write a configuration for a specified controller
+
 def writeControllersConfig(system, controllers):
     writeIndexes(controllers)
     for controller in controllers:
-        writeControllerConfig(controllers[controller])
-
-
-# Write a configuration for a specified controller
-def writeControllerConfig(controller):
-    generatedConfig = generateControllerConfig(controller)
-    for key in generatedConfig:
-        fbaSettings.save(key, generatedConfig[key])
+        playerConfig = generateControllerConfig(controller, controllers[controller])
+        for input in playerConfig:
+            fbaSettings.save(input, playerConfig[input])
 
 
 # Create a configuration file for a given controller
-def generateControllerConfig(controller):
+def generateControllerConfig(player, controller, special6=False):
     config = dict()
-    for btnkey in fba4bnts:
-        btnvalue = fba4bnts[btnkey]
-        if btnkey in controller.inputs:
-            input = controller.inputs[btnkey]
-            config[btnkey] = input
+    fbaBtns = fba4bnts
+    if special6:
+        fbaBtns = fba6bnts
+
     for dirkey in fbadirs:
         dirvalue = fbadirs[dirkey]
         if dirkey in controller.inputs:
             input = controller.inputs[dirkey]
-            config['input_%s_%s' % (dirvalue, typetoname[input.type])] = getConfigValue(input)
-    for jskey in retroarchjoysticks:
-        jsvalue = retroarchjoysticks[jskey]
-        if jskey in controller.inputs:
-            input = controller.inputs[jskey]
-            config['input_%s_minus_axis' % jsvalue] = '-%s' % input.id
-            config['input_%s_plus_axis' % jsvalue] = '+%s' % input.id
-    for specialkey in retroarchspecials:
-        specialvalue = retroarchspecials[specialkey]
-        if specialkey in controller.inputs:
-            input = controller.inputs[specialkey]
-            config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+            config['{}_{}'.format(dirvalue, player)] = input.id
+
+    for axis in fbaaxis:
+        axisvalue = fbaaxis[axis]
+        if axis in controller.inputs:
+            input = controller.inputs[axis]
+            config['{}_{}'.format(axisvalue, player)] = input.id
+
+    for btnkey in fbaBtns:
+        btnvalue = fbaBtns[btnkey]
+        if btnkey in controller.inputs:
+            input = controller.inputs[btnkey]
+            config['{}_{}'.format(btnvalue, player)] = input.id
+
+    if player == '1':
+        for btnkey in fbaspecials:
+            btnvalue = fbaspecials[btnkey]
+            if btnkey in controller.inputs:
+                input = controller.inputs[btnkey]
+                config['{}'.format(btnvalue)] = input.id
+
     return config
 
 
-# Returns the value to write in retroarch config file, depending on the type
-def getConfigValue(input):
-    if input.type == 'button':
-        return input.id
-    if input.type == 'axis':
-        if input.value == '-1':
-            return '-%s' % input.id
-        else:
-            return '+%s' % input.id
-    if input.type == 'hat':
-        return 'h' + input.id + hatstoname[input.value]
-    if input.type == 'key':
-        return input.id
-
-
-# Write indexes for configured controllers
 def writeIndexes(controllers):
+    for player in range(1, 5):
+        fbaSettings.save('SDLID_{}'.format(player), '-1')
     for player in controllers:
         controller = controllers[player]
-        libretroSettings.save('input_player{}_joypad_index'.format(player), controller.index)
+        fbaSettings.save('SDLID_{}'.format(player), controller.index)
 
 
-# TODO set analog dpad from system
-# return the retroarch analog_dpad_mode
-def getAnalogMode(controller):
-    for dirkey in retroarchdirs:
-        if dirkey in controller.inputs:
-            if controller.inputs[dirkey].type is 'button' or controller.inputs[dirkey].type is 'hat':
-                return '1'
-    return '0'
+sixBtnGames = ['sfa', 'sfz', 'sf2', 'dstlk', 'hsf2', 'msh', 'mshvsf', 'mvsc', 'nwarr', 'ssf2', 'vsav', 'vhunt', 'xmvsf',
+               'xmcota']
+
+
+def is6btn(rom):
+    rom = os.path.basename(rom)
+    for game in sixBtnGames:
+        if game in rom:
+            return True
+    return False

@@ -7,6 +7,7 @@ from settings.unixSettings import UnixSettings
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
+
 fbaSettings = UnixSettings(recalboxFiles.fbaCustom)
 
 # return true if the option is considered enabled (for boolean options)

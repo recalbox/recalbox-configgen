@@ -7,6 +7,7 @@ import argparse
 from Emulator import Emulator
 import generators
 from generators.libretro.libretroGenerator import LibretroGenerator
+from generators.fba2x.fba2xGenerator import Fba2xGenerator
 
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
@@ -32,7 +33,8 @@ parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
 args = parser.parse_args()
 
 generators = {
-    'libretro': LibretroGenerator()
+    'libretro': LibretroGenerator(),
+    'fba2x': Fba2xGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
