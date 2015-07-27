@@ -62,7 +62,6 @@ def writeControllerConfig(controller, playerIndex, system):
 def generateControllerConfig(controller):
     config = dict()
     config['input_device'] = '"%s"' % controller.realName
-    config['input_driver'] = '"udev"'
     for btnkey in retroarchbtns:
         btnvalue = retroarchbtns[btnkey]
         if btnkey in controller.inputs:
