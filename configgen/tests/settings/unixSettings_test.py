@@ -88,6 +88,16 @@ class TestUnixSettings(unittest.TestCase):
         self.assertEquals(4, len(loaded))
         self.assertEquals('myshaderfile.gplsp', loaded["shaders"])
 
+    def test_save_value_same_end_of_name_doesnt_overwrite(self):
+        name = "my_setting"
+        value = "my_setting"
+
+        unixSettings.save('my_setting', 'my_value')
+        unixSettings.save('setting', 'value')
+        self.assertEquals(unixSettings.load('my_setting'), 'my_value')
+        self.assertEquals(unixSettings.load('setting'), 'value')
+
+
 class TestUnixSettingsWithSeparator(unittest.TestCase):
     def test_load_empty_value_should_return_none(self):
         name = "I dont exists"

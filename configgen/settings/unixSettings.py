@@ -30,7 +30,7 @@ class UnixSettings():
 
     def save(self, name, value):
         os.system(
-            "sed -i \"s|{}\?{}{}=.*|{}{}={}{}|g\" {}".format(self.comment, name, self.separator, name,
+            "sed -i \"s|^{}\?{}{}=.*|{}{}={}{}|g\" {}".format(self.comment, name, self.separator, name,
                                                              self.separator, self.separator,
                                                              value, self.settingsFile))
         if self.load(name) is None:

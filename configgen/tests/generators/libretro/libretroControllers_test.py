@@ -36,7 +36,6 @@ class TestLibretroController(unittest.TestCase):
     def test_generate_simple_controller(self):
         config = libretroControllers.generateControllerConfig(basicController1)
         self.assertEquals(config['input_device'], '"Joypad1RealName"')
-        self.assertEquals(config['input_driver'], '"udev"')
         self.assertEquals(config['input_a_btn'], '10')
 
     def test_generate_ps3_controller_buttons(self):
@@ -45,7 +44,6 @@ class TestLibretroController(unittest.TestCase):
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_device'], '"p1controller"')
         self.assertEquals(config['input_device'], '"p1controller"')
-        self.assertEquals(config['input_driver'], '"udev"')
         self.assertEquals(config['input_select_btn'], '0')
         self.assertEquals(config['input_a_btn'], '13')
         self.assertEquals(config['input_start_btn'], '3')
@@ -61,7 +59,6 @@ class TestLibretroController(unittest.TestCase):
                                                              "p3controller", -1, 0, "p4controller")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_device'], '"p1controller"')
-        self.assertEquals(config['input_driver'], '"udev"')
         self.assertEquals(config['input_l_y_plus_axis'], '+1')
         self.assertEquals(config['input_l_y_minus_axis'], '-1')
         self.assertEquals(config['input_l_x_plus_axis'], '+0')
@@ -112,7 +109,6 @@ class TestLibretroController(unittest.TestCase):
                                                              "p3controller", -1, 0, "p4controller")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_device'], '"p1controller"')
-        self.assertEquals(config['input_driver'], '"udev"')
         self.assertEquals(config['input_r_y_plus_axis'], '+3')
         self.assertEquals(config['input_r_y_minus_axis'], '-3')
         self.assertEquals(config['input_r_x_plus_axis'], '+2')
