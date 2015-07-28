@@ -28,10 +28,11 @@ fbaHatToAxis = {'1': 'UP', '2': 'LR', '4': 'UD', '8': 'LR'}
 fbaspecials = {'start': 'QUIT', 'hotkey': 'HOTKEY'}
 
 
-def writeControllersConfig(system, controllers):
+def writeControllersConfig(system, rom, controllers):
     writeIndexes(controllers)
+    sixBtnConfig = is6btn(rom)
     for controller in controllers:
-        playerConfig = generateControllerConfig(controller, controllers[controller])
+        playerConfig = generateControllerConfig(controller, controllers[controller], sixBtnConfig)
         for input in playerConfig:
             fbaSettings.save(input, playerConfig[input])
 

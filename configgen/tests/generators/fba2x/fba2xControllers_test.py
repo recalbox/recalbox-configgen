@@ -93,7 +93,7 @@ class TestFba2xController(unittest.TestCase):
     def test_write_controller_config(self):
         controllers = controllersConfig.loadControllerConfig(2, PS3UUID, "p1controller", 1, PS3UUID, "p2controller", -1, PS3UUID,
                                                              "p3controller", -1, PS3UUID, "p4controller")
-        fba2xControllers.writeControllersConfig("fba", controllers)
+        fba2xControllers.writeControllersConfig("fba", "sf2.zip", controllers)
 
         self.assertEquals(self.fbaSettings.load('SDLID_1'), '2')
         self.assertEquals(self.fbaSettings.load('SDLID_2'), '1')

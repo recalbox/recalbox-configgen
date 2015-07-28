@@ -19,7 +19,7 @@ class Fba2xGenerator(Generator):
             # Copy original fba2x.cfg
             shutil.copyfile(recalboxFiles.fbaCustomOrigin, recalboxFiles.fbaCustom)
             #  Write controllers configuration files
-            fba2xControllers.writeControllersConfig(system, playersControllers)
+            fba2xControllers.writeControllersConfig(system, rom, playersControllers)
             # Write configuration to retroarchcustom.cfg
             fba2xConfig.writeFBAConfig(system)
 
