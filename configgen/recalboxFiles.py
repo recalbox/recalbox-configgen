@@ -7,6 +7,8 @@ recalboxConf = '/recalbox/share/system/recalbox.conf'
 retroarchRoot = '/recalbox/configs/retroarch'
 retroarchCustom = retroarchRoot + '/retroarchcustom.cfg'
 retroarchCustomOrigin = retroarchRoot + "/retroarchcustom.cfg.origin"
+retroarchCoreCustom  = retroarchRoot + "/cores/retroarch-core-options.cfg"
+
 retroarchBin = "retroarch"
 retroarchCores = "/usr/lib/libretro/"
 shadersRoot = "/recalbox/share/shaders/presets/"

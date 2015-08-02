@@ -9,12 +9,14 @@ from settings.unixSettings import UnixSettings
 import recalboxFiles
 
 libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
+coreSettings = UnixSettings(recalboxFiles.retroarchCoreCustom, separator=' ')
 
 settingsRoot = recalboxFiles.retroarchRoot
 
 # Map an emulationstation button name to the corresponding retroarch name
 retroarchbtns = {'a': 'a', 'b': 'b', 'x': 'x', 'y': 'y', \
                  'pageup': 'l', 'pagedown': 'r', 'l2': 'l2', 'r2': 'r2', \
+                 'l3': 'l3', 'r3': 'r3', \
                  'start': 'start', 'select': 'select'}
 
 # Map an emulationstation direction to the corresponding retroarch
@@ -56,6 +58,7 @@ def writeControllerConfig(controller, playerIndex, system):
         for key in generatedConfig:
             f.write('{} = {}\n'.format(key, generatedConfig[key]))
     libretroSettings.save('input_player{}_analog_dpad_mode'.format(playerIndex), getAnalogMode(controller, system))
+    coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
 
 
 # Create a configuration file for a given controller
@@ -103,7 +106,7 @@ def getConfigValue(input):
 
 # Write indexes for configured controllers
 def writeIndexes(controllers):
-    for player in range(1,5):
+    for player in range(1, 5):
         libretroSettings.disable('input_player{}_joypad_index'.format(player))
     for player in controllers:
         controller = controllers[player]
@@ -118,3 +121,10 @@ def getAnalogMode(controller, system):
                 if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
                     return '1'
     return '0'
+
+def getAnalogCoreMode(controller):
+    for dirkey in retroarchdirs:
+        if dirkey in controller.inputs:
+            if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
+                return 'analog'
+    return 'standard'
