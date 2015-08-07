@@ -52,7 +52,7 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    configFile = settingsRoot + '/inputs/' + controller.realName + '.cfg'
+    configFile = settingsRoot + '/inputs/' + controller.guid + '.cfg'
     generatedConfig = generateControllerConfig(controller)
     with open(configFile, 'w+') as f:
         for key in generatedConfig:
