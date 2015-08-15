@@ -58,7 +58,7 @@ def writeControllerConfig(controller, playerIndex, system):
         for key in generatedConfig:
             f.write('{} = {}\n'.format(key, generatedConfig[key]))
     libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1), getAnalogMode(controller, system))
-    coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
+    #coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
 
 
 # Create a configuration file for a given controller
@@ -115,11 +115,11 @@ def writeIndexes(controllers):
 
 # return the retroarch analog_dpad_mode
 def getAnalogMode(controller, system):
-    if system.name != 'psx':
-        for dirkey in retroarchdirs:
-            if dirkey in controller.inputs:
-                if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
-                    return '1'
+    #if system.name != 'psx':
+    for dirkey in retroarchdirs:
+        if dirkey in controller.inputs:
+            if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
+                return '1'
     return '0'
 
 def getAnalogCoreMode(controller):
