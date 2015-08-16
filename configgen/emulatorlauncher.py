@@ -8,6 +8,7 @@ from Emulator import Emulator
 import generators
 from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
+from generators.mupen.mupenGenerator import MupenGenerator
 
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
@@ -34,7 +35,8 @@ args = parser.parse_args()
 
 generators = {
     'libretro': LibretroGenerator(),
-    'fba2x': Fba2xGenerator()
+    'fba2x': Fba2xGenerator(),
+    'n64': MupenGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -42,7 +44,7 @@ emulators = dict()
 # Nintendo
 emulators["snes"] = Emulator(name='snes', emulator='libretro', core='pocketsnes')
 emulators["nes"] = Emulator(name='nes', emulator='libretro', core='fceunext')
-#emulators["n64"] = Emulator(name='n64', emulator='mupen64plus')
+emulators["n64"] = Emulator(name='n64', emulator='mupen64plus', core='n64')
 emulators["gba"] = Emulator(name='gba', emulator='libretro', core='gpsp')
 emulators["gb"] = Emulator(name='gb', emulator='libretro', core='gambatte')
 emulators["gbc"] = Emulator(name='gbc', emulator='libretro', core='gambatte')

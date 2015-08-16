@@ -7,6 +7,7 @@ sys.path.append(
 
 from settings.unixSettings import UnixSettings
 import recalboxFiles
+import utils.slugify as slugify
 
 libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
 coreSettings = UnixSettings(recalboxFiles.retroarchCoreCustom, separator=' ')
@@ -52,13 +53,14 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    configFile = settingsRoot + '/inputs/' + controller.guid + '.cfg'
+    configFile = settingsRoot + '/inputs/' + controller.guid + '_' + slugify.slugify(controller.name.decode('unicode-escape')) + '.cfg'
     generatedConfig = generateControllerConfig(controller)
     with open(configFile, 'w+') as f:
         for key in generatedConfig:
             f.write('{} = {}\n'.format(key, generatedConfig[key]))
-    libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1), getAnalogMode(controller, system))
-    #coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
+    libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1),
+                          getAnalogMode(controller, system))
+    # coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
 
 
 # Create a configuration file for a given controller
@@ -115,12 +117,13 @@ def writeIndexes(controllers):
 
 # return the retroarch analog_dpad_mode
 def getAnalogMode(controller, system):
-    #if system.name != 'psx':
+    # if system.name != 'psx':
     for dirkey in retroarchdirs:
         if dirkey in controller.inputs:
             if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
                 return '1'
     return '0'
+
 
 def getAnalogCoreMode(controller):
     for dirkey in retroarchdirs:

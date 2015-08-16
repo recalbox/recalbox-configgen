@@ -19,3 +19,5 @@ fbaRoot = '/recalbox/configs/fba/'
 fbaCustom= fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin= fbaRoot + 'fba2x.cfg.origin'
 fba2xBin='/usr/bin/fba2x'
+
+mupenCustom = "/recalbox/configs/mupen64/mupen64plus.cfg"
