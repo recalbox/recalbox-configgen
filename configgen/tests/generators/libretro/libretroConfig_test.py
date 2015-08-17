@@ -27,7 +27,7 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../r
 
 
 
-libretroSettings = unixSettings.UnixSettings(retroarchcustomFile)
+libretroSettings = unixSettings.UnixSettings(retroarchcustomFile, ' ' )
 
 # test Systems
 snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2', rewind='false', emulator='libretro')

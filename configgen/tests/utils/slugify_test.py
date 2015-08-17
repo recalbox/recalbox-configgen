@@ -15,6 +15,8 @@ class SlugifyUtilTest(unittest.TestCase):
 
     def test_slugify_horrible_name(self):
         self.assertEquals(slugify.slugify(u'reallt BAD NAME ^ç--(23àçè-'), "reallt-bad-name-c-23ace")
+    def test_slugify_name_with_int(self):
+        self.assertEquals(slugify.slugify(u'Xbox Gamepad (userspace driver) #2'), "xbox-gamepad-userspace-driver-2")
 
 
 if __name__ == '__main__':

@@ -21,7 +21,7 @@ controllersConfig.esInputs = os.path.abspath(os.path.join(os.path.dirname(__file
 
 # Test objects
 basicInputs1 = {'a': controllersConfig.Input("a", "button", "10", "1"),'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
-basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", "2", "Joypad1RealName", basicInputs1)
+basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", '1', "2", "Joypad1RealName", basicInputs1)
 PS3UUID = "060000004c0500006802000000010000"
 GPIOUUID = "15000000010000000100000000010000"
 MICROSOFT = "030000005e0400008e02000014010000"

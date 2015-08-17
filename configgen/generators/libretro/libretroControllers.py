@@ -53,42 +53,47 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    configFile = settingsRoot + '/inputs/' + controller.guid + '_' + slugify.slugify(controller.name.decode('unicode-escape')) + '.cfg'
+    configFile = settingsRoot + '/inputs/' + controller.guid + '_' + slugify.slugify(
+        controller.realName.decode('unicode-escape')) + '.cfg'
     generatedConfig = generateControllerConfig(controller)
-    with open(configFile, 'w+') as f:
-        for key in generatedConfig:
-            f.write('{} = {}\n'.format(key, generatedConfig[key]))
+    for key in generatedConfig:
+        libretroSettings.save(key, generatedConfig[key])
+
     libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1),
                           getAnalogMode(controller, system))
     # coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
 
 
+# input_player16_down_btn
 # Create a configuration file for a given controller
 def generateControllerConfig(controller):
     config = dict()
-    config['input_device'] = '"%s"' % controller.realName
+    # config['input_device'] = '"%s"' % controller.realName
     for btnkey in retroarchbtns:
         btnvalue = retroarchbtns[btnkey]
         if btnkey in controller.inputs:
             input = controller.inputs[btnkey]
-            config['input_%s_%s' % (btnvalue, typetoname[input.type])] = getConfigValue(input)
+            config['input_player%s_%s_%s' % (controller.player, btnvalue, typetoname[input.type])] = getConfigValue(
+                input)
     for dirkey in retroarchdirs:
         dirvalue = retroarchdirs[dirkey]
         if dirkey in controller.inputs:
             input = controller.inputs[dirkey]
-            config['input_%s_%s' % (dirvalue, typetoname[input.type])] = getConfigValue(input)
+            config['input_player%s_%s_%s' % (controller.player, dirvalue, typetoname[input.type])] = getConfigValue(
+                input)
     for jskey in retroarchjoysticks:
         jsvalue = retroarchjoysticks[jskey]
         if jskey in controller.inputs:
             input = controller.inputs[jskey]
-            config['input_%s_minus_axis' % jsvalue] = '-%s' % input.id
-            config['input_%s_plus_axis' % jsvalue] = '+%s' % input.id
-    for specialkey in retroarchspecials:
-        specialvalue = retroarchspecials[specialkey]
-        if specialkey in controller.inputs:
-            input = controller.inputs[specialkey]
-            config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
-    return config
+            config['input_player%s_%s_minus_axis' % (controller.player, jsvalue)] = '-%s' % input.id
+            config['input_player%s_%s_plus_axis' % (controller.player, jsvalue)] = '+%s' % input.id
+    if controller.player == '1' :
+        for specialkey in retroarchspecials:
+            specialvalue = retroarchspecials[specialkey]
+            if specialkey in controller.inputs:
+                input = controller.inputs[specialkey]
+                config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+        return config
 
 
 # Returns the value to write in retroarch config file, depending on the type

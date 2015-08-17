@@ -37,7 +37,7 @@ n64 = Emulator(name='n64', videomode='4', core='n64', shaders='', ratio='auto', 
 
 # test inputs
 basicInputs1 = {'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
-basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", "0", "Joypad1RealName", basicInputs1)
+basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", '1', "0", "Joypad1RealName", basicInputs1)
 basicControllers = dict()
 basicControllers['1'] = basicController1
 mupenGen = MupenGenerator()
