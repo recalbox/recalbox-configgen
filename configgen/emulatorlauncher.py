@@ -36,7 +36,7 @@ args = parser.parse_args()
 generators = {
     'libretro': LibretroGenerator(),
     'fba2x': Fba2xGenerator(),
-    'n64': MupenGenerator()
+    'mupen64plus': MupenGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
