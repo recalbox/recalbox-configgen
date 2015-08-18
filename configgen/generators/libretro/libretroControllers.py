@@ -93,7 +93,7 @@ def generateControllerConfig(controller):
             if specialkey in controller.inputs:
                 input = controller.inputs[specialkey]
                 config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
-        return config
+    return config
 
 
 # Returns the value to write in retroarch config file, depending on the type
