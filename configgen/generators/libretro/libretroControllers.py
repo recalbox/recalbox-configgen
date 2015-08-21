@@ -61,11 +61,9 @@ def writeControllerConfig(controller, playerIndex, system):
 
     libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1),
                           getAnalogMode(controller, system))
-    # coreSettings.save('pcsx_rearmed_pad{}type'.format(playerIndex), getAnalogCoreMode(controller))
 
 
-# input_player16_down_btn
-# Create a configuration file for a given controller
+# Create a configuration for a given controller
 def generateControllerConfig(controller):
     config = dict()
     # config['input_device'] = '"%s"' % controller.realName

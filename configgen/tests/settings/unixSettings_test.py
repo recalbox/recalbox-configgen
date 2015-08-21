@@ -98,6 +98,18 @@ class TestUnixSettings(unittest.TestCase):
         self.assertEquals(unixSettings.load('setting'), 'value')
 
 
+    def test_disable_all(self):
+        unixSettings.save("toDisable_1", "1")
+        unixSettings.save("toDisable_2", "2")
+        unixSettings.save("toDisable_3", "3")
+        loaded = unixSettings.load("toDisable_1")
+        self.assertEquals("1", loaded)
+        unixSettings.disableAll("toDisable")
+        self.assertEquals(unixSettings.load("toDisable_1"), None)
+        self.assertEquals(unixSettings.load("toDisable_2"), None)
+        self.assertEquals(unixSettings.load("toDisable_3"), None)
+
+
 class TestUnixSettingsWithSeparator(unittest.TestCase):
     def test_load_empty_value_should_return_none(self):
         name = "I dont exists"
