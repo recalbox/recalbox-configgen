@@ -39,12 +39,18 @@ retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot
 
 # Write a configuration for a specified controller
 def writeControllersConfig(system, controllers):
-    writeIndexes(controllers)
+    cleanControllerConfig(controllers)
     for controller in controllers:
         writeControllerConfig(controllers[controller], controller, system)
     writeHotKeyConfig(controllers)
 
+# remove all controller configurations
+def cleanControllerConfig(controllers):
+    libretroSettings.disableAll('input_player')
+    for specialkey in retroarchspecials:
+        libretroSettings.disableAll('input_{}'.format(retroarchspecials[specialkey]))
 
+# Write the hotkey for player 1
 def writeHotKeyConfig(controllers):
     if '1' in controllers:
         if 'hotkey' in controllers['1'].inputs:
@@ -53,12 +59,11 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    configFile = settingsRoot + '/inputs/' + controller.guid + '_' + slugify.slugify(
-        controller.realName.decode('unicode-escape')) + '.cfg'
     generatedConfig = generateControllerConfig(controller)
     for key in generatedConfig:
         libretroSettings.save(key, generatedConfig[key])
 
+    libretroSettings.save('input_player{}_joypad_index'.format(playerIndex), controller.index)
     libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1),
                           getAnalogMode(controller, system))
 
@@ -85,7 +90,7 @@ def generateControllerConfig(controller):
             input = controller.inputs[jskey]
             config['input_player%s_%s_minus_axis' % (controller.player, jsvalue)] = '-%s' % input.id
             config['input_player%s_%s_plus_axis' % (controller.player, jsvalue)] = '+%s' % input.id
-    if controller.player == '1' :
+    if controller.player == '1':
         for specialkey in retroarchspecials:
             specialvalue = retroarchspecials[specialkey]
             if specialkey in controller.inputs:
@@ -109,15 +114,6 @@ def getConfigValue(input):
         return input.id
 
 
-# Write indexes for configured controllers
-def writeIndexes(controllers):
-    for player in range(1, 5):
-        libretroSettings.disable('input_player{}_joypad_index'.format(player))
-    for player in controllers:
-        controller = controllers[player]
-        libretroSettings.save('input_player{}_joypad_index'.format(player), controller.index)
-
-
 # return the retroarch analog_dpad_mode
 def getAnalogMode(controller, system):
     # if system.name != 'psx':
@@ -127,7 +123,7 @@ def getAnalogMode(controller, system):
                 return '1'
     return '0'
 
-
+# return the playstation analog mode for a controller
 def getAnalogCoreMode(controller):
     for dirkey in retroarchdirs:
         if dirkey in controller.inputs:
