@@ -107,5 +107,16 @@ class TestFba2xController(unittest.TestCase):
     def test_6btnGamesIsTrueFor6BtnGame(self):
         self.assertTrue(fba2xControllers.is6btn("/recalbox/share/sf2.zip"))
 
+
+    def test_generate_only_axis_controller_doesnt_put_zero_in_directions(self):
+        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0,
+                                                             "p3controller", -1, 0, "p4controller")
+        config = fba2xControllers.generateControllerConfig("1", controllers["1"], True)
+        self.assertFalse('RIGHT_1' in config)
+        self.assertFalse('LEFT_1' in config)
+        self.assertFalse('UP_1' in config)
+        self.assertFalse('DOWN_1' in config)
+
+
 if __name__ == '__main__':
     unittest.main()
