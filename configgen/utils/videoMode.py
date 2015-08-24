@@ -3,7 +3,8 @@ import os
 
 # Set a specific video mode
 def setVideoMode(videomode):
-    os.system(createVideoModeLine(videomode))
+    if videomode != 'default':
+        os.system(createVideoModeLine(videomode))
 
 def createVideoModeLine(videoMode):
     return "tvservice -e '{}'".format(videoMode)
