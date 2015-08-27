@@ -21,7 +21,7 @@ def defined(key, dict):
     return key in dict and isinstance(dict[key], str) and len(dict[key]) > 0
 
 
-ratioIndexes = {'16/9': '1', '4/3': '0'}
+ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '1'}
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -48,6 +48,8 @@ def createLibretroConfig(system):
         retroarchConfig['video_aspect_ratio_auto'] = 'false'
     else:
         retroarchConfig['video_aspect_ratio_auto'] = 'true'
+        retroarchConfig['aspect_ratio_index'] = ''
+
 
     if enabled('rewind', recalboxConfig):
         retroarchConfig['rewind_enable'] = 'true'
