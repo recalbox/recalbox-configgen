@@ -43,7 +43,7 @@ def writeControllersConfig(system, controllers):
     for controller in controllers:
         writeControllerConfig(controllers[controller], controller, system)
     writeHotKeyConfig(controllers)
-    if 'inputdriver' not in system.config:
+    if ('inputdriver' not in system.config) or (system.config['inputdriver'] == 'auto'):
         system.config['inputdriver'] = getInputDriver(controllers)
 
 

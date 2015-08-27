@@ -92,7 +92,13 @@ class TestLibretroGenerator(unittest.TestCase):
         self.assertEquals(libretroConfig.libretroSettings.load('input_joypad_driver'), 'udev')
 
 
+    def test_inputdriver_none_specified(self):
+        command = libretroGen.generate(self.snes, rom, self.sdl2controllers)
+        self.assertEquals(libretroConfig.libretroSettings.load('input_joypad_driver'), 'sdl2')
+
+
     def test_inputdriver_auto(self):
+        self.snes.config['inputdriver'] = 'auto'
         command = libretroGen.generate(self.snes, rom, self.sdl2controllers)
         self.assertEquals(libretroConfig.libretroSettings.load('input_joypad_driver'), 'sdl2')
         # def test_copy_original_file(self):
