@@ -43,6 +43,9 @@ def writeControllersConfig(system, controllers):
     for controller in controllers:
         writeControllerConfig(controllers[controller], controller, system)
     writeHotKeyConfig(controllers)
+    if 'inputdriver' not in system.config:
+        system.config['inputdriver'] = getInputDriver(controllers)
+
 
 # remove all controller configurations
 def cleanControllerConfig(controllers):
@@ -130,3 +133,16 @@ def getAnalogCoreMode(controller):
             if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
                 return 'analog'
     return 'standard'
+
+
+# find the driver for controllers
+# Write a configuration for a specified controller
+def getInputDriver(controllers):
+    for controller in controllers:
+        for sdl2name in sdl2driverControllers:
+            if controllers[controller].realName == sdl2name:
+                return 'sdl2'
+    return 'udev'
+
+
+sdl2driverControllers = ('szmy-power Ltd.  Joypad  ','Bluetooth Wireless Controller   ')

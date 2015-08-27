@@ -40,7 +40,7 @@ class TestControllersConfig(unittest.TestCase):
         self.assertEquals(players["2"].realName, "p2controller")
         self.assertEquals(players["3"].realName, "p3controller")
         self.assertEquals(players["4"].realName, "p4controller")
-        self.assertEquals(players["3"].name, players["1"].name)
+        self.assertEquals(players["3"].configName, players["1"].configName)
 
     def test_associate_controllers_with_players_with_differentuuid(self):
         uuid1 = "060000004c0500006802000000010000"

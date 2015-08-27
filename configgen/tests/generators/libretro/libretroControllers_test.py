@@ -11,6 +11,7 @@ sys.path.append(
 
 import generators.libretro.libretroControllers as libretroControllers
 import controllersConfig as controllersConfig
+from controllersConfig import Controller
 from Emulator import Emulator
 from settings.unixSettings import UnixSettings
 
@@ -37,7 +38,7 @@ libretroControllers.coreSettings = UnixSettings(RETROARCH_CORE_CONFIG, separator
 # Test objects
 basicInputs1 = {'a': controllersConfig.Input("a", "button", "10", "1"),
                 'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
-basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", basicInputs1)
+basicController1 = Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", basicInputs1)
 PS3UUID = "060000004c0500006802000000010000"
 GPIOUUID = "15000000010000000100000000010000"
 snes = Emulator('snes', 'snes', 'libretro')
@@ -155,6 +156,39 @@ class TestLibretroDualAnalogPSone(unittest.TestCase):
         val = libretroControllers.getAnalogCoreMode(controllers['1'])
         self.assertEquals("analog", val)
 
+class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
+    def test_udev_by_default(self):
+        controllers = dict()
+        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", dict())
+        driver = libretroControllers.getInputDriver(controllers)
+        self.assertEquals("udev", driver)
+
+class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
+    def test_udev_by_default(self):
+        controllers = dict()
+        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", dict())
+        driver = libretroControllers.getInputDriver(controllers)
+        self.assertEquals("udev", driver)
+
+
+    def test_sdl2_for_nes30pro(self):
+        controllers = dict()
+        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "Bluetooth Wireless Controller   ", dict())
+        driver = libretroControllers.getInputDriver(controllers)
+        self.assertEquals("sdl2", driver)
+
+
+    def test_sdl2_for_fc30pro(self):
+        controllers = dict()
+        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "szmy-power Ltd.  Joypad  ", dict())
+        driver = libretroControllers.getInputDriver(controllers)
+        self.assertEquals("sdl2", driver)
+
+    def test_sdl2_for_fc30pro(self):
+        controllers = dict()
+        controllers['1'] = Controller("contr1", "joypad", "GUID1", '1',  "0", "szmy-power Ltd.  Joypad  ", dict())
+        driver = libretroControllers.getInputDriver(controllers)
+        self.assertEquals("sdl2", driver)
 
 if __name__ == '__main__':
     unittest.main()

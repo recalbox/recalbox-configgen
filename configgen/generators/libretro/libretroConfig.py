@@ -54,6 +54,12 @@ def createLibretroConfig(system):
     else:
         retroarchConfig['rewind_enable'] = 'false'
 
+
+    if defined('inputdriver', recalboxConfig):
+        retroarchConfig['input_joypad_driver'] = recalboxConfig['inputdriver']
+    else:
+        retroarchConfig['input_joypad_driver'] = 'udev'
+
     return retroarchConfig
 
 def writeLibretroConfigToFile(config):

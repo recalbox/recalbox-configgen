@@ -103,5 +103,17 @@ class TestLibretroConfig(unittest.TestCase):
         self.assertEquals(libretroSettings.load('video_aspect_ratio_auto'), 'false')
 
 
+
+    def test_driver_udev_default(self):
+        nes.config['inputdriver'] = None
+        retroconf = libretroConfig.createLibretroConfig(nes)
+        self.assertEquals(retroconf['input_joypad_driver'], 'udev')
+
+    def test_driver_forced_sdl(self):
+        nes.config['inputdriver'] = 'sdl2'
+        retroconf = libretroConfig.createLibretroConfig(nes)
+        self.assertEquals(retroconf['input_joypad_driver'], 'sdl2')
+
+
 if __name__ == '__main__':
     unittest.main()
