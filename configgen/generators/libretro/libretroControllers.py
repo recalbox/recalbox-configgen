@@ -139,10 +139,11 @@ def getAnalogCoreMode(controller):
 # Write a configuration for a specified controller
 def getInputDriver(controllers):
     for controller in controllers:
-        for sdl2name in sdl2driverControllers:
-            if controllers[controller].realName == sdl2name:
+        for sdlguid in sdl2driverControllers:
+            if controllers[controller].guid == sdlguid:
                 return 'sdl2'
     return 'udev'
 
-
-sdl2driverControllers = ('szmy-power Ltd.  Joypad  ','Bluetooth Wireless Controller   ')
+# list of controllers that works only with sdl2 driver
+# the key is the guid, the value is just for info
+sdl2driverControllers = {'030000003512000012ab000010010000': 'nes30','05000000103800000900000000010000': 'FC30pro'}

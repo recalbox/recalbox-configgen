@@ -54,7 +54,7 @@ class TestLibretroGenerator(unittest.TestCase):
         self.basicInputs1 = {'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
         self.basicController1 = controllersConfig.Controller("contr1", "joypad", "GUID1", 1,0, "Joypad1RealName", self.basicInputs1)
 
-        self.sdl2controler = controllersConfig.Controller("contr1", "joypad", "GUID1", 2,1, "Bluetooth Wireless Controller   ", self.basicInputs1)
+        self.sdl2controler = controllersConfig.Controller("contr1", "joypad", "030000003512000012ab000010010000", 2,1, "Bluetooth Wireless Controller   ", self.basicInputs1)
         self.controllers = dict()
         self.controllers['1'] = self.basicController1
 

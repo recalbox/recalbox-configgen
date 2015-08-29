@@ -156,12 +156,6 @@ class TestLibretroDualAnalogPSone(unittest.TestCase):
         val = libretroControllers.getAnalogCoreMode(controllers['1'])
         self.assertEquals("analog", val)
 
-class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
-    def test_udev_by_default(self):
-        controllers = dict()
-        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", dict())
-        driver = libretroControllers.getInputDriver(controllers)
-        self.assertEquals("udev", driver)
 
 class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
     def test_udev_by_default(self):
@@ -173,22 +167,17 @@ class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
 
     def test_sdl2_for_nes30pro(self):
         controllers = dict()
-        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "Bluetooth Wireless Controller   ", dict())
+        controllers['1'] =  Controller("contr1", "joypad", "030000003512000012ab000010010000", '1',  "0", "realname", dict())
         driver = libretroControllers.getInputDriver(controllers)
         self.assertEquals("sdl2", driver)
 
 
     def test_sdl2_for_fc30pro(self):
         controllers = dict()
-        controllers['1'] =  Controller("contr1", "joypad", "GUID1", '1',  "0", "szmy-power Ltd.  Joypad  ", dict())
+        controllers['1'] =  Controller("contr1", "joypad", "05000000103800000900000000010000", '1',  "0", "realname", dict())
         driver = libretroControllers.getInputDriver(controllers)
         self.assertEquals("sdl2", driver)
 
-    def test_sdl2_for_fc30pro(self):
-        controllers = dict()
-        controllers['1'] = Controller("contr1", "joypad", "GUID1", '1',  "0", "szmy-power Ltd.  Joypad  ", dict())
-        driver = libretroControllers.getInputDriver(controllers)
-        self.assertEquals("sdl2", driver)
 
 if __name__ == '__main__':
     unittest.main()

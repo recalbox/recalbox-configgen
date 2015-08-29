@@ -10,6 +10,6 @@ def runCommand(command):
         videoMode.setVideoMode(command.videomode)
 
     os.system(command.commandline)
-    
+
     if command.videoMode != 'default':
         videoMode.setPreffered()
