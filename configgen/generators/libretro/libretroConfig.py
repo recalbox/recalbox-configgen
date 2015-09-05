@@ -21,7 +21,7 @@ def defined(key, dict):
     return key in dict and isinstance(dict[key], str) and len(dict[key]) > 0
 
 
-ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '1'}
+ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
