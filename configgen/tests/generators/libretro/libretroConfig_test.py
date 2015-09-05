@@ -34,6 +34,8 @@ snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio
 nes = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='', ratio='16/9', smooth='1', rewind='false', emulator='libretro')
 nes43 = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='4/3', smooth='1', rewind='false', emulator='libretro')
 nesauto = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='auto', smooth='1', rewind='true', emulator='libretro')
+nes43 = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='4/3', smooth='1', rewind='false', emulator='libretro')
+wswan = Emulator(name='wswan', emulator='libretro', core='mednafen_wswan', ratio='16/10')
 
 
 class TestLibretroConfig(unittest.TestCase):
@@ -103,6 +105,11 @@ class TestLibretroConfig(unittest.TestCase):
         self.assertEquals(libretroSettings.load('video_aspect_ratio_auto'), 'false')
 
 
+    def test_write_config_to_file_new1610(self):
+        retroconf = libretroConfig.createLibretroConfig(wswan)
+        libretroConfig.writeLibretroConfigToFile(retroconf)
+        self.assertEquals(libretroSettings.load('aspect_ratio_index'), '2')
+        self.assertEquals(libretroSettings.load('video_aspect_ratio_auto'), 'false')
 
     def test_driver_udev_default(self):
         nes.config['inputdriver'] = None

@@ -96,8 +96,14 @@ if __name__ == '__main__':
         system = emulators[systemName]
         # Get the default configuration of the core
         systemSettings = system.config
+
         # Override the config with the global one
-        systemSettings.update(recalSettings.loadAll('global'))
+        globalSettings = recalSettings.loadAll('global')
+        # Special case of auto ratio
+        if 'ratio' in globalSettings and globalSettings['ratio'] == 'auto':
+            del globalSettings['ratio']
+        systemSettings.update(globalSettings)
+
         # Override the config with the core specific one
         systemSettings.update(recalSettings.loadAll(system.name))
 
