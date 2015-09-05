@@ -146,4 +146,4 @@ def getInputDriver(controllers):
 
 # list of controllers that works only with sdl2 driver
 # the key is the guid, the value is just for info
-sdl2driverControllers = {'030000003512000012ab000010010000': 'nes30','05000000103800000900000000010000': 'FC30pro'}
+sdl2driverControllers = {'030000003512000012ab000010010000': 'nes30','05000000103800000900000000010000': 'FC30pro', '05000000102800000900000000010000': 'FC30'}
