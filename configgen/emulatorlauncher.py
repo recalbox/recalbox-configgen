@@ -9,6 +9,7 @@ import generators
 from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
+from generators.configManager import ConfigManager
 
 import controllersConfig as controllers
 import settings.recalboxSettings as recalSettings
@@ -94,19 +95,9 @@ if __name__ == '__main__':
     # A generator will configure its emulator, and return a command
     if systemName in emulators:
         system = emulators[systemName]
-        # Get the default configuration of the core
-        systemSettings = system.config
+        systemManager = ConfigManager()
 
-        # Override the config with the global one
-        globalSettings = recalSettings.loadAll('global')
-        # Special case of auto ratio
-        if 'ratio' in globalSettings and globalSettings['ratio'] == 'auto':
-            del globalSettings['ratio']
-        systemSettings.update(globalSettings)
-
-        # Override the config with the core specific one
-        systemSettings.update(recalSettings.loadAll(system.name))
-
+        systemManager.configure(system)
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
         runner.runCommand(command)
         time.sleep(1)
