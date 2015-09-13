@@ -167,14 +167,14 @@ class TestLibretroGeneratorInputDriverTest(unittest.TestCase):
 
     def test_sdl2_for_nes30pro(self):
         controllers = dict()
-        controllers['1'] =  Controller("contr1", "joypad", "030000003512000012ab000010010000", '1',  "0", "realname", dict())
+        controllers['1'] =  Controller("contr1", "joypad", "030000003512000012ab000010010000", '1',  "0", "Bluetooth Wireless Controller ", dict())
         driver = libretroControllers.getInputDriver(controllers)
         self.assertEquals("sdl2", driver)
 
 
     def test_sdl2_for_fc30pro(self):
         controllers = dict()
-        controllers['1'] =  Controller("contr1", "joypad", "05000000103800000900000000010000", '1',  "0", "realname", dict())
+        controllers['1'] =  Controller("contr1", "joypad", "05000000103800000900000000010000", '1',  "0", "szmy-power Ltd. Joypad ", dict())
         driver = libretroControllers.getInputDriver(controllers)
         self.assertEquals("sdl2", driver)
 
