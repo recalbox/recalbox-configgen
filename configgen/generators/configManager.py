@@ -26,7 +26,8 @@ class ConfigManager():
 
 
     def updateShaders(self, system, shaderSet):
-        shaderfile = recalboxFiles.shaderPresetRoot + "/" + shaderSet + ".cfg"
-        systemShader = UnixSettings(shaderfile).load(system.name)
-        if systemShader != None:
-            system.config['shaders'] = systemShader
+        if shaderSet != None and shaderSet != "none":
+            shaderfile = recalboxFiles.shaderPresetRoot + "/" + shaderSet + ".cfg"
+            systemShader = UnixSettings(shaderfile).load(system.name)
+            if systemShader != None:
+                system.config['shaders'] = systemShader

@@ -36,6 +36,7 @@ class ConfigManagerTest(unittest.TestCase):
         self.manager.updateConfiguration(self.wswan, globalConf)
         self.assertEquals(self.wswan.config['shaders'], 'myshaders')
 
+
     def test_autoRatio(self):
         globalConf = {'ratio':'auto'}
         self.manager.updateConfiguration(self.snes, globalConf)
@@ -52,9 +53,13 @@ class ConfigManagerTest(unittest.TestCase):
 
 
     def test_specificShaderOverrideglobalShaderSet(self):
-        globalConf = {'shaderset':'scanlines'}
         self.manager.configure(self.snes)
         self.assertEquals(self.snes.config['shaders'], 'myshaderfile.gplsp')
+
+
+    def test_shaderSetNone(self):
+        self.manager.updateShaders(self.wswan, "none")
+        self.assertEquals(self.wswan.config['shaders'], 'defaultshaders')
 
     def testNoShaderSetInConfig(self):
         pass
