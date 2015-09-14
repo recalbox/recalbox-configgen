@@ -36,7 +36,7 @@ hatstoname = {'1': 'up', '2': 'right', '4': 'down', '8': 'left'}
 retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot', \
                      'b': 'menu_toggle', 'start': 'exit_emulator', 'up': 'state_slot_increase', \
                      'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward', \
-                      'l2': 'input_shader_prev', 'r2': 'input_shader_next'}
+                      'l2': 'shader_prev', 'r2': 'shader_next'}
 
 # Write a configuration for a specified controller
 def writeControllersConfig(system, controllers):
