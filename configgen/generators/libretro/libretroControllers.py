@@ -147,4 +147,4 @@ def getInputDriver(controllers):
 
 # list of controllers that works only with sdl2 driver
 # the key is the guid, the value is just for info
-sdl2driverControllers = ['Bluetooth Wireless Controller', 'szmy-power Ltd. Joypad']
+sdl2driverControllers = ['Bluetooth Wireless Controller', 'szmy-power']
