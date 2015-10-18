@@ -82,13 +82,16 @@ if __name__ == '__main__':
     parser.add_argument("-p4name", help="player4 controller name", type=str, required=False)
     parser.add_argument("-system", help="select the system to launch", type=str, required=True)
     parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
+    parser.add_argument("-demo", help="mode demo", type=bool, required=False)
 
     args = parser.parse_args()
 
-    # Read the controller configuration
-    playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid,
-                                                          args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index,
-                                                          args.p4guid, args.p4name)
+    playersControllers = dict()
+    if not args.demo:
+        # Read the controller configuration
+        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid,
+                                                              args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index,
+                                                              args.p4guid, args.p4name)
 
     systemName = args.system
 
