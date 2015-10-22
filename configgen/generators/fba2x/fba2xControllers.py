@@ -29,6 +29,7 @@ fbaspecials = {'start': 'QUIT', 'hotkey': 'HOTKEY'}
 
 
 def writeControllersConfig(system, rom, controllers):
+    cleanControllerConfig(controllers)
     writeIndexes(controllers)
     sixBtnConfig = is6btn(rom)
     for controller in controllers:
@@ -36,6 +37,16 @@ def writeControllersConfig(system, rom, controllers):
         for input in playerConfig:
             fbaSettings.save(input, playerConfig[input])
 
+# remove all controller configurations
+def cleanControllerConfig(controllers):
+    for key in fba6bnts:
+        fbaSettings.disableAll(fba6bnts[key])
+    for key in fbadirs:
+        fbaSettings.disableAll(fbadirs[key])
+    for key in fbaaxis:
+        fbaSettings.disableAll(fbaaxis[key])
+    for key in fbaspecials:
+        fbaSettings.disableAll(fbaspecials[key])
 
 # Create a configuration file for a given controller
 def generateControllerConfig(player, controller, special6=False):
