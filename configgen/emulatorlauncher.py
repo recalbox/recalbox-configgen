@@ -44,7 +44,7 @@ emulators["sega32x"] = Emulator(name='sega32x', emulator='libretro', core='picod
 emulators["segacd"] = Emulator(name='segacd', emulator='libretro', core='picodrive')
 # Arcade
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
-emulators["mame"] = Emulator(name='mame', emulator='libretro', core='imame4all')
+emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 emulators["fbalibretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
 #
