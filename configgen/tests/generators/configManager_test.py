@@ -5,7 +5,7 @@ import unittest
 import shutil
 import controllersConfig
 import time
-import settings.unixSettings as unixSettings
+from settings.unixSettings import UnixSettings
 import generators
 from generators.configManager import ConfigManager
 from Emulator import Emulator
@@ -19,6 +19,7 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../reso
 recalboxConf = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/recalbox.conf"))
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/recalbox.conf.origin")), \
                 recalboxConf)
+
 
 
 class ConfigManagerTest(unittest.TestCase):
@@ -60,6 +61,20 @@ class ConfigManagerTest(unittest.TestCase):
     def test_shaderSetNone(self):
         self.manager.updateShaders(self.wswan, "none")
         self.assertEquals(self.wswan.config['shaders'], 'defaultshaders')
+
+    def test_menues_change_specials_entry(self):
+        self.manager.configure(self.wswan)
+        self.assertEquals(self.wswan.config['specials'], 'default')
+
+    def test_specials_entry(self):
+        UnixSettings(recalboxConf).save('system.es.menu', 'default')
+        self.manager.configure(self.wswan)
+        self.assertEquals(self.wswan.config['specials'], 'default')
+
+    def test_menues_change_specials_entry(self):
+        UnixSettings(recalboxConf).save('system.es.menu', 'none')
+        self.manager.configure(self.wswan)
+        self.assertEquals(self.wswan.config['specials'], 'none')
 
     def testNoShaderSetInConfig(self):
         pass

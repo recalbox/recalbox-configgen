@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# First draft of emulator launcher python revision
-
 import argparse
 
 from Emulator import Emulator

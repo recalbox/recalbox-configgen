@@ -11,6 +11,7 @@ import utils.slugify as slugify
 
 libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
 coreSettings = UnixSettings(recalboxFiles.retroarchCoreCustom, separator=' ')
+recalboxConfSettings = UnixSettings(recalboxFiles.recalboxConf)
 
 settingsRoot = recalboxFiles.retroarchRoot
 
@@ -36,7 +37,7 @@ hatstoname = {'1': 'up', '2': 'right', '4': 'down', '8': 'left'}
 retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot', \
                      'b': 'menu_toggle', 'start': 'exit_emulator', 'up': 'state_slot_increase', \
                      'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward', \
-                      'l2': 'shader_prev', 'r2': 'shader_next'}
+                     'l2': 'shader_prev', 'r2': 'shader_next'}
 
 # Write a configuration for a specified controller
 def writeControllersConfig(system, controllers):
@@ -54,6 +55,7 @@ def cleanControllerConfig(controllers):
     for specialkey in retroarchspecials:
         libretroSettings.disableAll('input_{}'.format(retroarchspecials[specialkey]))
 
+
 # Write the hotkey for player 1
 def writeHotKeyConfig(controllers):
     if '1' in controllers:
@@ -63,7 +65,8 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    generatedConfig = generateControllerConfig(controller)
+    skipSpecials = 'specials' in system.config and system.config['specials'] != 'default'
+    generatedConfig = generateControllerConfig(controller, skipSpecials)
     for key in generatedConfig:
         libretroSettings.save(key, generatedConfig[key])
 
@@ -73,7 +76,7 @@ def writeControllerConfig(controller, playerIndex, system):
 
 
 # Create a configuration for a given controller
-def generateControllerConfig(controller):
+def generateControllerConfig(controller, skipSpecials=False):
     config = dict()
     # config['input_device'] = '"%s"' % controller.realName
     for btnkey in retroarchbtns:
@@ -95,11 +98,16 @@ def generateControllerConfig(controller):
             config['input_player%s_%s_minus_axis' % (controller.player, jsvalue)] = '-%s' % input.id
             config['input_player%s_%s_plus_axis' % (controller.player, jsvalue)] = '+%s' % input.id
     if controller.player == '1':
-        for specialkey in retroarchspecials:
-            specialvalue = retroarchspecials[specialkey]
-            if specialkey in controller.inputs:
-                input = controller.inputs[specialkey]
-                config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+        if not skipSpecials:
+            for specialkey in retroarchspecials:
+                specialvalue = retroarchspecials[specialkey]
+                if specialkey in controller.inputs:
+                    input = controller.inputs[specialkey]
+                    config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+        else:
+            specialvalue = retroarchspecials['start']
+            input = controller.inputs['start']
+            config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
     return config
 
 
@@ -126,6 +134,7 @@ def getAnalogMode(controller, system):
             if (controller.inputs[dirkey].type == 'button') or (controller.inputs[dirkey].type == 'hat'):
                 return '1'
     return '0'
+
 
 # return the playstation analog mode for a controller
 def getAnalogCoreMode(controller):

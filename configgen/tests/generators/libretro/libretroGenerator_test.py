@@ -28,7 +28,8 @@ shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../r
                 RETROARCH_CUSTOM_CFG_FILE)
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../resources/retroarchcustom.cfg.origin')), \
                 RETROARCH_ORIGIN_CFG_FILE)
-
+shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../resources/recalbox.conf.origin')), \
+                RECALBOX_CFG_FILE)
 
 # Injecting test files
 libretroGenerator.recalboxFiles.retroarchCustom = RETROARCH_CUSTOM_CFG_FILE
@@ -37,6 +38,7 @@ libretroGenerator.recalboxFiles.retroarchCustomOrigin = RETROARCH_ORIGIN_CFG_FIL
 libretroConfig.libretroSettings = unixSettings.UnixSettings(RETROARCH_CUSTOM_CFG_FILE, separator=' ')
 
 
+PS3UUID = "060000004c0500006802000000010000"
 
 rom = "MyRom.nes"
 
@@ -46,7 +48,9 @@ libretroGen = LibretroGenerator()
 class TestLibretroGenerator(unittest.TestCase):
     def setUp(self):
         self.snes = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
-                        rewind='false', emulator='libretro')
+                             rewind='false', emulator='libretro')
+        self.snes2 = Emulator(name='snes', videomode='4', core='pocketsnes', shaders='', ratio='auto', smooth='2',
+                             rewind='false', emulator='libretro')
         self.nes = Emulator(name='nes', videomode='6', core='catsfc', shaders='', ratio='16/9', smooth='1',
                        rewind='false', configfile='/myconfigfile.cfg', emulator='libretro')
 
@@ -101,12 +105,16 @@ class TestLibretroGenerator(unittest.TestCase):
         self.snes.config['inputdriver'] = 'auto'
         command = libretroGen.generate(self.snes, rom, self.sdl2controllers)
         self.assertEquals(libretroConfig.libretroSettings.load('input_joypad_driver'), 'sdl2')
-        # def test_copy_original_file(self):
-        #    os.remove(RETROARCH_CUSTOM_CFG_FILE)
-        #    time.sleep(1)
-        #   command = libretroGen.generate(snes, rom, dict())
-        #    self.assertTrue(os.path.isfile(RETROARCH_CUSTOM_CFG_FILE))
 
+    def test_remove_hotkeys_on_configure_with_es_menu_false(self):
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
+                                                             "p3controller", -1, 0, "p4controller")
+
+        command = libretroGen.generate(self.snes, rom, controllers)
+        self.assertEquals(libretroConfig.libretroSettings.load('input_menu_toggle_btn'), '14')
+        self.snes2.config['specials'] = "none"
+        command = libretroGen.generate(self.snes2, rom, controllers)
+        self.assertEquals(libretroConfig.libretroSettings.load('input_menu_toggle_btn'), None)
 
 if __name__ == '__main__':
     unittest.main()

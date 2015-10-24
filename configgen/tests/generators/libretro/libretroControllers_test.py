@@ -120,6 +120,19 @@ class TestLibretroController(unittest.TestCase):
         self.assertEquals(config['input_player1_r_x_plus_axis'], '+2')
         self.assertEquals(config['input_player1_r_x_minus_axis'], '-2')
 
+    def test_generate_with_recalbox_conf_es_menu_off_doesnt_save_hotkeys(self):
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
+                                                             "p3controller", -1, 0, "p4controller")
+        config = libretroControllers.generateControllerConfig(controllers["1"], True)
+        self.assertFalse('input_load_state_btn' in config)
+        self.assertFalse('input_menu_toggle_btn' in config)
+        self.assertFalse('input_state_slot_increase_axis' in config)
+
+    def test_generate_specialsKeys_off_save_exit_special(self):
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
+                                                             "p3controller", -1, 0, "p4controller")
+        config = libretroControllers.generateControllerConfig(controllers["1"], True)
+        self.assertEquals(config['input_exit_emulator_btn'], '3')
 
 class TestLibretroGeneratorGetValue(unittest.TestCase):
     def test_on_button(self):

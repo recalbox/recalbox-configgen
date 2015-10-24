@@ -10,6 +10,7 @@ class ConfigManager():
     def configure(self, system):
         recalSettings = UnixSettings(recalboxFiles.recalboxConf)
         globalSettings = recalSettings.loadAll('global')
+        system.config['specials'] = recalSettings.load('system.es.menu', 'default')
         self.updateConfiguration(system, globalSettings)
         self.updateConfiguration(system, recalSettings.loadAll(system.name))
 
