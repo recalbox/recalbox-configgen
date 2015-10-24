@@ -37,7 +37,8 @@ libretroControllers.coreSettings = UnixSettings(RETROARCH_CORE_CONFIG, separator
 
 # Test objects
 basicInputs1 = {'a': controllersConfig.Input("a", "button", "10", "1"),
-                'hotkey': controllersConfig.Input("hotkey", "button", "10", "1")}
+                'hotkey': controllersConfig.Input("hotkey", "button", "10", "1"),
+                'start': controllersConfig.Input("start", "button", "11", "1")}
 basicController1 = Controller("contr1", "joypad", "GUID1", '1',  "0", "Joypad1RealName", basicInputs1)
 PS3UUID = "060000004c0500006802000000010000"
 GPIOUUID = "15000000010000000100000000010000"

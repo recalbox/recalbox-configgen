@@ -34,10 +34,12 @@ typetoname = {'button': 'btn', 'hat': 'btn', 'axis': 'axis', 'key': 'key'}
 hatstoname = {'1': 'up', '2': 'right', '4': 'down', '8': 'left'}
 
 # Map buttons to the corresponding retroarch specials keys
-retroarchspecials = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot', \
-                     'b': 'menu_toggle', 'start': 'exit_emulator', 'up': 'state_slot_increase', \
-                     'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward', \
-                     'l2': 'shader_prev', 'r2': 'shader_next'}
+retroarchspecialsnomenu = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot', \
+                           'start': 'exit_emulator', 'up': 'state_slot_increase', \
+                           'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward', \
+                           'l2': 'shader_prev', 'r2': 'shader_next'}
+retroarchspecials = retroarchspecialsnomenu.copy()
+retroarchspecials['b'] = 'menu_toggle'
 
 # Write a configuration for a specified controller
 def writeControllersConfig(system, controllers):
@@ -65,8 +67,9 @@ def writeHotKeyConfig(controllers):
 
 # Write a configuration for a specified controller
 def writeControllerConfig(controller, playerIndex, system):
-    skipSpecials = 'specials' in system.config and system.config['specials'] != 'default'
-    generatedConfig = generateControllerConfig(controller, skipSpecials)
+    if not 'specials' in system.config:
+        system.config['specials'] = 'default'
+    generatedConfig = generateControllerConfig(controller, system.config['specials'])
     for key in generatedConfig:
         libretroSettings.save(key, generatedConfig[key])
 
@@ -76,7 +79,7 @@ def writeControllerConfig(controller, playerIndex, system):
 
 
 # Create a configuration for a given controller
-def generateControllerConfig(controller, skipSpecials=False):
+def generateControllerConfig(controller, specials = 'default'):
     config = dict()
     # config['input_device'] = '"%s"' % controller.realName
     for btnkey in retroarchbtns:
@@ -98,16 +101,19 @@ def generateControllerConfig(controller, skipSpecials=False):
             config['input_player%s_%s_minus_axis' % (controller.player, jsvalue)] = '-%s' % input.id
             config['input_player%s_%s_plus_axis' % (controller.player, jsvalue)] = '+%s' % input.id
     if controller.player == '1':
-        if not skipSpecials:
-            for specialkey in retroarchspecials:
-                specialvalue = retroarchspecials[specialkey]
-                if specialkey in controller.inputs:
-                    input = controller.inputs[specialkey]
-                    config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
-        else:
-            specialvalue = retroarchspecials['start']
-            input = controller.inputs['start']
-            config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+        specialMap = dict()
+        if specials == 'nomenu':
+            specialMap = retroarchspecialsnomenu
+        if specials == 'default':
+            specialMap = retroarchspecials
+        for specialkey in specialMap:
+            specialvalue = specialMap[specialkey]
+            if specialkey in controller.inputs:
+                input = controller.inputs[specialkey]
+                config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
+        specialvalue = retroarchspecials['start']
+        input = controller.inputs['start']
+        config['input_%s_%s' % (specialvalue, typetoname[input.type])] = getConfigValue(input)
     return config
 
 

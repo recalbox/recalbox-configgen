@@ -106,7 +106,7 @@ class TestLibretroGenerator(unittest.TestCase):
         command = libretroGen.generate(self.snes, rom, self.sdl2controllers)
         self.assertEquals(libretroConfig.libretroSettings.load('input_joypad_driver'), 'sdl2')
 
-    def test_remove_hotkeys_on_configure_with_es_menu_false(self):
+    def test_remove_hotkeys_on_configure_with_es_menu_none(self):
         controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
                                                              "p3controller", -1, 0, "p4controller")
 

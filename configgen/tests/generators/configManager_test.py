@@ -67,12 +67,12 @@ class ConfigManagerTest(unittest.TestCase):
         self.assertEquals(self.wswan.config['specials'], 'default')
 
     def test_specials_entry(self):
-        UnixSettings(recalboxConf).save('system.es.menu', 'default')
+        UnixSettings(recalboxConf).save('system.emulators.specialkeys', 'default')
         self.manager.configure(self.wswan)
         self.assertEquals(self.wswan.config['specials'], 'default')
 
     def test_menues_change_specials_entry(self):
-        UnixSettings(recalboxConf).save('system.es.menu', 'none')
+        UnixSettings(recalboxConf).save('system.emulators.specialkeys', 'none')
         self.manager.configure(self.wswan)
         self.assertEquals(self.wswan.config['specials'], 'none')
 
