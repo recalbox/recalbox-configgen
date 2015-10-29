@@ -53,13 +53,12 @@ class TestLibretroGenerator(unittest.TestCase):
     def test_generate_system_no_custom_settings(self):
         command = fba2xGen.generate(fbaSystem, rom, dict())
         self.assertEquals(command.videomode, '4')
-        self.assertEquals(command.commandline,
-                          '/usr/bin/fba2x --configfile \"' + FBA2X_CUSTOM_CFG_FILE + "\" \"MyRom.zip\"")
+        self.assertEquals(command.array,['/usr/bin/fba2x', '--configfile', FBA2X_CUSTOM_CFG_FILE, 'MyRom.zip'])
 
     def test_generate_system_custom_settings(self):
         command = fba2xGen.generate(fbaSystemCustom, rom, dict())
         self.assertEquals(command.videomode, '6')
-        self.assertEquals(command.commandline, '/usr/bin/fba2x --configfile \"lol\" \"MyRom.zip\"')
+        self.assertEquals(command.array, ['/usr/bin/fba2x', '--configfile', 'lol', 'MyRom.zip'])
 
 
 if __name__ == '__main__':

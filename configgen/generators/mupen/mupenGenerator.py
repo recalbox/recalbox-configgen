@@ -16,7 +16,6 @@ class MupenGenerator(Generator):
             #  Write controllers configuration files
             mupenControllers.writeControllersConfig(playersControllers)
 
-        # the command to run
-        commandline = "SDL_VIDEO_GL_DRIVER=/usr/lib/libGLESv2.so  mupen64plus --corelib /usr/lib/libmupen64plus.so.2.0.0 --gfx /usr/lib/mupen64plus/mupen64plus-video-{}.so --configdir /recalbox/configs/mupen64/ --datadir /recalbox/configs/mupen64/ \"{}\"".format(
-            system.config['core'], rom)
-        return Command.Command(videomode=system.config['videomode'], commandline=commandline)
+        commandArray = ["mupen64plus", "--corelib", "/usr/lib/libmupen64plus.so.2.0.0", "--gfx", "/usr/lib/mupen64plus/mupen64plus-video-{}.so".format(system.config['core']),
+                        "--configdir", "/recalbox/configs/mupen64/", "--datadir", "/recalbox/configs/mupen64/", rom]
+        return Command.Command(videomode=system.config['videomode'], array=commandArray, env={"SDL_VIDEO_GL_DRIVER":"/usr/lib/libGLESv2.so"})

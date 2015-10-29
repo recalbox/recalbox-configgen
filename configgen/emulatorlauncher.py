@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import time
 
 from Emulator import Emulator
 import generators
@@ -8,13 +9,9 @@ from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
 from generators.configManager import ConfigManager
-
 import controllersConfig as controllers
-import settings.recalboxSettings as recalSettings
 import utils.runner as runner
-import time
-
-
+import signal
 
 generators = {
     'libretro': LibretroGenerator(),
@@ -61,10 +58,16 @@ emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed'
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
 
 
-
+def signal_handler(signal, frame):
+    print('Exiting')
+    if runner.proc:
+        print('killing runner.proc')
+        runner.proc.kill()
 
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
+
     parser = argparse.ArgumentParser(description='emulator-launcher script')
     parser.add_argument("-p1index", help="player1 controller index", type=int, required=False)
     parser.add_argument("-p1guid", help="player1 controller SDL2 guid", type=str, required=False)
@@ -87,8 +90,10 @@ if __name__ == '__main__':
     playersControllers = dict()
     if not args.demo:
         # Read the controller configuration
-        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index, args.p2guid,
-                                                              args.p2name, args.p3index, args.p3guid, args.p3name, args.p4index,
+        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index,
+                                                              args.p2guid,
+                                                              args.p2name, args.p3index, args.p3guid, args.p3name,
+                                                              args.p4index,
                                                               args.p4guid, args.p4name)
 
     systemName = args.system

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 class Command:
-    def __init__(self, videomode, commandline):
+    def __init__(self, videomode, array, env=dict()):
         self.videomode = videomode
-        self.commandline = commandline
+        self.array = array
+        self.env = env

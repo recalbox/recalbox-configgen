@@ -29,4 +29,6 @@ class LibretroGenerator(Generator):
 
         # the command to run
         commandline = '{} -L "{}" --config "{}" "{}"'.format(recalboxFiles.retroarchBin, retroarchCore, system.config['configfile'], rom)
-        return Command.Command(videomode=system.config['videomode'], commandline=commandline)
+
+        commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], rom]
+        return Command.Command(videomode=system.config['videomode'], array=commandArray)

@@ -17,7 +17,6 @@ sys.path.append(
 
 import generators.mupen.mupenControllers as mupenControllers
 
-
 MUPEN_CUSTOM_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/mupen64plus.cfg'))
 RECALBOX_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/recalbox.conf'))
 
@@ -50,8 +49,10 @@ class TestMupenControllers(unittest.TestCase):
 
     def test_commandline_core_n64(self):
         command = mupenGen.generate(n64, "rom.n64", basicControllers)
-        self.assertEquals(command.commandline,
-                          "SDL_VIDEO_GL_DRIVER=/usr/lib/libGLESv2.so  mupen64plus --corelib /usr/lib/libmupen64plus.so.2.0.0 --gfx /usr/lib/mupen64plus/mupen64plus-video-n64.so --configdir /recalbox/configs/mupen64/ --datadir /recalbox/configs/mupen64/ \"rom.n64\"")
+        self.assertEquals(command.array,
+                          ['mupen64plus', '--corelib', '/usr/lib/libmupen64plus.so.2.0.0', '--gfx',
+                           '/usr/lib/mupen64plus/mupen64plus-video-n64.so', '--configdir', '/recalbox/configs/mupen64/',
+                           '--datadir', '/recalbox/configs/mupen64/', "rom.n64"])
 
 
 if __name__ == '__main__':
