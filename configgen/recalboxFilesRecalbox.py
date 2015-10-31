@@ -22,4 +22,4 @@ fba2xBin = '/usr/bin/fba2x'
 
 mupenCustom = "/recalbox/configs/mupen64/mupen64plus.cfg"
 
-shaderPresetRoot = "/recalbox/config/shadersets/"
+shaderPresetRoot = "/recalbox/configs/shadersets/"
