@@ -5,11 +5,11 @@ import recalboxFiles
 import settings
 from settings.unixSettings import UnixSettings
 
-
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
+
 
 # return true if the option is considered enabled (for boolean options)
 def enabled(key, dict):
@@ -22,6 +22,7 @@ def defined(key, dict):
 
 
 ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
+
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -43,19 +44,21 @@ def createLibretroConfig(system):
     else:
         retroarchConfig['video_shader_enable'] = 'false'
 
-    if defined('ratio', recalboxConfig) and recalboxConfig['ratio'] in ratioIndexes:
-        retroarchConfig['aspect_ratio_index'] = ratioIndexes[recalboxConfig['ratio']]
-        retroarchConfig['video_aspect_ratio_auto'] = 'false'
-    else:
-        retroarchConfig['video_aspect_ratio_auto'] = 'true'
-        retroarchConfig['aspect_ratio_index'] = ''
-
+    if defined('ratio', recalboxConfig):
+        if recalboxConfig['ratio'] in ratioIndexes:
+            retroarchConfig['aspect_ratio_index'] = ratioIndexes[recalboxConfig['ratio']]
+            retroarchConfig['video_aspect_ratio_auto'] = 'false'
+        elif recalboxConfig['ratio'] == "custom":
+            retroarchConfig['aspect_ratio_index'] = ''
+            retroarchConfig['video_aspect_ratio_auto'] = 'false'
+        else:
+            retroarchConfig['video_aspect_ratio_auto'] = 'true'
+            retroarchConfig['aspect_ratio_index'] = ''
 
     if enabled('rewind', recalboxConfig):
         retroarchConfig['rewind_enable'] = 'true'
     else:
         retroarchConfig['rewind_enable'] = 'false'
-
 
     if defined('inputdriver', recalboxConfig):
         retroarchConfig['input_joypad_driver'] = recalboxConfig['inputdriver']
@@ -63,6 +66,7 @@ def createLibretroConfig(system):
         retroarchConfig['input_joypad_driver'] = 'udev'
 
     return retroarchConfig
+
 
 def writeLibretroConfigToFile(config):
     for setting in config:

@@ -36,6 +36,8 @@ nes43 = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshader
 nesauto = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='auto', smooth='1', rewind='true', emulator='libretro')
 nes43 = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='4/3', smooth='1', rewind='false', emulator='libretro')
 wswan = Emulator(name='wswan', emulator='libretro', core='mednafen_wswan', ratio='16/10')
+nescustomratio = Emulator(name='nes', videomode='4', core='pocketsnes', shaders='myshaders.gpslp', ratio='custom', smooth='1', rewind='true', emulator='libretro')
+
 
 
 class TestLibretroConfig(unittest.TestCase):
@@ -120,6 +122,13 @@ class TestLibretroConfig(unittest.TestCase):
         nes.config['inputdriver'] = 'sdl2'
         retroconf = libretroConfig.createLibretroConfig(nes)
         self.assertEquals(retroconf['input_joypad_driver'], 'sdl2')
+
+
+
+    def test_create_with_ratio_custom(self):
+        retroconf = libretroConfig.createLibretroConfig(nescustomratio)
+        self.assertEquals(retroconf['video_aspect_ratio_auto'], 'false')
+        self.assertTrue(retroconf['aspect_ratio_index'] is '')
 
 
 if __name__ == '__main__':
