@@ -42,6 +42,20 @@ def loadAllControllersConfig():
             controllerInstance.inputs[input.get("name")] = inputInstance
     return controllers
 
+# Load all controllers from the es_input.cfg
+def loadAllControllersByNameConfig():
+    controllers = dict()
+    tree = ET.parse(esInputs)
+    root = tree.getroot()
+    for controller in root.findall(".//inputConfig"):
+        controllerInstance = Controller(controller.get("deviceName"), controller.get("type"),
+                                        controller.get("deviceGUID"), None)
+        deviceName = controller.get("deviceName")
+        controllers[deviceName] = controllerInstance
+        for input in controller.findall("input"):
+            inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"))
+            controllerInstance.inputs[input.get("name")] = inputInstance
+    return controllers
 
 # Create a controller array with the player id as a key
 def loadControllerConfig(p1index, p1guid, p1name, p2index, p2guid, p2name, p3index, p3guid, p3name, p4index, p4guid,
