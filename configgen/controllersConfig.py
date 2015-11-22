@@ -35,8 +35,8 @@ def loadAllControllersConfig():
     for controller in root.findall(".//inputConfig"):
         controllerInstance = Controller(controller.get("deviceName"), controller.get("type"),
                                         controller.get("deviceGUID"), None)
-        uid = controller.get("deviceGUID")
-        controllers[uid] = controllerInstance
+        uidname = controller.get("deviceGUID") + controller.get("deviceName")
+        controllers[uidname] = controllerInstance
         for input in controller.findall("input"):
             inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"))
             controllerInstance.inputs[input.get("name")] = inputInstance
@@ -62,22 +62,37 @@ def loadControllerConfig(p1index, p1guid, p1name, p2index, p2guid, p2name, p3ind
                          p4name):
     playerControllers = dict()
     controllers = loadAllControllersConfig()
+
+    newController = findBestControllerConfig(controllers, '1', p1guid, p1index, p1name)
+    if newController:
+        playerControllers["1"] = newController
+    newController = findBestControllerConfig(controllers, '2', p2guid, p2index, p2name)
+    if newController:
+        playerControllers["2"] = newController
+    newController = findBestControllerConfig(controllers, '3', p3guid, p3index, p3name)
+    if newController:
+        playerControllers["3"] = newController
+    newController = findBestControllerConfig(controllers, '4', p4guid, p4index, p4name)
+    if newController:
+        playerControllers["4"] = newController
+    return playerControllers
+
+def findBestControllerConfig(controllers, x, pxguid, pxindex, pxname):
+    # when there will have more joysticks, use hash tables
     for controllerGUID in controllers:
         controller = controllers[controllerGUID]
-        if controller.guid == p1guid:
-            newController = Controller(controller.configName, controller.type, controller.guid, '1', p1index, p1name,
-                                       controller.inputs)
-            playerControllers["1"] = newController
-        if controller.guid == p2guid:
-            newController = Controller(controller.configName, controller.type, controller.guid, '2', p2index, p2name,
-                                       controller.inputs)
-            playerControllers["2"] = newController
-        if controller.guid == p3guid:
-            newController = Controller(controller.configName, controller.type, controller.guid, '3', p3index, p3name,
-                                       controller.inputs)
-            playerControllers["3"] = newController
-        if controller.guid == p4guid:
-            newController = Controller(controller.configName, controller.type, controller.guid, '4', p4index, p4name,
-                                       controller.inputs)
-            playerControllers["4"] = newController
-    return playerControllers
+        if controller.guid == pxguid and controller.configName == pxname:
+            return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
+                              controller.inputs)
+    for controllerGUID in controllers:
+        controller = controllers[controllerGUID]
+        if controller.guid == pxguid:
+            return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
+                              controller.inputs)
+    for controllerGUID in controllers:
+        controller = controllers[controllerGUID]
+        if controller.configName == pxname:
+            return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
+                              controller.inputs)
+
+    return None
