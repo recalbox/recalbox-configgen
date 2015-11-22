@@ -74,7 +74,7 @@ def writeControllerConfig(controller, playerIndex, system):
         libretroSettings.save(key, generatedConfig[key])
 
     libretroSettings.save('input_player{}_joypad_index'.format(playerIndex), controller.index)
-    libretroSettings.save('input_player{}_analog_dpad_mode'.format(controller.index + 1),
+    libretroSettings.save('input_player{}_analog_dpad_mode'.format(playerIndex),
                           getAnalogMode(controller, system))
 
 
