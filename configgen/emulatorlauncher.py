@@ -59,7 +59,7 @@ emulators["prboom"] = Emulator(name='prboom', emulator='libretro', core='prboom'
 emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
 
-emulators["kodi"] = Emulator(name='kodi', emulator='kodi')
+emulators["kodi"] = Emulator(name='kodi', emulator='kodi',videomode='default')
 
 
 def signal_handler(signal, frame):
