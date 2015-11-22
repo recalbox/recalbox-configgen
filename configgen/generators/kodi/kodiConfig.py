@@ -5,24 +5,6 @@ import signal
 import recalboxFiles
 from xml.dom import minidom
 
-def signal_handler(signal, frame):
-    print('Exiting')
-    if runner.proc:
-        print('killing runner.proc')
-        runner.proc.kill()
-
-def getCurrentControllers(dom):
-    joys = dict()
-    for config in dom.getElementsByTagName('config'):
-        for node in config.childNodes:
-            if node.attributes:
-                if node.attributes['name']:
-                    if node.attributes['name'].value in ['INPUT P1', 'INPUT P2', 'INPUT P3', 'INPUT P4']:
-                        if node.attributes['value']:
-                            if node.attributes['value'].value != 'DEFAULT':
-                                joys[node.attributes['value'].value] = None
-    return joys
-
 def getKodiMapping():
     dom = minidom.parse(recalboxFiles.kodiMapping)
     map = dict()
@@ -34,7 +16,7 @@ def getKodiMapping():
                         map[input.attributes['name'].value] = input.attributes['value'].value
     return map
 
-def getKodiConfig(currentControllers, playersControllers):
+def getKodiConfig(currentControllers):
     kodimapping          = getKodiMapping()
     kodihatspositions    = {1: 'up', 2: 'right', 4: 'down', 8: 'left'}
     kodireversepositions = {'joystick1up': 'joystick1down', 'joystick1left': 'joystick1right', 'joystick2up': 'joystick2down', 'joystick2left': 'joystick2right' }
@@ -44,12 +26,13 @@ def getKodiConfig(currentControllers, playersControllers):
     config.appendChild(xmlkeymap)
     xmlglobal = config.createElement('global')
     xmlkeymap.appendChild(xmlglobal)
-    for cur in currentControllers:
+    for controller in currentControllers:
+        cur = currentControllers[controller]
         xmljoystick = config.createElement('joystick')
-        xmljoystick.attributes["name"] = playersControllers[cur].configName
+        xmljoystick.attributes["name"] = cur.configName
         xmlglobal.appendChild(xmljoystick)
-        for x in playersControllers[cur].inputs:
-            input = playersControllers[cur].inputs[x]
+        for x in cur.inputs:
+            input = cur.inputs[x]
             if input.name in kodimapping:
                 if input.type == 'button':
                     xmlbutton = config.createElement('button')
@@ -82,13 +65,8 @@ def getKodiConfig(currentControllers, playersControllers):
                         xmljoystick.appendChild(xmlaxis)
 
     return config
-                
-if __name__ == '__main__':
-    signal.signal(signal.SIGINT, signal_handler)
 
-    currentControllers = getCurrentControllers(minidom.parse(recalboxFiles.esSettings))
-    playersControllers = controllers.loadAllControllersByNameConfig()
-
+def writeKodiConfig(controllersFromES):
     file = open(recalboxFiles.kodiJoystick, "w")
-    file.write(getKodiConfig(currentControllers, playersControllers).toprettyxml())
+    file.write(getKodiConfig(controllersFromES).toprettyxml())
     file.close()

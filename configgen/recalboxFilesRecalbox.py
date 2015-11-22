@@ -23,3 +23,8 @@ fba2xBin = '/usr/bin/fba2x'
 mupenCustom = "/recalbox/configs/mupen64/mupen64plus.cfg"
 
 shaderPresetRoot = "/recalbox/configs/shadersets/"
+
+kodiJoystick = '/root/.kodi/userdata/keymaps/recalbox.xml'
+kodiMapping  = '/recalbox/configs/kodi/input.xml'
+
+kodiBin  = '/usr/lib/kodi/kodi.bin'

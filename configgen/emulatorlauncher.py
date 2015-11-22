@@ -8,6 +8,7 @@ import generators
 from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
+from generators.kodi.kodiGenerator import KodiGenerator
 from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
@@ -16,7 +17,8 @@ import signal
 generators = {
     'libretro': LibretroGenerator(),
     'fba2x': Fba2xGenerator(),
-    'mupen64plus': MupenGenerator()
+    'mupen64plus': MupenGenerator(),
+    'kodi': KodiGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -56,6 +58,8 @@ emulators["msx"] = Emulator(name='msx', emulator='libretro', core='fmsx')
 emulators["prboom"] = Emulator(name='prboom', emulator='libretro', core='prboom')
 emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
+
+emulators["kodi"] = Emulator(name='kodi', emulator='kodi')
 
 
 def signal_handler(signal, frame):
@@ -106,5 +110,6 @@ if __name__ == '__main__':
 
         systemManager.configure(system)
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
+        print(command.array)
         runner.runCommand(command)
         time.sleep(1)
