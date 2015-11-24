@@ -2,6 +2,7 @@
 
 import controllersConfig as controllers
 import signal
+import os
 import recalboxFiles
 from xml.dom import minidom
 
@@ -67,6 +68,9 @@ def getKodiConfig(currentControllers):
     return config
 
 def writeKodiConfig(controllersFromES):
-    file = open(recalboxFiles.kodiJoystick, "w")
-    file.write(getKodiConfig(controllersFromES).toprettyxml())
-    file.close()
+    directory = os.path.dirname(recalboxFiles.kodiJoystick)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    kodiJoy = open(recalboxFiles.kodiJoystick, "w")
+    kodiJoy.write(getKodiConfig(controllersFromES).toprettyxml())
+    kodiJoy.close()
