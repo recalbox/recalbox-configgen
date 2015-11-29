@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-esInputs = '/root/.emulationstation/es_input.cfg'
-esSettings = '/root/.emulationstation/es_settings.cfg'
+esInputs = '/recalbox/share/system/.emulationstation/es_input.cfg'
+esSettings = '/recalbox/share/system/.emulationstation/es_settings.cfg'
 recalboxConf = '/recalbox/share/system/recalbox.conf'
 
-retroarchRoot = '/recalbox/configs/retroarch'
+retroarchRoot = '/recalbox/share/configs/retroarch'
 retroarchCustom = retroarchRoot + '/retroarchcustom.cfg'
 retroarchCustomOrigin = retroarchRoot + "/retroarchcustom.cfg.origin"
 retroarchCoreCustom = retroarchRoot + "/cores/retroarch-core-options.cfg"
@@ -15,16 +15,16 @@ shadersRoot = "/recalbox/share/shaders/presets/"
 shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
 
-fbaRoot = '/recalbox/configs/fba/'
+fbaRoot = '/recalbox/share/configs/fba/'
 fbaCustom = fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'
 fba2xBin = '/usr/bin/fba2x'
 
-mupenCustom = "/recalbox/configs/mupen64/mupen64plus.cfg"
+mupenCustom = "/recalbox/share/configs/mupen64/mupen64plus.cfg"
 
-shaderPresetRoot = "/recalbox/configs/shadersets/"
+shaderPresetRoot = "/recalbox/share/configs/shadersets/"
 
-kodiJoystick = '/root/.kodi/userdata/keymaps/recalbox.xml'
-kodiMapping  = '/recalbox/configs/kodi/input.xml'
+kodiJoystick = '/recalbox/share/system/.kodi/userdata/keymaps/recalbox.xml'
+kodiMapping  = '/recalbox/share/configs/kodi/input.xml'
 
-kodiBin  = '/recalbox/scripts/kodilauncher.sh'
+kodiBin  = '/usr/lib/kodi/kodi.bin'
