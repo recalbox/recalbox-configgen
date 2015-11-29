@@ -51,8 +51,8 @@ class TestLibretroController(unittest.TestCase):
         self.assertEquals(config['input_player1_a_btn'], '10')
 
     def test_generate_ps3_controller_buttons(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_player1_select_btn'], '0')
         self.assertEquals(config['input_player1_a_btn'], '13')
@@ -65,8 +65,8 @@ class TestLibretroController(unittest.TestCase):
         self.assertEquals(config['input_player1_l_btn'], '10')
 
     def test_generate_ps3_controller_joysticks(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_player1_l_y_plus_axis'], '+1')
         self.assertEquals(config['input_player1_l_y_minus_axis'], '-1')
@@ -75,8 +75,8 @@ class TestLibretroController(unittest.TestCase):
 
 
     def test_generate_joystick_as_directions(self):
-        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_player1_up_axis'], '-1')
         self.assertEquals(config['input_player1_down_axis'], '+1')
@@ -84,16 +84,16 @@ class TestLibretroController(unittest.TestCase):
         self.assertEquals(config['input_player1_left_axis'], '-0')
 
     def test_generate_specials(self):
-        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         print config
         self.assertEquals(config['input_exit_emulator_btn'], '7')
 
 
     def test_write_ps3_controller_joysticks(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.writeControllerConfig(controllers["1"], "1", snes)
         with open(RETROARCH_CONFIG) as controllerFile:
             lines = []
@@ -103,8 +103,8 @@ class TestLibretroController(unittest.TestCase):
         self.assertTrue(libretroControllers.libretroSettings.load("input_player1_analog_dpad_mode"), "1")
 
     def test_write_only_joystick_controller(self):
-        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, GPIOUUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.writeControllerConfig(controllers["1"], "1", snes)
         self.assertTrue(libretroControllers.libretroSettings.load("input_player1_analog_dpad_mode"), "0")
 
@@ -113,8 +113,8 @@ class TestLibretroController(unittest.TestCase):
         self.assertEqual(libretroControllers.libretroSettings.load('input_enable_hotkey_btn'), '10')
 
     def test_generate_ps3_controller_joysticks_right(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"])
         self.assertEquals(config['input_player1_r_y_plus_axis'], '+3')
         self.assertEquals(config['input_player1_r_y_minus_axis'], '-3')
@@ -122,16 +122,16 @@ class TestLibretroController(unittest.TestCase):
         self.assertEquals(config['input_player1_r_x_minus_axis'], '-2')
 
     def test_generate_with_recalbox_conf_es_menu_off_doesnt_save_hotkeys(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"], True)
         self.assertFalse('input_load_state_btn' in config)
         self.assertFalse('input_menu_toggle_btn' in config)
         self.assertFalse('input_state_slot_increase_axis' in config)
 
     def test_generate_specialsKeys_off_save_exit_special(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         config = libretroControllers.generateControllerConfig(controllers["1"], True)
         self.assertEquals(config['input_exit_emulator_btn'], '3')
 
@@ -165,8 +165,8 @@ class TestLibretroDualAnalogPSone(unittest.TestCase):
         self.assertEquals("standard", val)
 
     def test_enable_analog_mode_psx(self):
-        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller", -1, 0, "p2controller", -1, 0,
-                                                             "p3controller", -1, 0, "p4controller")
+        controllers = controllersConfig.loadControllerConfig(0, PS3UUID, "p1controller","", -1, 0, "p2controller","", -1, 0,
+                                                             "p3controller","", -1, 0, "p4controller","")
         val = libretroControllers.getAnalogCoreMode(controllers['1'])
         self.assertEquals("analog", val)
 
