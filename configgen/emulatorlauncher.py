@@ -59,7 +59,7 @@ emulators["prboom"] = Emulator(name='prboom', emulator='libretro', core='prboom'
 emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
 
-emulators["kodi"] = Emulator(name='kodi', emulator='kodi',videomode='default')
+emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 
 
 def signal_handler(signal, frame):
@@ -98,11 +98,10 @@ if __name__ == '__main__':
     playersControllers = dict()
     if not args.demo:
         # Read the controller configuration
-        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p2index,
-                                                              args.p2guid,
-                                                              args.p2name, args.p3index, args.p3guid, args.p3name,
-                                                              args.p4index,
-                                                              args.p4guid, args.p4name)
+        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p1devicepath,
+                                                              args.p2index, args.p2guid, args.p2name, args.p2devicepath,
+                                                              args.p3index, args.p3guid, args.p3name, args.p3devicepath,
+                                                              args.p4index, args.p4guid, args.p4name, args.p4devicepath)
 
     systemName = args.system
 

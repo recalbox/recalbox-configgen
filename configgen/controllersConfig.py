@@ -14,13 +14,14 @@ class Input:
 
 
 class Controller:
-    def __init__(self, configName, type, guid, player, index="-1", realName="", inputs=None):
+    def __init__(self, configName, type, guid, player, index="-1", realName="", inputs=None, dev=None):
         self.type = type
         self.configName = configName
         self.index = index
         self.realName = realName
         self.guid = guid
         self.player = player
+        self.dev = dev
         if inputs == None:
             self.inputs = dict()
         else:
@@ -42,6 +43,7 @@ def loadAllControllersConfig():
             controllerInstance.inputs[input.get("name")] = inputInstance
     return controllers
 
+
 # Load all controllers from the es_input.cfg
 def loadAllControllersByNameConfig():
     controllers = dict()
@@ -57,42 +59,43 @@ def loadAllControllersByNameConfig():
             controllerInstance.inputs[input.get("name")] = inputInstance
     return controllers
 
+
 # Create a controller array with the player id as a key
-def loadControllerConfig(p1index, p1guid, p1name, p2index, p2guid, p2name, p3index, p3guid, p3name, p4index, p4guid,
-                         p4name):
+def loadControllerConfig(p1index, p1guid, p1name, p1dev, p2index, p2guid, p2name, p2dev, p3index, p3guid, p3name, p3dev,
+                         p4index, p4guid, p4name, p4dev):
     playerControllers = dict()
     controllers = loadAllControllersConfig()
 
-    newController = findBestControllerConfig(controllers, '1', p1guid, p1index, p1name)
+    newController = findBestControllerConfig(controllers, '1', p1guid, p1index, p1name, p1dev)
     if newController:
         playerControllers["1"] = newController
-    newController = findBestControllerConfig(controllers, '2', p2guid, p2index, p2name)
+    newController = findBestControllerConfig(controllers, '2', p2guid, p2index, p2name, p2dev)
     if newController:
         playerControllers["2"] = newController
-    newController = findBestControllerConfig(controllers, '3', p3guid, p3index, p3name)
+    newController = findBestControllerConfig(controllers, '3', p3guid, p3index, p3name, p3dev)
     if newController:
         playerControllers["3"] = newController
-    newController = findBestControllerConfig(controllers, '4', p4guid, p4index, p4name)
+    newController = findBestControllerConfig(controllers, '4', p4guid, p4index, p4name, p4dev)
     if newController:
         playerControllers["4"] = newController
     return playerControllers
 
-def findBestControllerConfig(controllers, x, pxguid, pxindex, pxname):
+
+def findBestControllerConfig(controllers, x, pxguid, pxindex, pxname, pxdev):
     # when there will have more joysticks, use hash tables
     for controllerGUID in controllers:
         controller = controllers[controllerGUID]
         if controller.guid == pxguid and controller.configName == pxname:
             return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
-                              controller.inputs)
+                              controller.inputs, pxdev)
     for controllerGUID in controllers:
         controller = controllers[controllerGUID]
         if controller.guid == pxguid:
             return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
-                              controller.inputs)
+                              controller.inputs, pxdev)
     for controllerGUID in controllers:
         controller = controllers[controllerGUID]
         if controller.configName == pxname:
             return Controller(controller.configName, controller.type, controller.guid, x, pxindex, pxname,
-                              controller.inputs)
-
+                              controller.inputs, pxdev)
     return None
