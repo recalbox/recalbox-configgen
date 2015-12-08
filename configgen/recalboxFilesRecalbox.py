@@ -27,4 +27,4 @@ shaderPresetRoot = "/recalbox/share/configs/shadersets/"
 kodiJoystick = '/recalbox/share/system/.kodi/userdata/keymaps/recalbox.xml'
 kodiMapping  = '/recalbox/share/system/configs/kodi/input.xml'
 
-kodiBin  = '/usr/lib/kodi/kodi.bin'
+kodiBin  = '/recalbox/scripts/kodilauncher.sh'
