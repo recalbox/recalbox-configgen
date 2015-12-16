@@ -52,7 +52,7 @@ def getKodiConfig(currentControllers):
                     # dir 1
                     xmlaxis = config.createElement('axis')
                     xmlaxis.attributes["id"] = str(int(input.id)+1) # in kodi, it's sdl +1
-                    xmlaxis.attributes["limit"] = "-1"
+                    xmlaxis.attributes["limit"] = str(input.value)
                     action = config.createTextNode(kodimapping[input.name])
                     xmlaxis.appendChild(action)
                     xmljoystick.appendChild(xmlaxis)
@@ -60,7 +60,7 @@ def getKodiConfig(currentControllers):
                     if input.name in kodireversepositions and kodireversepositions[input.name] in kodimapping:
                         xmlaxis = config.createElement('axis')
                         xmlaxis.attributes["id"] = str(int(input.id)+1) # in kodi, it's sdl +1
-                        xmlaxis.attributes["limit"] = "1"
+                        xmlaxis.attributes["limit"] = str(-input.value)
                         action = config.createTextNode(kodimapping[kodireversepositions[input.name]])
                         xmlaxis.appendChild(action)
                         xmljoystick.appendChild(xmlaxis)
