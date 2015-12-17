@@ -49,7 +49,6 @@ def createLibretroConfig(system):
             retroarchConfig['aspect_ratio_index'] = ratioIndexes[recalboxConfig['ratio']]
             retroarchConfig['video_aspect_ratio_auto'] = 'false'
         elif recalboxConfig['ratio'] == "custom":
-            retroarchConfig['aspect_ratio_index'] = ''
             retroarchConfig['video_aspect_ratio_auto'] = 'false'
         else:
             retroarchConfig['video_aspect_ratio_auto'] = 'true'
