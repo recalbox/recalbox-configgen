@@ -43,7 +43,7 @@ emulators["segacd"] = Emulator(name='segacd', emulator='libretro', core='picodri
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
-emulators["fbalibretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
+emulators["fba_libretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
 emulators["gw"] = Emulator(name='gw', emulator='libretro', core='gw')
