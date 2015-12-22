@@ -27,3 +27,6 @@ kodiJoystick = '/home/matthieu/.kodi/userdata/keymaps/recalbox.xml'
 kodiMapping  = '/home/matthieu/recalbox/configs/kodi/input.xml'
 
 kodiBin  = '/usr/lib/kodi/kodi.bin'
+
+logdir = '/home/matthieu/recalbox/logs/'
+
