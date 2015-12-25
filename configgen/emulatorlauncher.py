@@ -9,6 +9,7 @@ from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
 from generators.kodi.kodiGenerator import KodiGenerator
+from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
@@ -18,7 +19,8 @@ generators = {
     'libretro': LibretroGenerator(),
     'fba2x': Fba2xGenerator(),
     'mupen64plus': MupenGenerator(),
-    'kodi': KodiGenerator()
+    'kodi': KodiGenerator(),
+    'moonlight': MoonlightGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -68,6 +70,7 @@ emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='n
 emulators["imageviewer"] = Emulator(name='imageviewer', emulator='libretro', core='imageviewer')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
+emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')
 
 
 def signal_handler(signal, frame):

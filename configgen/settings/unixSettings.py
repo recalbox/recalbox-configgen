@@ -15,6 +15,8 @@ class UnixSettings():
         separ = self.separator
         if separ is not '':
             separ += "?"
+        if not os.path.isfile(self.settingsFile):
+            return default
         with open(self.settingsFile) as lines:
             for line in open(self.settingsFile):
                 if name in line:
@@ -28,10 +30,11 @@ class UnixSettings():
             return default
 
     def save(self, name, value):
-        os.system(
-            "sed -i \"s|^{}\?{}{}=.*|{}{}={}{}|g\" {}".format(self.comment, name, self.separator, name,
-                                                              self.separator, self.separator,
-                                                              value, self.settingsFile))
+        if os.path.isfile(self.settingsFile):
+            os.system(
+                "sed -i \"s|^{}\?{}{}=.*|{}{}={}{}|g\" {}".format(self.comment, name, self.separator, name,
+                                                                  self.separator, self.separator,
+                                                                  value, self.settingsFile))
         if self.load(name) is None:
             with open(self.settingsFile, "a+") as settings:
                 settings.write("\n{}{}={}{}".format(name, self.separator, self.separator, value))

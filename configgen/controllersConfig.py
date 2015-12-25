@@ -6,11 +6,12 @@ esInputs = recalboxFiles.esInputs
 
 
 class Input:
-    def __init__(self, name, type, id, value):
+    def __init__(self, name, type, id, value, code):
         self.name = name
         self.type = type
         self.id = id
         self.value = value
+        self.code = code
 
 
 class Controller:
@@ -39,7 +40,7 @@ def loadAllControllersConfig():
         uidname = controller.get("deviceGUID") + controller.get("deviceName")
         controllers[uidname] = controllerInstance
         for input in controller.findall("input"):
-            inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"))
+            inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"), input.get("code"))
             controllerInstance.inputs[input.get("name")] = inputInstance
     return controllers
 
@@ -55,7 +56,7 @@ def loadAllControllersByNameConfig():
         deviceName = controller.get("deviceName")
         controllers[deviceName] = controllerInstance
         for input in controller.findall("input"):
-            inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"))
+            inputInstance = Input(input.get("name"), input.get("type"), input.get("id"), input.get("value"), input.get("code"))
             controllerInstance.inputs[input.get("name")] = inputInstance
     return controllers
 
