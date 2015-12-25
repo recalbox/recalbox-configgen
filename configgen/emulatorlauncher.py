@@ -44,6 +44,14 @@ emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 emulators["fba_libretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
+# Computers
+emulators["msx"] = Emulator(name='msx', emulator='libretro', core='fmsx')
+emulators["amiga"] = Emulator(name='amiga', emulator='libretro', core='puae')
+emulators["amstradcpc"] = Emulator(name='amstradcpc', emulator='libretro', core='cap32')
+emulators["atarist"] = Emulator(name='atarist', emulator='libretro', core='hatari')
+emulators["zxspectrum"] = Emulator(name='zxspectrum', emulator='libretro', core='fuse')
+emulators["odyssey2"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
+emulators["zx81"] = Emulator(name='zx81', emulator='libretro', core='81')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
 emulators["gw"] = Emulator(name='gw', emulator='libretro', core='gw')
@@ -54,10 +62,10 @@ emulators["wswan"] = Emulator(name='wswan', emulator='libretro', core='mednafen_
 emulators["pcengine"] = Emulator(name='pcengine', emulator='libretro', core='mednafen_supergrafx')
 emulators["atari2600"] = Emulator(name='atari2600', emulator='libretro', core='stella')
 emulators["atari7800"] = Emulator(name='atari7800', emulator='libretro', core='prosystem')
-emulators["msx"] = Emulator(name='msx', emulator='libretro', core='fmsx')
 emulators["prboom"] = Emulator(name='prboom', emulator='libretro', core='prboom')
 emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed')
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
+emulators["imageviewer"] = Emulator(name='imageviewer', emulator='libretro', core='imageviewer')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 
