@@ -7,12 +7,13 @@ from settings.unixSettings import UnixSettings
 
 class ConfigManager():
 
-    def configure(self, system):
+    def configure(self, system, emulator='default', core='default'):
         recalSettings = UnixSettings(recalboxFiles.recalboxConf)
         globalSettings = recalSettings.loadAll('global')
         system.config['specials'] = recalSettings.load('system.emulators.specialkeys', 'default')
         self.updateConfiguration(system, globalSettings)
         self.updateConfiguration(system, recalSettings.loadAll(system.name))
+        self.updateEmulatorAndCore(system, emulator, core)
 
     def updateConfiguration(self, system, settings):
         systemSettings = system.config
@@ -24,11 +25,15 @@ class ConfigManager():
         if ('shaderset' in settings and settings['shaderset'] != ''):
             self.updateShaders(system,settings['shaderset'])
 
-
-
     def updateShaders(self, system, shaderSet):
-        if shaderSet != None and shaderSet != "none":
-            shaderfile = recalboxFiles.shaderPresetRoot + "/" + shaderSet + ".cfg"
+        if shaderSet != None and shaderSet != 'none':
+            shaderfile = recalboxFiles.shaderPresetRoot + '/' + shaderSet + '.cfg'
             systemShader = UnixSettings(shaderfile).load(system.name)
             if systemShader != None:
                 system.config['shaders'] = systemShader
+
+    def updateEmulatorAndCore(self, system, emulator, core):
+        if emulator != None and emulator != 'default':
+            system.config['emulator'] = emulator
+        if core != None and core != 'default':
+            system.config['core'] = core
