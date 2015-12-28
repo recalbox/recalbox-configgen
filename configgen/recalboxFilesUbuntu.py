@@ -11,7 +11,7 @@ retroarchCoreCustom = retroarchRoot + "/cores/retroarch-core-options.cfg"
 
 retroarchBin = "retroarch"
 retroarchCores = "/usr/lib/libretro/"
-shadersRoot = "/home/matthieu/recalbox/share/shaders/presets/"
+shadersRoot = "/home/matthieu/recalbox/share_init/shaders/presets/"
 shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
 
