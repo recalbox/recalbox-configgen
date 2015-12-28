@@ -11,7 +11,7 @@ retroarchCoreCustom = retroarchRoot + "/cores/retroarch-core-options.cfg"
 
 retroarchBin = "retroarch"
 retroarchCores = "/usr/lib/libretro/"
-shadersRoot = "/recalbox/share/shaders/presets/"
+shadersRoot = "/recalbox/share_init/shaders/presets/"
 shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
 
@@ -25,7 +25,8 @@ mupenCustom = "/recalbox/share/system/configs/mupen64/mupen64plus.cfg"
 shaderPresetRoot = "/recalbox/share/system/configs/shadersets/"
 
 kodiJoystick = '/recalbox/share/system/.kodi/userdata/keymaps/recalbox.xml'
-kodiMapping  = '/recalbox/share/system/configs/kodi/input.xml'
+kodiMappingUser    = '/recalbox/share/system/configs/kodi/input.xml'
+kodiMappingSystem  = '/recalbox/share_init/system/configs/kodi/input.xml'
 
 kodiBin  = '/recalbox/scripts/kodilauncher.sh'
 
