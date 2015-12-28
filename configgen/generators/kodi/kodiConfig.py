@@ -7,7 +7,10 @@ import recalboxFiles
 from xml.dom import minidom
 
 def getKodiMapping():
-    dom = minidom.parse(recalboxFiles.kodiMapping)
+    if os.path.exists(recalboxFiles.kodiMappingUser):
+        dom = minidom.parse(recalboxFiles.kodiMappingUser)
+    else:
+        dom = minidom.parse(recalboxFiles.kodiMappingSystem)
     map = dict()
     for inputs in dom.getElementsByTagName('inputList'):
         for input in inputs.childNodes:

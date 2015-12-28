@@ -24,7 +24,7 @@ mupenCustom = "/home/matthieu/recalbox/configs/mupen64/mupen64plus.cfg"
 shaderPresetRoot = "/home/matthieu/recalbox/share/system/shadersets/"
 
 kodiJoystick = '/home/matthieu/.kodi/userdata/keymaps/recalbox.xml'
-kodiMapping  = '/home/matthieu/recalbox/configs/kodi/input.xml'
+kodiMappingUser  = '/home/matthieu/recalbox/configs/kodi/input.xml'
 
 kodiBin  = '/usr/lib/kodi/kodi.bin'
 
