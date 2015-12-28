@@ -20,6 +20,10 @@ class ConfigManager():
         # Special case of auto ratio
         if 'ratio' in settings and settings['ratio'] == 'auto':
             del settings['ratio']
+        if 'emulator' in settings and settings['emulator'] == 'default':
+            del settings['emulator']
+        if 'core' in settings and settings['core'] == 'default':
+            del settings['core']
         systemSettings.update(settings)
         # ShaderSets
         if ('shaderset' in settings and settings['shaderset'] != ''):
