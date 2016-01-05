@@ -1,32 +1,35 @@
 #!/usr/bin/env python
+HOME = '/recalbox/share/system'
+CONF = HOME + '/configs'
 
-esInputs = '/recalbox/share/system/.emulationstation/es_input.cfg'
-esSettings = '/recalbox/share/system/.emulationstation/es_settings.cfg'
-recalboxConf = '/recalbox/share/system/recalbox.conf'
+esInputs = HOME + '/.emulationstation/es_input.cfg'
+esSettings = HOME + '/.emulationstation/es_settings.cfg'
+recalboxConf = HOME + '/recalbox.conf'
 
-retroarchRoot = '/recalbox/share/system/configs/retroarch'
+retroarchRoot = CONF + '/retroarch'
 retroarchCustom = retroarchRoot + '/retroarchcustom.cfg'
 retroarchCustomOrigin = retroarchRoot + "/retroarchcustom.cfg.origin"
 retroarchCoreCustom = retroarchRoot + "/cores/retroarch-core-options.cfg"
 
 retroarchBin = "retroarch"
 retroarchCores = "/usr/lib/libretro/"
-shadersRoot = "/recalbox/share_init/shaders/presets/"
+shadersRoot = "/recalbox/share/shaders/presets/"
 shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
 
-fbaRoot = '/recalbox/share/system/configs/fba/'
+fbaRoot = CONF + '/fba/'
 fbaCustom = fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'
 fba2xBin = '/usr/bin/fba2x'
 
-mupenCustom = "/recalbox/share/system/configs/mupen64/mupen64plus.cfg"
+mupenConf = CONF + '/mupen'
+mupenCustom = mupenConf + "/mupen64plus.cfg"
+mupenInput = mupenConf + "InputAutoCfg.ini"
 
 shaderPresetRoot = "/recalbox/share/system/configs/shadersets/"
 
-kodiJoystick = '/recalbox/share/system/.kodi/userdata/keymaps/recalbox.xml'
-kodiMappingUser    = '/recalbox/share/system/configs/kodi/input.xml'
-kodiMappingSystem  = '/recalbox/share_init/system/configs/kodi/input.xml'
+kodiJoystick = HOME + '/.kodi/userdata/keymaps/recalbox.xml'
+kodiMapping  = CONF + '/kodi/input.xml'
 
 kodiBin  = '/recalbox/scripts/kodilauncher.sh'
 
@@ -40,4 +43,48 @@ moonlightMapping[2] = moonlightCustom + '/mappingP2.conf'
 moonlightMapping[3] = moonlightCustom + '/mappingP3.conf'
 moonlightMapping[4] = moonlightCustom + '/mappingP4.conf'
 
-logdir = '/recalbox/share/system/logs/'
+logdir = HOME + '/logs/'
+#!/usr/bin/env python
+
+esInputs = HOME + '/.emulationstation/es_input.cfg'
+esSettings = HOME + '/.emulationstation/es_settings.cfg'
+recalboxConf = HOME + '/recalbox.conf'
+
+retroarchRoot = CONF + '/retroarch'
+retroarchCustom = retroarchRoot + '/retroarchcustom.cfg'
+retroarchCustomOrigin = retroarchRoot + "/retroarchcustom.cfg.origin"
+retroarchCoreCustom = retroarchRoot + "/cores/retroarch-core-options.cfg"
+
+retroarchBin = "retroarch"
+retroarchCores = "/usr/lib/libretro/"
+shadersRoot = "/recalbox/share/shaders/presets/"
+shadersExt = '.gplsp'
+libretroExt = '_libretro.so'
+
+fbaRoot = CONF + '/fba/'
+fbaCustom = fbaRoot + 'fba2x.cfg'
+fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'
+fba2xBin = '/usr/bin/fba2x'
+
+mupenConf = CONF + '/mupen64'
+mupenCustom = mupenConf + '/mupen64plus.cfg'
+mupenInput = mupenConf + '/InputAutoCfg.ini'
+
+shaderPresetRoot = "/recalbox/share/system/configs/shadersets/"
+
+kodiJoystick = HOME + '/.kodi/userdata/keymaps/recalbox.xml'
+kodiMapping  = CONF + '/kodi/input.xml'
+
+kodiBin  = '/recalbox/scripts/kodilauncher.sh'
+
+moonlightBin = '/usr/bin/moonlight'
+moonlightCustom = '/recalbox/share/config/moonlight'
+moonlightConfig = moonlightCustom + '/moonlight.conf'
+moonlightGamelist = moonlightCustom + '/gamelist.txt'
+moonlightMapping = dict()
+moonlightMapping[1] = moonlightCustom + '/mappingP1.conf'
+moonlightMapping[2] = moonlightCustom + '/mappingP2.conf'
+moonlightMapping[3] = moonlightCustom + '/mappingP3.conf'
+moonlightMapping[4] = moonlightCustom + '/mappingP4.conf'
+
+logdir = HOME + '/logs/'
