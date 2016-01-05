@@ -102,6 +102,8 @@ if __name__ == '__main__':
     parser.add_argument("-p4devicepath", help="player4 controller device", type=str, required=False)
     parser.add_argument("-system", help="select the system to launch", type=str, required=True)
     parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
+    parser.add_argument("-emulator", help="force emulator", type=str, required=False)
+    parser.add_argument("-core", help="fore emulator core", type=str, required=False)
     parser.add_argument("-demo", help="mode demo", type=bool, required=False)
 
     args = parser.parse_args()
@@ -122,7 +124,7 @@ if __name__ == '__main__':
         system = emulators[systemName]
         systemManager = ConfigManager()
 
-        systemManager.configure(system)
+        systemManager.configure(system, args.emulator, args.core)
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
         print(command.array)
         runner.runCommand(command)
