@@ -26,10 +26,11 @@ mupenConf = CONF + '/mupen'
 mupenCustom = mupenConf + "/mupen64plus.cfg"
 mupenInput = mupenConf + "InputAutoCfg.ini"
 
-shaderPresetRoot = "/recalbox/share/system/configs/shadersets/"
+shaderPresetRoot = "/recalbox/share_init/system/configs/shadersets/"
 
 kodiJoystick = HOME + '/.kodi/userdata/keymaps/recalbox.xml'
-kodiMapping  = CONF + '/kodi/input.xml'
+kodiMappingUser    = CONF + '/kodi/input.xml'
+kodiMappingSystem  = '/recalbox/share_init/system/configs/kodi/input.xml'
 
 kodiBin  = '/recalbox/scripts/kodilauncher.sh'
 
