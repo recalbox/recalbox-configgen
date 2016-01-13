@@ -22,8 +22,8 @@ fbaCustom = fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'
 fba2xBin = '/usr/bin/fba2x'
 
-mupenConf = CONF + '/mupen'
-mupenCustom = mupenConf + "/mupen64plus.cfg"
+mupenConf = CONF + '/mupen64/'
+mupenCustom = mupenConf + "mupen64plus.cfg"
 mupenInput = mupenConf + "InputAutoCfg.ini"
 
 shaderPresetRoot = "/recalbox/share_init/system/configs/shadersets/"
