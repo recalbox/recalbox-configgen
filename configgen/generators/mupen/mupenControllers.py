@@ -79,7 +79,6 @@ def setControllerLine(input, mupenSettingName):
 			else:
 				value = "axis({}+,{}-)".format(input.id, input.id)
 		else:
-			print mupenSettingName
 			if (type(mupenPad[input.name]) is dict and mupenPad[input.name].keys()[mupenPad[input.name].values().index(mupenSettingName)] == "1") or input.value == "-1":
 				value = "axis({}+)".format(input.id)
 			else:
