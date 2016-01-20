@@ -39,9 +39,31 @@ def writeControllersConfig(controllers):
 
 
 def writeHotKeyConfig(controllers):
-    if '1' in controllers:
-        if 'hotkey' in controllers['1'].inputs:
-            mupenSettings.save('Joy Mapping Stop', "\"J{}B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id))
+	if '1' in controllers:
+		if 'hotkey' in controllers['1'].inputs:
+			mupenSettings.save('Joy Mapping Stop', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['start'].id))
+			mupenSettings.save('Joy Mapping Save State', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['y'].id))
+			mupenSettings.save('Joy Mapping Load State', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['x'].id))
+			mupenSettings.save('Joy Mapping Screenshot', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['pageup'].id))
+		if controllers['1'].inputs['up'].type == 'button':
+			mupenSettings.save('Joy Mapping Increment Slot', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['up'].id))
+		elif controllers['1'].inputs['up'].type == 'hat':
+			mupenSettings.save('Joy Mapping Increment Slot', "\"J{}B{}/H{}V{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['up'].id, controllers['1'].inputs['up'].value))
+		elif controllers['1'].inputs['up'].type == 'axis':
+			if controllers['1'].inputs['up'].value == '-1':
+				mupenSettings.save('Joy Mapping Increment Slot', "\"J{}B{}/A{}{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['up'].id, '-'))
+			else:
+				mupenSettings.save('Joy Mapping Increment Slot', "\"J{}B{}/A{}{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['up'].id, '+'))
+
+		if controllers['1'].inputs['right'].type == 'button':
+			mupenSettings.save('Joy Mapping Fast Forward', "\"J{}B{}/B{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['right'].id))
+		elif controllers['1'].inputs['right'].type == 'hat':
+			mupenSettings.save('Joy Mapping Fast Forward', "\"J{}B{}/H{}V{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['right'].id, controllers['1'].inputs['right'].value))
+		elif controllers['1'].inputs['right'].type == 'axis':
+			if controllers['1'].inputs['right'].value == '-1':
+				mupenSettings.save('Joy Mapping Fast Forward', "\"J{}B{}/A{}{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['right'].id, '-'))
+			else:
+				mupenSettings.save('Joy Mapping Fast Forward', "\"J{}B{}/A{}{}\"".format(controllers['1'].index, controllers['1'].inputs['hotkey'].id, controllers['1'].inputs['right'].id, '+'))
 
 def defineControllerKeys(controller):
 	config = dict()
