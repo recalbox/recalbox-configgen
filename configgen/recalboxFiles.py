@@ -16,7 +16,8 @@ retroarchCores = "/usr/lib/libretro/"
 shadersRoot = "/recalbox/share/shaders/presets/"
 shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
-
+screenshotsDir = "/recalbox/share/screenshots/"
+savesDir = "/recalbox/share/saves/"
 fbaRoot = CONF + '/fba/'
 fbaCustom = fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'

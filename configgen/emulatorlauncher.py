@@ -15,6 +15,8 @@ from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
 import signal
+import recalboxFiles
+import os
 
 generators = {
     'libretro': LibretroGenerator(),
@@ -128,6 +130,10 @@ if __name__ == '__main__':
         systemManager = ConfigManager()
 
         systemManager.configure(system, args.emulator, args.core)
+	# Save dir
+	if not os.path.exists(recalboxFiles.savesDir+system.name):
+    		os.makedirs(recalboxFiles.savesDir+system.name)
+
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
         print(command.array)
         runner.runCommand(command)

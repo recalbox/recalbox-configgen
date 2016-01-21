@@ -64,6 +64,8 @@ def createLibretroConfig(system):
     else:
         retroarchConfig['input_joypad_driver'] = 'udev'
 
+    retroarchConfig['savestate_directory'] = recalboxFiles.savesDir + system.name
+    retroarchConfig['savefile_directory'] = recalboxFiles.savesDir + system.name
     return retroarchConfig
 
 
