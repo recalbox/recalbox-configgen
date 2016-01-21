@@ -23,8 +23,9 @@ class ScummVMGenerator(Generator):
         print romName
         commandArray = ["scummvm", 
 			"--joystick=0", 
-			"--screenshotspath=/recalbox/share/screenshots", 
+			"--screenshotspath="+recalboxFiles.screenshotsDir, 
 			"--extrapath=/usr/share/scummvm",
+			"--savepath="+recalboxFiles.savesDir+"scummvm",
 			"--path=""{}""".format(romPath),
 			"""{}""".format(romName)]
 			
