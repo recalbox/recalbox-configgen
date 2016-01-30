@@ -36,7 +36,7 @@ kodiMappingSystem  = '/recalbox/share_init/system/configs/kodi/input.xml'
 kodiBin  = '/recalbox/scripts/kodilauncher.sh'
 
 moonlightBin = '/usr/bin/moonlight'
-moonlightCustom = '/recalbox/share/config/moonlight'
+moonlightCustom = CONF+'/moonlight'
 moonlightConfig = moonlightCustom + '/moonlight.conf'
 moonlightGamelist = moonlightCustom + '/gamelist.txt'
 moonlightMapping = dict()
