@@ -37,7 +37,7 @@ hatstoname = {'1': 'up', '2': 'right', '4': 'down', '8': 'left'}
 retroarchspecialsnomenu = {'x': 'load_state', 'y': 'save_state', 'pageup': 'screenshot', \
                            'start': 'exit_emulator', 'up': 'state_slot_increase', \
                            'down': 'state_slot_decrease', 'left': 'rewind', 'right': 'hold_fast_forward', \
-                           'l2': 'shader_prev', 'r2': 'shader_next'}
+                           'l2': 'shader_prev', 'r2': 'shader_next', 'a': 'reset'}
 retroarchspecials = retroarchspecialsnomenu.copy()
 retroarchspecials['b'] = 'menu_toggle'
 

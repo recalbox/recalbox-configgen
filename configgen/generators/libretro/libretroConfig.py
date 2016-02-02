@@ -59,6 +59,13 @@ def createLibretroConfig(system):
     else:
         retroarchConfig['rewind_enable'] = 'false'
 
+    if enabled('autosave', recalboxConfig):
+        retroarchConfig['savestate_auto_save'] = 'true'
+        retroarchConfig['savestate_auto_load'] = 'true'
+    else:
+        retroarchConfig['savestate_auto_save'] = 'false'
+        retroarchConfig['savestate_auto_load'] = 'false'
+
     if defined('inputdriver', recalboxConfig):
         retroarchConfig['input_joypad_driver'] = recalboxConfig['inputdriver']
     else:
