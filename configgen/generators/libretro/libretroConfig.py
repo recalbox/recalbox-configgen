@@ -23,6 +23,10 @@ def defined(key, dict):
 
 ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
 
+# Define the libretro device type corresponding to the libretro cores, when needed.
+coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '769'};
+coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
+
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -73,6 +77,15 @@ def createLibretroConfig(system):
 
     retroarchConfig['savestate_directory'] = recalboxFiles.savesDir + system.name
     retroarchConfig['savefile_directory'] = recalboxFiles.savesDir + system.name
+
+    retroarchConfig['input_libretro_device_p1'] = '1'
+    retroarchConfig['input_libretro_device_p2'] = '1'
+
+    if(system.config['core'] in coreToP1Device):
+        retroarchConfig['input_libretro_device_p1'] = coreToP1Device[system.config['core']]
+
+    if(system.config['core'] in coreToP2Device):
+        retroarchConfig['input_libretro_device_p2'] = coreToP2Device[system.config['core']]
     return retroarchConfig
 
 
