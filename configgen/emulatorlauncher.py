@@ -32,7 +32,7 @@ emulators = dict()
 # Nintendo
 emulators["snes"] = Emulator(name='snes', emulator='libretro', core='pocketsnes')
 emulators["nes"] = Emulator(name='nes', emulator='libretro', core='fceunext')
-emulators["n64"] = Emulator(name='n64', emulator='mupen64plus', core='n64')
+emulators["n64"] = Emulator(name='n64', emulator='mupen64plus', core='gliden64')
 emulators["gba"] = Emulator(name='gba', emulator='libretro', core='gpsp')
 emulators["gb"] = Emulator(name='gb', emulator='libretro', core='gambatte')
 emulators["gbc"] = Emulator(name='gbc', emulator='libretro', core='gambatte')
