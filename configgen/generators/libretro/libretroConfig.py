@@ -86,6 +86,13 @@ def createLibretroConfig(system):
 
     if(system.config['core'] in coreToP2Device):
         retroarchConfig['input_libretro_device_p2'] = coreToP2Device[system.config['core']]
+
+    if enabled('retroachievements', recalboxConfig):
+        retroarchConfig['cheevos_enable'] = 'true'
+        retroarchConfig['cheevos_username'] = recalboxConfig['retroachievements.username']
+        retroarchConfig['cheevos_password'] = recalboxConfig['retroachievements.password']
+    else:
+        retroarchConfig['cheevos_enable'] = 'false'
     return retroarchConfig
 
 
