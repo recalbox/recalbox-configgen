@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import Command
+import mupenConfig
 import mupenControllers
 import recalboxFiles
 from generators.Generator import Generator
@@ -13,6 +14,8 @@ class MupenGenerator(Generator):
         if not system.config['configfile']:
             # Using recalbox config file
             system.config['configfile'] = recalboxFiles.mupenCustom
+            # Write configuration file
+            mupenConfig.writeMupenConfig(system, playersControllers)
             #  Write controllers configuration files
             mupenControllers.writeControllersConfig(playersControllers)
 

@@ -28,35 +28,12 @@ mupenDoubleAxis = {0:'X Axis', 1:'Y Axis'}
 
 # Write a configuration for a specified controller
 def writeControllersConfig(controllers):
-    writeHotKeyConfig(controllers)
-
     for controller in controllers:
 		player = controllers[controller]
 		# Dynamic controller bindings
 		# Write to file
 		config = defineControllerKeys(player)
 		writeToIni(player, config)
-
-def createButtonCode(button):
-	if(button.type == 'axis'):
-		if button.value == '-1':
-			return 'A'+button.id+'-'
-		else:
-			return 'A'+button.id+'+'
-	if(button.type == 'button'):
-		return 'B'+button.id
-	if(button.type == 'hat'):
-		return 'H'+button.id+'V'+button.value
-
-def writeHotKeyConfig(controllers):
-	if '1' in controllers:
-		if 'hotkey' in controllers['1'].inputs:
-			mupenSettings.save('Joy Mapping Stop', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['start'])))
-			mupenSettings.save('Joy Mapping Save State', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['y'])))
-			mupenSettings.save('Joy Mapping Load State', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['x'])))
-			mupenSettings.save('Joy Mapping Screenshot', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['pageup'])))
-			mupenSettings.save('Joy Mapping Increment Slot', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['up'])))
-			mupenSettings.save('Joy Mapping Fast Forward', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['right'])))
 
 def defineControllerKeys(controller):
 	config = dict()
