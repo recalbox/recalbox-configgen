@@ -9,7 +9,6 @@ import json
 mupenSettings = UnixSettings(recalboxFiles.mupenCustom, separator=' ')
 
 def writeMupenConfig(system, controllers):
-	print "writeMupenConfig"
 	writeHotKeyConfig(controllers)
 	group, mode, drive = system.config['videomode'].split()
 	setRealResolution(group, mode, drive)
@@ -39,7 +38,6 @@ def createButtonCode(button):
 
 def setRealResolution(group, mode, drive):
 	# Use tvservice to get the real resolution
-	print "getRealResolution " + group+mode+drive
 	groups = ['CEA', 'DMT']
 	if group not in groups:
 		sys.exit("{} is an unknown group. Can't switch to {} {} {}".format(group, group, mode, drive))
