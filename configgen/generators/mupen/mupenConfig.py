@@ -12,8 +12,7 @@ def writeMupenConfig(system, controllers):
 	writeHotKeyConfig(controllers)
 	group, mode, drive = system.config['videomode'].split()
 	setRealResolution(group, mode, drive)
-	
-	pass
+
 	
 def writeHotKeyConfig(controllers):
 	if '1' in controllers:
@@ -24,6 +23,7 @@ def writeHotKeyConfig(controllers):
 			mupenSettings.save('Joy Mapping Screenshot', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['pageup'])))
 			mupenSettings.save('Joy Mapping Increment Slot', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['up'])))
 			mupenSettings.save('Joy Mapping Fast Forward', "\"J{}{}/{}\"".format(controllers['1'].index, createButtonCode(controllers['1'].inputs['hotkey']), createButtonCode(controllers['1'].inputs['right'])))
+
 			
 def createButtonCode(button):
 	if(button.type == 'axis'):
@@ -35,6 +35,7 @@ def createButtonCode(button):
 		return 'B'+button.id
 	if(button.type == 'hat'):
 		return 'H'+button.id+'V'+button.value
+
 
 def setRealResolution(group, mode, drive):
 	# Use tvservice to get the real resolution
