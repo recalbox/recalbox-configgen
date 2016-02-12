@@ -28,7 +28,10 @@ mupenDoubleAxis = {0:'X Axis', 1:'Y Axis'}
 
 # Write a configuration for a specified controller
 def writeControllersConfig(controllers):
-    for controller in controllers:
+	if os.path.isfile(recalboxFiles.mupenInput):
+		os.remove(recalboxFiles.mupenInput)
+
+	for controller in controllers:
 		player = controllers[controller]
 		# Dynamic controller bindings
 		# Write to file
@@ -88,12 +91,15 @@ def setControllerLine(input, mupenSettingName):
 
 
 def writeToIni(controller, config):
+	Config.read(recalboxFiles.mupenInput)
+	section = controller.realName
+
+	# Avoid a crash when writing twice a same section
+	if Config.has_section(section):
+		return None
+
 	# Open file
 	cfgfile = open(recalboxFiles.mupenInput,'w+')
-	#Config.read(recalboxFiles.mupenCustom)
-	# Set section name
-	#section = "Input-SDL-Control{}".format(controller.index)
-	section = controller.realName
 
 	# Write static config
 	Config.add_section(section)
