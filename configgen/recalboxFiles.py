@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 HOME = '/recalbox/share/system'
 CONF = HOME + '/configs'
+SAVES = '/recalbox/share/saves'
+SCREENSHOTS = '/recalbox/share/screenshots'
 
 esInputs = HOME + '/.emulationstation/es_input.cfg'
 esSettings = HOME + '/.emulationstation/es_settings.cfg'
@@ -26,6 +28,7 @@ fba2xBin = '/usr/bin/fba2x'
 mupenConf = CONF + '/mupen64/'
 mupenCustom = mupenConf + "mupen64plus.cfg"
 mupenInput = mupenConf + "InputAutoCfg.ini"
+mupenSaves = SAVES + "/n64"
 
 shaderPresetRoot = "/recalbox/share_init/system/configs/shadersets/"
 
