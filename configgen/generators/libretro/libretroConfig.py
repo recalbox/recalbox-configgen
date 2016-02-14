@@ -89,8 +89,8 @@ def createLibretroConfig(system):
 
     if enabled('retroachievements', recalboxConfig):
         retroarchConfig['cheevos_enable'] = 'true'
-        retroarchConfig['cheevos_username'] = recalboxConfig['retroachievements.username']
-        retroarchConfig['cheevos_password'] = recalboxConfig['retroachievements.password']
+        retroarchConfig['cheevos_username'] = recalboxConfig.get('retroachievements.username', "")
+        retroarchConfig['cheevos_password'] = recalboxConfig.get('retroachievements.password', "")
     else:
         retroarchConfig['cheevos_enable'] = 'false'
     return retroarchConfig
