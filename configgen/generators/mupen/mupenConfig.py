@@ -9,6 +9,7 @@ import json
 mupenSettings = UnixSettings(recalboxFiles.mupenCustom, separator=' ')
 
 def writeMupenConfig(system, controllers):
+	setPaths()
 	writeHotKeyConfig(controllers)
 	group, mode, drive = system.config['videomode'].split()
 	setRealResolution(group, mode, drive)
@@ -59,3 +60,9 @@ def setRealResolution(group, mode, drive):
 			return
 			
 	sys.exit("The resolution for '{} {} {}' is not supported by your monitor".format(group, mode, drive))
+
+
+def setPaths():
+	mupenSettings.save('ScreenshotPath', recalboxFiles.SCREENSHOTS)
+	mupenSettings.save('SaveStatePath', recalboxFiles.mupenSaves)
+	mupenSettings.save('SaveSRAMPath', recalboxFiles.mupenSaves)
