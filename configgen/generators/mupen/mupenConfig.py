@@ -11,8 +11,9 @@ mupenSettings = UnixSettings(recalboxFiles.mupenCustom, separator=' ')
 def writeMupenConfig(system, controllers):
 	setPaths()
 	writeHotKeyConfig(controllers)
-	group, mode, drive = system.config['videomode'].split()
-	setRealResolution(group, mode, drive)
+	if system.config['videomode'] != 'default':
+		group, mode, drive = system.config['videomode'].split()
+		setRealResolution(group, mode, drive)
 
 	
 def writeHotKeyConfig(controllers):
