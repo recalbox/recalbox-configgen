@@ -63,7 +63,7 @@ def loadAllControllersByNameConfig():
 
 # Create a controller array with the player id as a key
 def loadControllerConfig(p1index, p1guid, p1name, p1dev, p2index, p2guid, p2name, p2dev, p3index, p3guid, p3name, p3dev,
-                         p4index, p4guid, p4name, p4dev):
+                         p4index, p4guid, p4name, p4dev, p5index, p5guid, p5name, p5dev):
     playerControllers = dict()
     controllers = loadAllControllersConfig()
 
@@ -79,6 +79,9 @@ def loadControllerConfig(p1index, p1guid, p1name, p1dev, p2index, p2guid, p2name
     newController = findBestControllerConfig(controllers, '4', p4guid, p4index, p4name, p4dev)
     if newController:
         playerControllers["4"] = newController
+    newController = findBestControllerConfig(controllers, '5', p5guid, p5index, p5name, p5dev)
+    if newController:
+        playerControllers["5"] = newController
     return playerControllers
 
 
