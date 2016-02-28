@@ -2,7 +2,7 @@
 
 import argparse
 import time
-
+from sys import exit
 from Emulator import Emulator
 import generators
 from generators.libretro.libretroGenerator import LibretroGenerator
@@ -141,5 +141,6 @@ if __name__ == '__main__':
 
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
         print(command.array)
-        runner.runCommand(command)
+        exitcode = runner.runCommand(command)
         time.sleep(1)
+        exit(exitcode)

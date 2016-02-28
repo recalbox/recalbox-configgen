@@ -13,10 +13,13 @@ def runCommand(command):
         videoMode.setVideoMode(command.videomode)
     command.env.update(os.environ)
     proc = subprocess.Popen(command.array, stdout=subprocess.PIPE, env=command.env)
+    exitcode = -1
     try:
-        proc.wait()
+        exitcode = proc.wait()
     except:
         print("emulator exited")
 
     if command.videomode != 'default':
         videoMode.setPreffered()
+
+    return exitcode
