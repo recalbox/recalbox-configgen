@@ -11,6 +11,7 @@ from generators.mupen.mupenGenerator import MupenGenerator
 from generators.kodi.kodiGenerator import KodiGenerator
 from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
+from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
@@ -24,7 +25,8 @@ generators = {
     'mupen64plus': MupenGenerator(),
     'kodi': KodiGenerator(),
     'moonlight': MoonlightGenerator(),
-    'scummvm': ScummVMGenerator()
+    'scummvm': ScummVMGenerator(),
+    'dosbox': DosBoxGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -73,6 +75,7 @@ emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed'
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
 emulators["imageviewer"] = Emulator(name='imageviewer', emulator='libretro', core='imageviewer')
 emulators["scummvm"] = Emulator(name='scummvm', emulator='scummvm', videomode='default')
+emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')
