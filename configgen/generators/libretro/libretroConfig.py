@@ -27,6 +27,9 @@ ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
 coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '769'};
 coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
 
+# Define systems compatible with retroachievements
+systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
+
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -87,10 +90,13 @@ def createLibretroConfig(system):
     if(system.config['core'] in coreToP2Device):
         retroarchConfig['input_libretro_device_p2'] = coreToP2Device[system.config['core']]
 
+    retroarchConfig['cheevos_enable'] = 'false'
+
     if enabled('retroachievements', recalboxConfig):
-        retroarchConfig['cheevos_enable'] = 'true'
-        retroarchConfig['cheevos_username'] = recalboxConfig.get('retroachievements.username', "")
-        retroarchConfig['cheevos_password'] = recalboxConfig.get('retroachievements.password', "")
+        if(system.name in systemToRetroachievements):
+            retroarchConfig['cheevos_enable'] = 'true'
+            retroarchConfig['cheevos_username'] = recalboxConfig.get('retroachievements.username', "")
+            retroarchConfig['cheevos_password'] = recalboxConfig.get('retroachievements.password', "")
     else:
         retroarchConfig['cheevos_enable'] = 'false'
     return retroarchConfig
