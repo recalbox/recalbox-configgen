@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+HOME_INIT = '/recalbox/share_init/system/'
 HOME = '/recalbox/share/system'
 CONF = HOME + '/configs'
 SAVES = '/recalbox/share/saves'
