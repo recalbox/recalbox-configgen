@@ -36,12 +36,12 @@ class TestLoader(unittest.TestLoader):
 
         loaded_suite = self.suiteClass(tests)
         return loaded_suite
-    
+
     def loadTestsFromFixture(self, testCaseClass, name, fn, fix_cls):
         # First check if we already generated this fixture previously
         fix_args = getattr(fn, self._str_fixture_args)
         fix_kwargs = getattr(fn, self._str_fixture_kwargs)
-        fix_key = str(testCaseClass) + str(fix_args) + \
+        fix_key = str(fix_cls) + str(fix_args) + \
                     str(sorted(fix_kwargs.items()))
         fix_list = self.fixtures.get(fix_key, None)
 
@@ -50,7 +50,7 @@ class TestLoader(unittest.TestLoader):
             fix_obj = fix_cls(*fix_args, **fix_kwargs)
             fix_list = fix_obj.generate() 
             self.fixtures[fix_key] = fix_list
-        
+
         # Create test list from the fixture  
         fix_tests = [testCaseClass(name, params=p, results=r, msg=m)
                     for (p, r, m) in fix_list]

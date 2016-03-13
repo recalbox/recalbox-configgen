@@ -51,7 +51,7 @@ class Joystick(FixtureJoystick):
             if verbose:
                 exp = choices[0]
                 if (a != exp) :
-                    msg = '[Warning] Uses ({}) instead of ({})'.format(a, exp)
+                    msg = '[INFO] Uses ({}) instead of ({})'.format(a, exp)
                     print(self.message(controller, message=msg))
             
             return str(value.id)
@@ -84,7 +84,7 @@ class Joystick(FixtureJoystick):
                 })
                     
         except Exception as e:
-            print(self.message(controller, message='[ERROR] {}'.format(e)))
+            print(self.message(controller, message='[WARNING] {}'.format(e)))
             results = None
 
         return results
