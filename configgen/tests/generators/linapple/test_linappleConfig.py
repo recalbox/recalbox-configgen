@@ -35,6 +35,7 @@ class TestLinappleConfig(runtest.TestCase):
         runtest.TestCase.tearDownClass()
     
     def setUp(self):
+        super(self.__class__, self).setUp()
         self.maxDiff = None
         
     def tearDown(self):
