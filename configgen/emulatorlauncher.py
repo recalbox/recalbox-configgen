@@ -5,11 +5,12 @@ import time
 from sys import exit
 from Emulator import Emulator
 import generators
-from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.fba2x.fba2xGenerator import Fba2xGenerator
-from generators.mupen.mupenGenerator import MupenGenerator
 from generators.kodi.kodiGenerator import KodiGenerator
+from generators.linapple.linappleGenerator import LinappleGenerator
+from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.moonlight.moonlightGenerator import MoonlightGenerator
+from generators.mupen.mupenGenerator import MupenGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.configManager import ConfigManager
@@ -20,13 +21,15 @@ import recalboxFiles
 import os
 
 generators = {
-    'libretro': LibretroGenerator(),
     'fba2x': Fba2xGenerator(),
-    'mupen64plus': MupenGenerator(),
     'kodi': KodiGenerator(),
+    'linapple': LinappleGenerator(os.path.join(recalboxFiles.HOME_INIT, '.linapple'),
+                                  os.path.join(recalboxFiles.HOME, '.linapple')),
+    'libretro': LibretroGenerator(),
     'moonlight': MoonlightGenerator(),
     'scummvm': ScummVMGenerator(),
-    'dosbox': DosBoxGenerator()
+    'dosbox': DosBoxGenerator(),
+    'mupen64plus': MupenGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -56,6 +59,7 @@ emulators["fba_libretro"] = Emulator(name='fbalibretro', emulator='libretro', co
 emulators["msx"] = Emulator(name='msx', emulator='libretro', core='fmsx')
 emulators["amiga"] = Emulator(name='amiga', emulator='libretro', core='puae')
 emulators["amstradcpc"] = Emulator(name='amstradcpc', emulator='libretro', core='cap32')
+emulators["apple2"] = Emulator(name='apple2', emulator='linapple', videomode='default')
 emulators["atarist"] = Emulator(name='atarist', emulator='libretro', core='hatari')
 emulators["zxspectrum"] = Emulator(name='zxspectrum', emulator='libretro', core='fuse')
 emulators["odyssey2"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
@@ -80,14 +84,40 @@ emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')
 
+def main(args):
+    playersControllers = dict()
+    if not args.demo:
+        # Read the controller configuration
+        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p1devicepath,
+                                                              args.p2index, args.p2guid, args.p2name, args.p2devicepath,
+                                                              args.p3index, args.p3guid, args.p3name, args.p3devicepath,
+                                                              args.p4index, args.p4guid, args.p4name, args.p4devicepath,
+                                                              args.p5index, args.p5guid, args.p5name, args.p5devicepath)
+
+    systemName = args.system
+
+    # Main Program
+    # A generator will configure its emulator, and return a command
+    if systemName in emulators:
+        system = emulators[systemName]
+        systemManager = ConfigManager()
+        systemManager.configure(system, args.emulator, args.core)
+
+        # Save dir
+        dirname = os.path.join(recalboxFiles.savesDir, system.name)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        
+        command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
+        print(command.array)
+        return runner.runCommand(command)
 
 def signal_handler(signal, frame):
     print('Exiting')
     if runner.proc:
         print('killing runner.proc')
         runner.proc.kill()
-
-
+    
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
 
@@ -119,31 +149,13 @@ if __name__ == '__main__':
     parser.add_argument("-demo", help="mode demo", type=bool, required=False)
 
     args = parser.parse_args()
+    exitcode = main(args)
+    time.sleep(1)
+    exit(exitcode)
+    
 
-    playersControllers = dict()
-    if not args.demo:
-        # Read the controller configuration
-        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p1devicepath,
-                                                              args.p2index, args.p2guid, args.p2name, args.p2devicepath,
-                                                              args.p3index, args.p3guid, args.p3name, args.p3devicepath,
-                                                              args.p4index, args.p4guid, args.p4name, args.p4devicepath,
-                                                              args.p5index, args.p5guid, args.p5name, args.p5devicepath)
-
-    systemName = args.system
-
-    # Main Program
-    # A generator will configure its emulator, and return a command
-    if systemName in emulators:
-        system = emulators[systemName]
-        systemManager = ConfigManager()
-
-        systemManager.configure(system, args.emulator, args.core)
-	# Save dir
-	if not os.path.exists(recalboxFiles.savesDir+system.name):
-    		os.makedirs(recalboxFiles.savesDir+system.name)
-
-        command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
-        print(command.array)
-        exitcode = runner.runCommand(command)
-        time.sleep(1)
-        exit(exitcode)
+# Local Variables:
+# tab-width:4
+# indent-tabs-mode:nil
+# End:
+# vim: set expandtab tabstop=4 shiftwidth=4:
