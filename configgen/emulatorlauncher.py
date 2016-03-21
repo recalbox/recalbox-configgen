@@ -13,6 +13,7 @@ from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
+from generators.vice.viceGenerator import ViceGenerator
 from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
@@ -29,7 +30,8 @@ generators = {
     'moonlight': MoonlightGenerator(),
     'scummvm': ScummVMGenerator(),
     'dosbox': DosBoxGenerator(),
-    'mupen64plus': MupenGenerator()
+    'mupen64plus': MupenGenerator(),
+    'vice': ViceGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -80,6 +82,7 @@ emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='n
 emulators["imageviewer"] = Emulator(name='imageviewer', emulator='libretro', core='imageviewer')
 emulators["scummvm"] = Emulator(name='scummvm', emulator='scummvm', videomode='default')
 emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
+emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')

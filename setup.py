@@ -14,6 +14,7 @@ setup(name='recalbox-configgen',
         'configgen.generators.mupen', 
         'configgen.generators.scummvm', 
         'configgen.generators.dosbox',
+        'configgen.generators.vice',
         'configgen.settings',
         'configgen.utils']
       )
