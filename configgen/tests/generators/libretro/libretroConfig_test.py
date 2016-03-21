@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
 import shutil
-from Emulator import Emulator
+from configgen.Emulator import Emulator
 
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-import generators.libretro.libretroConfig as libretroConfig
-import generators.libretro.libretroGenerator as libretroGen
-import settings.unixSettings as unixSettings
-import settings.recalboxSettings as recalSettings
+import configgen.generators.libretro.libretroConfig as libretroConfig
+import configgen.settings.unixSettings as unixSettings
+import configgen.settings.recalboxSettings as recalSettings
 
 retroarchcustomFile = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustom.cfg'))
 recalboxConfFile = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/recalbox.conf'))

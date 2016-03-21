@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
@@ -9,10 +8,10 @@ import shutil
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-import generators.libretro.libretroControllers as libretroControllers
-import settings.unixSettings as unixSettings
-import controllersConfig as controllersConfig
-from Emulator import Emulator
+import configgen.generators.libretro.libretroControllers as libretroControllers
+import configgen.settings.unixSettings as unixSettings
+import configgen.controllersConfig as controllersConfig
+from configgen.Emulator import Emulator
 
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/retroarchcustom.cfg.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg")))

@@ -1,15 +1,12 @@
 #!/usr/bin/env python
-
-import os
 import sys
 import os.path
 import unittest
-import shutil
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-import utils.videoMode as videoMode
+import configgen.utils.videoMode as videoMode
 
 class VideoModeUtilTest(unittest.TestCase):
     pass

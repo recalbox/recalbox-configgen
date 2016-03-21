@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
 import shutil
-from Emulator import Emulator
+from configgen.Emulator import Emulator
 
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-import generators.fba2x.fba2xConfig as fba2xConfig
-import settings.unixSettings as unixSettings
+import configgen.generators.fba2x.fba2xConfig as fba2xConfig
+import configgen.settings.unixSettings as unixSettings
 
 fba2xCustom = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/fba2x.cfg'))
 

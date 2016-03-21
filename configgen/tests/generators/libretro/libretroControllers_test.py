@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
@@ -9,11 +8,11 @@ import shutil
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-import generators.libretro.libretroControllers as libretroControllers
-import controllersConfig as controllersConfig
-from controllersConfig import Controller
-from Emulator import Emulator
-from settings.unixSettings import UnixSettings
+import configgen.generators.libretro.libretroControllers as libretroControllers
+import configgen.controllersConfig as controllersConfig
+from configgen.controllersConfig import Controller
+from configgen.Emulator import Emulator
+from configgen.settings.unixSettings import UnixSettings
 
 
 RETROARCH_CONFIG = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg"))
@@ -160,7 +159,7 @@ class TestLibretroGeneratorGetValue(unittest.TestCase):
 
 
 class TestLibretroDualAnalogPSone(unittest.TestCase):
-    def test_enable_analog_mode_psx(self):
+    def test_enable_standard_mode_psx(self):
         val = libretroControllers.getAnalogCoreMode(basicController1)
         self.assertEquals("standard", val)
 

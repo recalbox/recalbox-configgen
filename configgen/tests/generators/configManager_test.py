@@ -1,14 +1,12 @@
-import os
 import sys
 import os.path
 import unittest
 import shutil
-import controllersConfig
-import time
-from settings.unixSettings import UnixSettings
-import generators
-from generators.configManager import ConfigManager
-from Emulator import Emulator
+import configgen.controllersConfig as controllersConfig
+from configgen.settings.unixSettings import UnixSettings
+import configgen.generators as generators
+from configgen.generators.configManager import ConfigManager
+from configgen.Emulator import Emulator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
@@ -62,7 +60,7 @@ class ConfigManagerTest(unittest.TestCase):
         self.manager.updateShaders(self.wswan, "none")
         self.assertEquals(self.wswan.config['shaders'], 'defaultshaders')
 
-    def test_menues_change_specials_entry(self):
+    def test_menues_change_specials_entry1(self):
         self.manager.configure(self.wswan)
         self.assertEquals(self.wswan.config['specials'], 'default')
 
@@ -71,7 +69,7 @@ class ConfigManagerTest(unittest.TestCase):
         self.manager.configure(self.wswan)
         self.assertEquals(self.wswan.config['specials'], 'default')
 
-    def test_menues_change_specials_entry(self):
+    def test_menues_change_specials_entry2(self):
         UnixSettings(recalboxConf).save('system.emulators.specialkeys', 'none')
         self.manager.configure(self.wswan)
         self.assertEquals(self.wswan.config['specials'], 'none')

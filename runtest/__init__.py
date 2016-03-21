@@ -14,7 +14,7 @@ dir_tmp = os.path.join(dir_root , 'tests/tmp')
 #     sys.path.append(dir_root)
 
 # Override configuration directories
-import recalboxFiles
+import configgen.recalboxFiles as recalboxFiles
 recalboxFiles.esInputs = os.path.join(dir_res, 'es_input.cfg')
 recalboxFiles.esSettings = os.path.join(dir_res, 'es_settings.cfg')
 recalboxFiles.recalboxConf = os.path.join(dir_res, 'recalbox.conf')

@@ -8,7 +8,7 @@ import functools
 from unittest import SkipTest
 from loader import TestLoader
 
-from controllersConfig import loadAllControllersConfig
+from configgen.controllersConfig import loadAllControllersConfig
 
 def fixture_joystick(cls_fix, *args_fix, **kwargs_fix):
     def decorator(fn):

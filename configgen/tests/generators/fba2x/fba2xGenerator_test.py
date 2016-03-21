@@ -1,22 +1,20 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
 import shutil
-import controllersConfig
-import time
-import settings.unixSettings as unixSettings
+import configgen.controllersConfig as controllersConfig
+import configgen.settings.unixSettings as unixSettings
 
-from Emulator import Emulator
-from generators.fba2x.fba2xGenerator import Fba2xGenerator
+from configgen.Emulator import Emulator
+from configgen.generators.fba2x.fba2xGenerator import Fba2xGenerator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-import generators.fba2x.fba2xConfig as fba2xConfig
-import generators.fba2x.fba2xGenerator as fba2xGenerator
+import configgen.generators.fba2x.fba2xConfig as fba2xConfig
+import configgen.generators.fba2x.fba2xGenerator as fba2xGenerator
 
 
 FBA2X_ORIGIN_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/fba2x.cfg.origin'))

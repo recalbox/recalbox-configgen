@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
 import re
 import argparse
-import recalboxFiles
+import configgen.recalboxFiles as recalboxFiles
 
 settingsFile = recalboxFiles.recalboxConf
 

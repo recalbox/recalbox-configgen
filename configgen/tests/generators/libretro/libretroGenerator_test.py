@@ -1,22 +1,20 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
 import shutil
-import controllersConfig
-import time
-import settings.unixSettings as unixSettings
+import configgen.controllersConfig as controllersConfig
+import configgen.settings.unixSettings as unixSettings
 
-from Emulator import Emulator
-from generators.libretro.libretroGenerator import LibretroGenerator
+from configgen.Emulator import Emulator
+from configgen.generators.libretro.libretroGenerator import LibretroGenerator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-import generators.libretro.libretroConfig as libretroConfig
-import generators.libretro.libretroGenerator as libretroGenerator
+import configgen.generators.libretro.libretroConfig as libretroConfig
+import configgen.generators.libretro.libretroGenerator as libretroGenerator
 
 RETROARCH_ORIGIN_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustomorigin.cfg'))
 RETROARCH_CUSTOM_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/retroarchcustom.cfg'))
