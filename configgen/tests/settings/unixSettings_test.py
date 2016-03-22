@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-import os
 import sys
 import os.path
 import unittest
@@ -8,7 +6,7 @@ import shutil
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-import settings.unixSettings as unixSet
+import configgen.settings.unixSettings as unixSet
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/unixSettings.cfg")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/unixSettings.cfg")))
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/retroarchcustom.cfg.origin")), \

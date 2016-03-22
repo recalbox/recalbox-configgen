@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 
-import os
 import sys
 import os.path
 import unittest
 import shutil
-import controllersConfig
-import time
-import settings.unixSettings as unixSettings
+import configgen.controllersConfig as controllersConfig
+import configgen.settings.unixSettings as unixSettings
 
-from Emulator import Emulator
-from generators.mupen.mupenGenerator import MupenGenerator
+from configgen.Emulator import Emulator
+from configgen.generators.mupen.mupenGenerator import MupenGenerator
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
-import generators.mupen.mupenControllers as mupenControllers
+import configgen.generators.mupen.mupenControllers as mupenControllers
 
 MUPEN_CUSTOM_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/mupen64plus.cfg'))
 RECALBOX_CFG_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/recalbox.conf'))

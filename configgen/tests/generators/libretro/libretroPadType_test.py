@@ -9,9 +9,9 @@ import shutil
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-import generators.libretro.libretroControllers as libretroControllers
-import controllersConfig as controllersConfig
-from Emulator import Emulator
+import configgen.generators.libretro.libretroControllers as libretroControllers
+import configgen.controllersConfig as controllersConfig
+from configgen.Emulator import Emulator
 # Cloning config files
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../resources/retroarchcustom.cfg.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/retroarchcustom.cfg")))
@@ -48,14 +48,14 @@ class TestLibretroAnalogMode(unittest.TestCase):
         padtype = libretroControllers.getAnalogMode(basicController, snes)
         self.assertEqual("1", padtype)
 
-    def test_padtype_dual(self):
+    def test_padtype_dual1(self):
         basicController = controllersConfig.Controller("contr1", "joypad", "GUID1", '1', "0", "Joypad1RealName",
                                                        axisAndBtnsInputs)
         padtype = libretroControllers.getAnalogMode(basicController, snes)
         self.assertEqual("1", padtype)
 
 
-    def test_padtype_dual(self):
+    def test_padtype_dual2(self):
         basicController = controllersConfig.Controller("contr1", "joypad", "GUID1", '1', "0", "Joypad1RealName",
                                                        axisAndBtnsInputs)
         padtype = libretroControllers.getAnalogMode(basicController, snes)

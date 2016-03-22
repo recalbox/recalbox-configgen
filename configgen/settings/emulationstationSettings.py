@@ -2,7 +2,7 @@
 
 import re
 import os
-import recalboxFiles
+import configgen.recalboxFiles as recalboxFiles
 settingsFile = recalboxFiles.esSettings
 
 

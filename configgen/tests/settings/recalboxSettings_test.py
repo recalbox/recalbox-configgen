@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-import os
 import sys
 import os.path
 import unittest
@@ -8,7 +6,7 @@ import shutil
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-import settings.recalboxSettings as recalSettings
+import configgen.settings.recalboxSettings as recalSettings
 
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/recalbox.conf.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/recalbox.conf")))

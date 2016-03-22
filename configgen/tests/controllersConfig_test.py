@@ -7,7 +7,7 @@ import shutil
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-import controllersConfig as controllersConfig
+import configgen.controllersConfig as controllersConfig
 
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/es_input.cfg.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "resources/es_input.cfg")))

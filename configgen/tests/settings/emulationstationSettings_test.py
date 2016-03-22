@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-import os
 import sys
 import os.path
 import unittest
@@ -9,7 +7,7 @@ import shutil
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-import settings.emulationstationSettings as esSettings
+import configgen.settings.emulationstationSettings as esSettings
 
 shutil.copyfile(os.path.abspath(os.path.join(os.path.dirname(__file__), "../resources/es_settings.cfg.origin")), \
                 os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp/es_settings.cfg")))

@@ -13,8 +13,8 @@ import runtest
 import linapple_fixture
 
 # Import needed configgen modules
-import controllersConfig
-from generators.linapple.linappleConfig import LinappleConfig
+import configgen.controllersConfig as controllersConfig
+from configgen.generators.linapple.linappleConfig import LinappleConfig
 
 class TestLinappleConfig(runtest.TestCase):
 

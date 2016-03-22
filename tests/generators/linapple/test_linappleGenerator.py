@@ -13,9 +13,9 @@ import runtest
 import linapple_fixture
 
 # Import needed configgen modules
-import emulatorlauncher
-from generators.linapple.linappleConfig import LinappleConfig
-from generators.linapple.linappleGenerator import LinappleGenerator
+import configgen.emulatorlauncher as emulatorlauncher
+from configgen.generators.linapple.linappleConfig import LinappleConfig
+from configgen.generators.linapple.linappleGenerator import LinappleGenerator
 
 class TestLinappleGenerator(runtest.TestCase):
 

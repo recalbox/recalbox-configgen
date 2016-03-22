@@ -9,10 +9,9 @@ import shutil
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
-import generators.fba2x.fba2xControllers as fba2xControllers
-import generators.fba2x.fba2xConfig as fba2xConfig
-import settings.unixSettings as unixSettings
-import controllersConfig as controllersConfig
+import configgen.generators.fba2x.fba2xControllers as fba2xControllers
+import configgen.settings.unixSettings as unixSettings
+import configgen.controllersConfig as controllersConfig
 
 fba2xCustom = os.path.abspath(os.path.join(os.path.dirname(__file__), 'tmp/fba2x.cfg'))
 
