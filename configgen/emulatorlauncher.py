@@ -115,6 +115,22 @@ def main(args):
         print(command.array)
         return runner.runCommand(command)
 
+def config_upgrade(version):
+    '''
+    Upgrade all generators user's configuration files with new values added
+    to their system configuration file upgraded by S11Share:do_upgrade()
+    
+    Args: 
+        version (str): New Recalbox version
+        
+    Returns (bool):
+        Returns True if all generators sucessfully handled the upgraded.
+    '''
+    res = True
+    for g in generators.values():
+        res &= g.config_upgrade(version)
+    return res
+
 def signal_handler(signal, frame):
     print('Exiting')
     if runner.proc:

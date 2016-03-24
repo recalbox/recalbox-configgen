@@ -70,6 +70,18 @@ class TestLinappleGenerator(runtest.TestCase):
         self.assertDictContentEqual(config_init.settings,
                                     config_user.settings)
 
+    def test_config_upgrade(self):
+        generator = LinappleGenerator(self.path_init, self.path_user)
+        generator.config_upgrade('v4.0.0 2016/03/20 01:19')
+        
+    def test_config_upgrade_all(self):
+        result = True
+        generators = emulatorlauncher.generators
+        for _,g in generators.items():
+            result &= g.config_upgrade('v4.0.0 2016/03/20 01:19')
+            
+        #self.assertTrue(result)
+
 if __name__ == "__main__":
     runtest.main(testLoader=runtest.TestLoader())
     

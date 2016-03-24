@@ -33,7 +33,34 @@ class LinappleGenerator(Generator):
         self.resources = ['Master.dsk']
         self.filename = 'linapple.conf'
         self.cmdArray = [ '/usr/bin/linapple' ]
+
+    def check_resources(self):
+        '''
+        Check system needed resources
         
+        Returns (bool:
+            Returns True if the check suceeded, False otherwise.
+        '''
+        # Create user setting path, if it does not exists
+        if not os.path.exists(self.path_user):
+            os.makedirs(self.path_user)
+
+        # Ensure system configuration file is available
+        sys_conf = os.path.join(self.path_init, self.filename)
+        if not os.path.exists(sys_conf):
+            return False
+
+        # Ensure system resources are available
+        for r in self.resources:
+            sys_filename = os.path.join(self.path_init, r)
+            if not os.path.exists(sys_filename):
+                return False
+            usr_filename = os.path.join(self.path_user, r)
+            if not os.path.exists(usr_filename):
+                os.symlink(sys_filename, usr_filename)
+
+        return True
+
     def generate(self, system, rom, playersControllers):
         '''
         Configure linapple inputs and return the command line to run.
@@ -51,37 +78,56 @@ class LinappleGenerator(Generator):
             Returns Command object containing needed parameter to launch the 
             emulator or None if an error occured.
         '''
-        # Create user setting path, if it does not exists
-        if not os.path.exists(self.path_user):
-            os.makedirs(self.path_user)
-        
-        # Ensure system configuration file is available
-        sys_conf = os.path.join(self.path_init, self.filename)
-        if not os.path.exists(sys_conf):
+        # Check resources
+        if not self.check_resources(): 
             return
-        
-        # Ensure system resources are available
-        for r in self.resources:
-            sys_filename = os.path.join(self.path_init, r)
-            if not os.path.exists(sys_filename):
-                return
-            usr_filename = os.path.join(self.path_user, r)
-            if not os.path.exists(usr_filename):
-                os.symlink(sys_filename, usr_filename)
-        
+
         # Load config file
         usr_conf = os.path.join(self.path_user, self.filename)
-        filename = usr_conf if os.path.exists(usr_conf) else sys_conf
+        filename = usr_conf \
+            if os.path.exists(usr_conf) \
+            else os.path.join(self.path_init, self.filename)
         config = LinappleConfig(filename=filename)
-        
+
         # Adjust configuration 
         config.joysticks(playersControllers)
         config.system(system, rom)
-        
+
         # Save changes 
         config.save(filename=usr_conf)
+        return Command.Command(videomode=system.config['videomode'], array=self.cmdArray)
+
+    def config_upgrade(self, version):
+        '''
+        Upgrade the user's configuration file with new values added to the
+        system configuration file upgraded by S11Share:do_upgrade()
         
-        return Command.Command(videomode=system.config['videomode'], array=self.cmdArray) 
+        Args: 
+            version (str): New Recalbox version
+            
+        Returns (bool):
+            Returns True if this Generators sucessfully handled the upgrade.
+        '''
+        # Check resources
+        if not self.check_resources(): 
+            return False
+
+        # Load system configuration file
+        config = LinappleConfig(filename=os.path.join(
+                    self.path_init, self.filename))
+
+        # If an user's configuration file exists, upgrade it
+        usr_conf = os.path.join(self.path_user, self.filename)
+        if os.path.exists(usr_conf):
+            config_sys = config
+            config = LinappleConfig(filename=usr_conf)
+            for k,v in config_sys.settings.items():
+                if k not in config.settings:
+                    config.settings[k]=v
+
+        # Save config file (original/updated) to user's directory
+        config.save(filename=usr_conf)
+        return True
 
 # Local Variables:
 # tab-width:4
