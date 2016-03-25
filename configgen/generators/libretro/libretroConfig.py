@@ -97,6 +97,10 @@ def createLibretroConfig(system):
             retroarchConfig['cheevos_enable'] = 'true'
             retroarchConfig['cheevos_username'] = recalboxConfig.get('retroachievements.username', "")
             retroarchConfig['cheevos_password'] = recalboxConfig.get('retroachievements.password', "")
+            if enabled('retroachievements.hardcore', recalboxConfig):
+                retroarchConfig['cheevos_hardcore_mode_enable'] = 'true'
+            else:
+                retroarchConfig['cheevos_hardcore_mode_enable'] = 'false'
     else:
         retroarchConfig['cheevos_enable'] = 'false'
     return retroarchConfig
