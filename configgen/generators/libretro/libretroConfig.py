@@ -30,6 +30,9 @@ coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
 # Define systems compatible with retroachievements
 systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
 
+# Define systems not compatible with rewind option
+systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2'};
+
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -61,8 +64,11 @@ def createLibretroConfig(system):
             retroarchConfig['video_aspect_ratio_auto'] = 'true'
             retroarchConfig['aspect_ratio_index'] = ''
 
+    retroarchConfig['rewind_enable'] = 'false'
+
     if enabled('rewind', recalboxConfig):
-        retroarchConfig['rewind_enable'] = 'true'
+        if(not system.name in systemNoRewind):
+            retroarchConfig['rewind_enable'] = 'true'
     else:
         retroarchConfig['rewind_enable'] = 'false'
 
