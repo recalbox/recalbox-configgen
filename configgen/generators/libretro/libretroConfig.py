@@ -31,7 +31,7 @@ coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
 systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
 
 # Define systems not compatible with rewind option
-systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2'};
+systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
 
 
 def writeLibretroConfig(system):
