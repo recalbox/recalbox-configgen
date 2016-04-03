@@ -24,8 +24,8 @@ def defined(key, dict):
 ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
 
 # Define the libretro device type corresponding to the libretro cores, when needed.
-coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '769'};
-coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
+coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '513'};
+coreToP2Device = {'fuse': '513', 'snes9x_next': '257' };
 
 # Define systems compatible with retroachievements
 systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
