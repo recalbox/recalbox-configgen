@@ -21,7 +21,11 @@ def defined(key, dict):
     return key in dict and isinstance(dict[key], str) and len(dict[key]) > 0
 
 
-ratioIndexes = {'16/9': '1', '4/3': '0', '16/10': '2'}
+# Warning the values in the array must be exactly at the same index than
+# https://github.com/libretro/RetroArch/blob/master/gfx/video_driver.c#L132
+ratioIndexes = ["4/3", "16/9", "16/10", "16/15", "1/1", "2/1", "3/2", "3/4", "4/1", "4/4", "5/4", "6/5", "7/9", "8/3",
+                "8/7", "19/12", "19/14", "30/17", "32/9", "config", "squarepixel"]
+
 
 # Define the libretro device type corresponding to the libretro cores, when needed.
 coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '769'};
@@ -53,7 +57,7 @@ def createLibretroConfig(system):
 
     if defined('ratio', recalboxConfig):
         if recalboxConfig['ratio'] in ratioIndexes:
-            retroarchConfig['aspect_ratio_index'] = ratioIndexes[recalboxConfig['ratio']]
+            retroarchConfig['aspect_ratio_index'] = ratioIndexes.index(recalboxConfig['ratio'])
             retroarchConfig['video_aspect_ratio_auto'] = 'false'
         elif recalboxConfig['ratio'] == "custom":
             retroarchConfig['video_aspect_ratio_auto'] = 'false'

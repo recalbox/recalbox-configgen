@@ -7,13 +7,13 @@ from settings.unixSettings import UnixSettings
 
 class ConfigManager():
 
-    def configure(self, system, emulator='default', core='default'):
+    def configure(self, system, emulator='default', core='default', ratio='auto'):
         recalSettings = UnixSettings(recalboxFiles.recalboxConf)
         globalSettings = recalSettings.loadAll('global')
         system.config['specials'] = recalSettings.load('system.emulators.specialkeys', 'default')
         self.updateConfiguration(system, globalSettings)
         self.updateConfiguration(system, recalSettings.loadAll(system.name))
-        self.updateEmulatorAndCore(system, emulator, core)
+        self.updateForcedConfig(system, emulator, core, ratio)
 
     def updateConfiguration(self, system, settings):
         systemSettings = system.config
@@ -36,8 +36,10 @@ class ConfigManager():
             if systemShader != None:
                 system.config['shaders'] = systemShader
 
-    def updateEmulatorAndCore(self, system, emulator, core):
+    def updateForcedConfig(self, system, emulator, core, ratio):
         if emulator != None and emulator != 'default':
             system.config['emulator'] = emulator
         if core != None and core != 'default':
             system.config['core'] = core
+        if ratio != None and ratio != 'auto':
+            system.config['ratio'] = ratio
