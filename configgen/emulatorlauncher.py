@@ -104,7 +104,7 @@ def main(args):
     if systemName in emulators:
         system = emulators[systemName]
         systemManager = ConfigManager()
-        systemManager.configure(system, args.emulator, args.core)
+        systemManager.configure(system, args.emulator, args.core, args.ratio)
 
         # Save dir
         dirname = os.path.join(recalboxFiles.savesDir, system.name)
@@ -164,7 +164,8 @@ if __name__ == '__main__':
     parser.add_argument("-system", help="select the system to launch", type=str, required=True)
     parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
     parser.add_argument("-emulator", help="force emulator", type=str, required=False)
-    parser.add_argument("-core", help="fore emulator core", type=str, required=False)
+    parser.add_argument("-core", help="force emulator core", type=str, required=False)
+    parser.add_argument("-ratio", help="force game ratio", type=str, required=False)
     parser.add_argument("-demo", help="mode demo", type=bool, required=False)
 
     args = parser.parse_args()
