@@ -28,11 +28,14 @@ ratioIndexes = ["4/3", "16/9", "16/10", "16/15", "1/1", "2/1", "3/2", "3/4", "4/
 
 
 # Define the libretro device type corresponding to the libretro cores, when needed.
-coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '769'};
-coreToP2Device = {'fuse': '1025', 'snes9x_next': '257' };
+coreToP1Device = {'cap32': '513', '81': '257', 'fuse': '513'};
+coreToP2Device = {'fuse': '513', 'snes9x_next': '257' };
 
 # Define systems compatible with retroachievements
 systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
+
+# Define systems not compatible with rewind option
+systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
 
 
 def writeLibretroConfig(system):
@@ -65,8 +68,11 @@ def createLibretroConfig(system):
             retroarchConfig['video_aspect_ratio_auto'] = 'true'
             retroarchConfig['aspect_ratio_index'] = ''
 
+    retroarchConfig['rewind_enable'] = 'false'
+
     if enabled('rewind', recalboxConfig):
-        retroarchConfig['rewind_enable'] = 'true'
+        if(not system.name in systemNoRewind):
+            retroarchConfig['rewind_enable'] = 'true'
     else:
         retroarchConfig['rewind_enable'] = 'false'
 
