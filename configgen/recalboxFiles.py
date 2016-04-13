@@ -4,6 +4,7 @@ HOME = '/recalbox/share/system'
 CONF = HOME + '/configs'
 SAVES = '/recalbox/share/saves'
 SCREENSHOTS = '/recalbox/share/screenshots'
+BIOS = '/recalbox/share/bios'
 
 esInputs = HOME + '/.emulationstation/es_input.cfg'
 esSettings = HOME + '/.emulationstation/es_settings.cfg'
@@ -48,5 +49,13 @@ moonlightMapping[1] = moonlightCustom + '/mappingP1.conf'
 moonlightMapping[2] = moonlightCustom + '/mappingP2.conf'
 moonlightMapping[3] = moonlightCustom + '/mappingP3.conf'
 moonlightMapping[4] = moonlightCustom + '/mappingP4.conf'
+
+reicastBin = '/usr/bin/reicast.elf'
+reicastCustom = CONF + '/reicast'
+reicastConfig = reicastCustom + '/emu.cfg'
+reicastSaves = SAVES
+reicastBios = BIOS
+
+
 
 logdir = HOME + '/logs/'

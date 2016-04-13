@@ -11,6 +11,7 @@ from generators.linapple.linappleGenerator import LinappleGenerator
 from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
+from generators.reicast.reicastGenerator import ReicastGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.vice.viceGenerator import ViceGenerator
@@ -31,7 +32,8 @@ generators = {
     'scummvm': ScummVMGenerator(),
     'dosbox': DosBoxGenerator(),
     'mupen64plus': MupenGenerator(),
-    'vice': ViceGenerator()
+    'vice': ViceGenerator(),
+    'reicast': ReicastGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -52,6 +54,7 @@ emulators["megadrive"] = Emulator(name='megadrive', emulator='libretro', core='p
 emulators["gamegear"] = Emulator(name='gamegear', emulator='libretro', core='genesisplusgx')
 emulators["sega32x"] = Emulator(name='sega32x', emulator='libretro', core='picodrive')
 emulators["segacd"] = Emulator(name='segacd', emulator='libretro', core='picodrive')
+emulators["dreamcast"] = Emulator(name='dreamcast', emulator='reicast')
 # Arcade
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
@@ -104,7 +107,6 @@ def main(args):
                                                               args.p5index, args.p5guid, args.p5name, args.p5devicepath)
 
     systemName = args.system
-
     # Main Program
     # A generator will configure its emulator, and return a command
     if systemName in emulators:
