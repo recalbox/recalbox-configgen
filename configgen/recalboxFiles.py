@@ -53,6 +53,7 @@ moonlightMapping[4] = moonlightCustom + '/mappingP4.conf'
 reicastBin = '/usr/bin/reicast.elf'
 reicastCustom = CONF + '/reicast'
 reicastConfig = reicastCustom + '/emu.cfg'
+reicastConfigInit = HOME_INIT + 'configs/reicast/emu.cfg'
 reicastSaves = SAVES
 reicastBios = BIOS
 

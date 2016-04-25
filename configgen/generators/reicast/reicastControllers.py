@@ -23,8 +23,10 @@ reicastMapping = { 'a' :             {'button': 'btn_b'},
                    'joystick1left' : {'axis': 'axis_x'},
                    'joystick1up' :   {'axis': 'axis_y'},
                    # The DPAD can be an axis (for gpio sticks for example) or a hat
-                   'left' :          {'hat': 'axis_dpad1_x', 'axis': 'axis_x'},
-                   'up' :            {'hat': 'axis_dpad1_y', 'axis': 'axis_y'}
+                   'left' :          {'hat': 'axis_dpad1_x', 'axis': 'axis_x', 'button': 'btn_dpad1_left'},
+                   'up' :            {'hat': 'axis_dpad1_y', 'axis': 'axis_y', 'button': 'btn_dpad1_up'},
+                   'right' :         {'button': 'btn_dpad1_right'},
+                   'down' :          {'button': 'btn_dpad1_down'},
 }
 
 sections = { 'emulator' : ['mapping_name', 'btn_escape'],
@@ -40,7 +42,6 @@ def generateControllerConfig(controller):
 	# Set config file name
     configFileName = "{}/controllerP{}.cfg".format(recalboxFiles.reicastCustom,controller.player)
     Config = ConfigParser.ConfigParser()
-    #~ cfgfile = open(recalboxFiles.reicastCustom + '/mappings/' + configFileName,'w+')
     cfgfile = open(configFileName,'w+')
     
     # create ini sections
@@ -54,6 +55,8 @@ def generateControllerConfig(controller):
     for index in controller.inputs:
 		input = controller.inputs[index]
 		if input.name not in reicastMapping:
+			continue
+		if input.type not in reicastMapping[input.name]:
 			continue
 		var = reicastMapping[input.name][input.type]
 		for i in sections:
