@@ -19,9 +19,9 @@ class DosBoxGenerator(Generator):
 			"-userconf", 
 			"-exit", 
 			"""{}""".format(batFile),
-			"-c", """set ROOT=""{}""".format(gameDir)]
+			"-c", """set ROOT={}""".format(gameDir)]
         if os.path.isfile(gameConfFile):
             commandArray.append("-conf")
             commandArray.append("""{}""".format(gameConfFile))
 			
-        return Command.Command(videomode='default', array=commandArray)
+        return Command.Command(videomode='default', array=commandArray, env={"SDL_VIDEO_GL_DRIVER":"/usr/lib/libGLESv2.so"})
