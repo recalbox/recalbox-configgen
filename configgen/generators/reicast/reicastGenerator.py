@@ -14,26 +14,28 @@ class ReicastGenerator(Generator):
     # Configure fba and return a command
     def generate(self, system, rom, playersControllers):
         if not system.config['configfile']:
-	        # Write emu.cfg to map joysticks
-	        # For each pad detected
-	        Config = ConfigParser.ConfigParser()
-	        Config.read(recalboxFiles.reicastConfig)
-	        cfgfile = open(recalboxFiles.reicastConfig,'w+')
-	        section = "input"
-	        for index in playersControllers :
-	            controller = playersControllers[index]
-	            # Get the event number
-	            eventNum = controller.dev.replace('/dev/input/event','')
-	            # Write its mapping file
-	            controllerConfigFile = reicastControllers.generateControllerConfig(controller)
-	            # set the evdev_device_id_X
-	            Config.set(section, 'evdev_device_id_' + controller.player, eventNum)
-	            # Set the evdev_mapping_X
-	            Config.set(section, 'evdev_mapping_' + controller.player, controllerConfigFile)
-			
-	        Config.write(cfgfile)
-	        cfgfile.close()
-	            
+            # Overwrite emu.cfg : it can be empty on a crash during configgen
+            shutil.copyfile(recalboxFiles.reicastConfigInit, recalboxFiles.reicastConfig)
+            # Write emu.cfg to map joysticks
+            # For each pad detected
+            Config = ConfigParser.ConfigParser()
+            Config.read(recalboxFiles.reicastConfig)
+            section = "input"
+            for index in playersControllers :
+                controller = playersControllers[index]
+                # Get the event number
+                eventNum = controller.dev.replace('/dev/input/event','')
+                # Write its mapping file
+                controllerConfigFile = reicastControllers.generateControllerConfig(controller)
+                # set the evdev_device_id_X
+                Config.set(section, 'evdev_device_id_' + controller.player, eventNum)
+                # Set the evdev_mapping_X
+                Config.set(section, 'evdev_mapping_' + controller.player, controllerConfigFile)
+
+            cfgfile = open(recalboxFiles.reicastConfig,'w+')
+            Config.write(cfgfile)
+            cfgfile.close()
+                
         # the command to run  
         commandArray = [recalboxFiles.reicastBin, rom]
         # Here is the trick to make reicast find files :
