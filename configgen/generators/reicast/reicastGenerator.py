@@ -20,7 +20,6 @@ class ReicastGenerator(Generator):
             # For each pad detected
             Config = ConfigParser.ConfigParser()
             Config.read(recalboxFiles.reicastConfig)
-            cfgfile = open(recalboxFiles.reicastConfig,'w+')
             section = "input"
             for index in playersControllers :
                 controller = playersControllers[index]
@@ -33,6 +32,7 @@ class ReicastGenerator(Generator):
                 # Set the evdev_mapping_X
                 Config.set(section, 'evdev_mapping_' + controller.player, controllerConfigFile)
 
+            cfgfile = open(recalboxFiles.reicastConfig,'w+')
             Config.write(cfgfile)
             cfgfile.close()
                 
