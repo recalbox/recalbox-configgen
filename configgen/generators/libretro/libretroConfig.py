@@ -101,6 +101,7 @@ def createLibretroConfig(system):
         retroarchConfig['input_libretro_device_p2'] = coreToP2Device[system.config['core']]
 
     retroarchConfig['cheevos_enable'] = 'false'
+    retroarchConfig['cheevos_hardcore_mode_enable'] = 'false'
 
     if enabled('retroachievements', recalboxConfig):
         if(system.name in systemToRetroachievements):
