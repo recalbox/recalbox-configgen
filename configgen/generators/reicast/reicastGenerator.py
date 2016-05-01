@@ -14,13 +14,11 @@ class ReicastGenerator(Generator):
     # Configure fba and return a command
     def generate(self, system, rom, playersControllers):
         if not system.config['configfile']:
-            # Overwrite emu.cfg : it can be empty on a crash during configgen
-            shutil.copyfile(recalboxFiles.reicastConfigInit, recalboxFiles.reicastConfig)
-            # Write emu.cfg to map joysticks
-            # For each pad detected
+            # Write emu.cfg to map joysticks, init with the default emu.cfg
             Config = ConfigParser.ConfigParser()
-            Config.read(recalboxFiles.reicastConfig)
+            Config.read(recalboxFiles.reicastConfigInit)
             section = "input"
+            # For each pad detected
             for index in playersControllers :
                 controller = playersControllers[index]
                 # Get the event number
