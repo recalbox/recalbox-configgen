@@ -35,7 +35,7 @@ coreToP2Device = {'fuse': '513', 'snes9x_next': '257' };
 systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pcengine'};
 
 # Define systems not compatible with rewind option
-systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
+systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fbalibretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
 
 
 def writeLibretroConfig(system):
@@ -101,6 +101,7 @@ def createLibretroConfig(system):
         retroarchConfig['input_libretro_device_p2'] = coreToP2Device[system.config['core']]
 
     retroarchConfig['cheevos_enable'] = 'false'
+    retroarchConfig['cheevos_hardcore_mode_enable'] = 'false'
 
     if enabled('retroachievements', recalboxConfig):
         if(system.name in systemToRetroachievements):
