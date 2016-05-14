@@ -57,6 +57,9 @@ reicastConfigInit = HOME_INIT + 'configs/reicast/emu.cfg'
 reicastSaves = SAVES
 reicastBios = BIOS
 
-
+ppssppBin = '/recalbox/share/system/PPSSPP/PPSSPPSDL'
+#~ ppssppControls = HOME+'/.config/ppsspp/PSP/SYSTEM/controls.ini'
+ppssppControls = CONF + '/ppsspp/PSP/SYSTEM/controls.ini'
+ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
 
 logdir = HOME + '/logs/'

@@ -11,6 +11,7 @@ from generators.linapple.linappleGenerator import LinappleGenerator
 from generators.libretro.libretroGenerator import LibretroGenerator
 from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
+from generators.ppsspp.ppssppGenerator import PPSSPPGenerator
 from generators.reicast.reicastGenerator import ReicastGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
@@ -33,7 +34,8 @@ generators = {
     'dosbox': DosBoxGenerator(),
     'mupen64plus': MupenGenerator(),
     'vice': ViceGenerator(),
-    'reicast': ReicastGenerator()
+    'reicast': ReicastGenerator(),
+    'ppsspp': PPSSPPGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -95,6 +97,8 @@ emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')
+emulators["psp"] = Emulator(name='psp', emulator='ppsspp')
+
 
 def main(args):
     playersControllers = dict()
