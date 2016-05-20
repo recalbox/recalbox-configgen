@@ -27,6 +27,9 @@ reicastMapping = { 'a' :             {'button': 'btn_b'},
                    'up' :            {'hat': 'axis_dpad1_y', 'axis': 'axis_y', 'button': 'btn_dpad1_up'},
                    'right' :         {'button': 'btn_dpad1_right'},
                    'down' :          {'button': 'btn_dpad1_down'},
+# We are only interested in L2/R2 if they are axis, to have real dreamcasttriggers
+                   'r2' :            {'axis':  'axis_trigger_right'},
+                   'l2' :            {'axis': 'axis_trigger_left'}
 }
 
 sections = { 'emulator' : ['mapping_name', 'btn_escape'],
