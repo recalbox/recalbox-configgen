@@ -16,6 +16,7 @@ class ReicastGenerator(Generator):
         if not system.config['configfile']:
             # Write emu.cfg to map joysticks, init with the default emu.cfg
             Config = ConfigParser.ConfigParser()
+            Config.optionxform = str
             Config.read(recalboxFiles.reicastConfigInit)
             section = "input"
             # For each pad detected

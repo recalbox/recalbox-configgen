@@ -18,8 +18,8 @@ reicastMapping = { 'a' :             {'button': 'btn_b'},
                    'y' :             {'button': 'btn_x'},
                    'start' :         {'button': 'btn_start'},
                    'hotkey' :        {'button': 'btn_escape'},
-                   'pageup' :        {'axis': 'axis_trigget_left',  'button': 'btn_trigget_left'},
-                   'pagedown' :      {'axis': 'axis_trigget_right', 'button': 'btn_trigget_right'},
+                   'pageup' :        {'axis': 'axis_trigget_left',  'button': 'btn_trigger_left'},
+                   'pagedown' :      {'axis': 'axis_trigget_right', 'button': 'btn_trigger_right'},
                    'joystick1left' : {'axis': 'axis_x'},
                    'joystick1up' :   {'axis': 'axis_y'},
                    # The DPAD can be an axis (for gpio sticks for example) or a hat
@@ -27,6 +27,9 @@ reicastMapping = { 'a' :             {'button': 'btn_b'},
                    'up' :            {'hat': 'axis_dpad1_y', 'axis': 'axis_y', 'button': 'btn_dpad1_up'},
                    'right' :         {'button': 'btn_dpad1_right'},
                    'down' :          {'button': 'btn_dpad1_down'},
+# We are only interested in L2/R2 if they are axis, to have real dreamcasttriggers
+                   'r2' :            {'axis':  'axis_trigger_right'},
+                   'l2' :            {'axis': 'axis_trigger_left'}
 }
 
 sections = { 'emulator' : ['mapping_name', 'btn_escape'],
