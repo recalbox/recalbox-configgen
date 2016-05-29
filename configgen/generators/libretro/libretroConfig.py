@@ -37,6 +37,8 @@ systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pc
 # Define systems not compatible with rewind option
 systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fbalibretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
 
+# Netplay modes
+systemNetplayModes = {'host', 'client'}
 
 def writeLibretroConfig(system):
     writeLibretroConfigToFile(createLibretroConfig(system))
@@ -119,6 +121,23 @@ def createLibretroConfig(system):
         retroarchConfig['video_scale_integer'] = 'true'
     else:
         retroarchConfig['video_scale_integer'] = 'false'
+
+    # Netplay management
+    if 'netplaymode' in system.config and system.config['netplaymode'] in systemNetplayModes:
+        # Security : hardcore mode disables save states, which would kill netplay
+        retroarchConfig['cheevos_hardcore_mode_enable'] = 'false'
+        # Quite strangely, host mode requires netplay_mode to be set to false when launched from command line
+        retroarchConfig['netplay_mode']              = "false"
+        retroarchConfig['netplay_ip_port']           = recalboxConfig.get('netplay.server.port', "")
+        retroarchConfig['netplay_delay_frames']      = recalboxConfig.get('netplay.frames', "")
+        retroarchConfig['netplay_nickname']          = recalboxConfig.get('netplay.nick', "")
+        retroarchConfig['netplay_client_swap_input'] = "false"
+        if system.config['netplaymode'] == 'client':
+            # But client needs netplay_mode = true ... bug ?
+            retroarchConfig['netplay_mode']              = "true"
+            retroarchConfig['netplay_ip_address']        = recalboxConfig.get('netplay.server.ip', "")
+            retroarchConfig['netplay_client_swap_input'] = "true"
+
     return retroarchConfig
 
 
