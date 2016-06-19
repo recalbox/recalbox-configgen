@@ -114,6 +114,11 @@ def createLibretroConfig(system):
                 retroarchConfig['cheevos_hardcore_mode_enable'] = 'false'
     else:
         retroarchConfig['cheevos_enable'] = 'false'
+
+    if enabled('integerscale', recalboxConfig):
+        retroarchConfig['video_scale_integer'] = 'true'
+    else:
+        retroarchConfig['video_scale_integer'] = 'false'
     return retroarchConfig
 
 
