@@ -109,7 +109,7 @@ def createLibretroConfig(system):
     if enabled('integerscale', recalboxConfig):
         retroarchConfig['video_scale_integer'] = 'true'
     else:
-retroarchConfig['video_scale_integer'] = 'false'
+        retroarchConfig['video_scale_integer'] = 'false'
     return retroarchConfig
 
 
