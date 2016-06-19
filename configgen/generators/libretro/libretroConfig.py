@@ -105,6 +105,11 @@ def createLibretroConfig(system):
             retroarchConfig['cheevos_password'] = recalboxConfig.get('retroachievements.password', "")
     else:
         retroarchConfig['cheevos_enable'] = 'false'
+
+    if enabled('integerscale', recalboxConfig):
+        retroarchConfig['video_scale_integer'] = 'true'
+    else:
+retroarchConfig['video_scale_integer'] = 'false'
     return retroarchConfig
 
 
