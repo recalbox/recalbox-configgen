@@ -31,6 +31,8 @@ mupenConf = CONF + '/mupen64/'
 mupenCustom = mupenConf + "mupen64plus.cfg"
 mupenInput = mupenConf + "InputAutoCfg.ini"
 mupenSaves = SAVES + "/n64"
+mupenMappingUser    = mupenConf + 'input.xml'
+mupenMappingSystem  = '/recalbox/share_init/system/configs/mupen64/input.xml'
 
 shaderPresetRoot = "/recalbox/share_init/system/configs/shadersets/"
 
