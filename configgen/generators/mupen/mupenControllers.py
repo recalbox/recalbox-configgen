@@ -2,6 +2,7 @@
 import sys
 import os
 import ConfigParser
+from xml.dom import minidom
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -18,16 +19,25 @@ Config = ConfigParser.ConfigParser()
 Config.optionxform = str
 
 # Mupen doesn't like to have 2 buttons mapped for N64 pad entry. That's why r2 is commented for now. 1 axis and 1 button is ok
-mupenPad = { 'up': 'DPad U', 'down': 'DPad D', 'left': 'DPad L', 'right': 'DPad R'
-			, 'start': 'Start', 'y': 'B Button', 'b': 'A Button'
-			, 'pagedown': 'R Trig', 'l2': 'Z Trig', 'pageup': 'L Trig'
-			, 'joystick1left': 'X Axis', 'joystick1up': 'Y Axis'
-			, 'joystick2left': {'-1':'C Button L', '1': 'C Button R'}, 'joystick2up': {'-1':'C Button U', '1': 'C Button D'}
-			, 'x': 'C Button U', 'a': 'C Button R'
-			#, 'r2': 'R Trig'
-}
 mupenHatToAxis = {'1': 'Up', '2': 'Right', '4': 'Down', '8': 'Left'}
 mupenDoubleAxis = {0:'X Axis', 1:'Y Axis'}
+
+def getMupenMappingFile():
+    if os.path.exists(recalboxFiles.mupenMappingUser):
+        return recalboxFiles.mupenMappingUser
+    else:
+        return recalboxFiles.mupenMappingSystem
+
+def getMupenMapping():
+    dom = minidom.parse(getMupenMappingFile())
+    map = dict()
+    for inputs in dom.getElementsByTagName('inputList'):
+        for input in inputs.childNodes:
+            if input.attributes:
+                if input.attributes['name']:
+                        if input.attributes['value']:
+                                map[input.attributes['name'].value] = input.attributes['value'].value
+    return map
 
 # Write a configuration for a specified controller
 def writeControllersConfig(controllers):
@@ -43,31 +53,26 @@ def writeControllersConfig(controllers):
 
 
 def defineControllerKeys(controller):
+        mupenmapping = getMupenMapping()
+
 	# config holds the final pad configuration in the mupen style
 	# ex: config['DPad U'] = "button(1)"
 	config = dict()
+        config['AnalogDeadzone'] = mupenmapping['AnalogDeadzone']
 	for inputIdx in controller.inputs:
 		input = controller.inputs[inputIdx]
-		if input.name in mupenPad:
-			# Make a dict of a single element so that the next step is just a browse of the keySetting array
-			# With this trick, handle a single button Joystick2up just the same
-			if type(mupenPad[input.name]) is not dict:
-				keySetting = {input.name: mupenPad[input.name]}
-			else:
-				keySetting = mupenPad[input.name]
-
-			for name in keySetting:
-				value=setControllerLine(input, keySetting[name])
-				# Handle multiple inputs for a single N64 Pad input
-				if keySetting[name] not in config :
-					config[keySetting[name]] = value
-				else:
-					config[keySetting[name]] += " " + value
+		if input.name in mupenmapping and mupenmapping[input.name] != "":
+                        value=setControllerLine(mupenmapping, input, mupenmapping[input.name])
+                        # Handle multiple inputs for a single N64 Pad input
+                        if mupenmapping[input.name] not in config :
+                                config[mupenmapping[input.name]] = value
+                        else:
+                                config[mupenmapping[input.name]] += " " + value
 
 	# Big dirty hack : handle when the pad has no analog sticks. Only Start A, B L and R survive from the previous configuration
 	if "X Axis" not in config and "Y Axis" not in config:
 		# remap Z Trig
-		config['Z Trig'] = setControllerLine(controller.inputs['x'], "Z Trig")
+		config['Z Trig'] = setControllerLine(mupenmapping, controller.inputs['x'], "Z Trig")
 		# remove C Button U and R
 		if 'C Button U' in config: del config['C Button U']
 		if 'C Button R' in config: del config['C Button R']
@@ -81,15 +86,15 @@ def defineControllerKeys(controller):
 			config['X Axis'] = "hat({} {} {})".format(controller.inputs['left'].id, mupenHatToAxis[controller.inputs['left'].value], mupenHatToAxis[controller.inputs['right'].value])
 			config['Y Axis'] = "hat({} {} {})".format(controller.inputs['up'].id, mupenHatToAxis[controller.inputs['up'].value], mupenHatToAxis[controller.inputs['down'].value])
 		elif controller.inputs['left'].type == 'axis':
-			config['X Axis'] = setControllerLine(controller.inputs['left'], "X Axis")
-			config['Y Axis'] = setControllerLine(controller.inputs['up'], "Y Axis")
+			config['X Axis'] = setControllerLine(mupenmapping, controller.inputs['left'], "X Axis")
+			config['Y Axis'] = setControllerLine(mupenmapping, controller.inputs['up'], "Y Axis")
 		elif controller.inputs['left'].type == 'button':
 			config['X Axis'] = "button({},{})".format(controller.inputs['left'].id, controller.inputs['right'].id)
 			config['Y Axis'] = "button({},{})".format(controller.inputs['up'].id, controller.inputs['down'].id)
 	return config
 
 
-def setControllerLine(input, mupenSettingName):
+def setControllerLine(mupenmapping, input, mupenSettingName):
 	value = ''
 	inputType = input.type
 	if inputType == 'button':
@@ -106,19 +111,10 @@ def setControllerLine(input, mupenSettingName):
 			else:
 				value = "axis({}+,{}-)".format(input.id, input.id)
 		else:
-			# Here is the case for joystick2up and joystick2left
-			if type(mupenPad[input.name]) is dict:
-				if mupenPad[input.name].keys()[mupenPad[input.name].values().index(mupenSettingName)] == "1":
-					value = "axis({}+)".format(input.id)
-				else:
-					value = "axis({}-)".format(input.id)
-			# Case of triggers L2/R2
-			else : 
-				if input.value == "1":
-					value = "axis({}+)".format(input.id)
-				else:
-					value = "axis({}-)".format(input.id)
-
+                        if input.value == "1":
+                                value = "axis({}+)".format(input.id)
+                        else:
+                                value = "axis({}-)".format(input.id)
 	return value
 
 
@@ -137,7 +133,7 @@ def writeToIni(controller, config):
 	Config.add_section(section)
 	Config.set(section, 'plugged', True)
 	Config.set(section, 'plugin', 2)
-	Config.set(section, 'AnalogDeadzone', "4096,4096")
+	Config.set(section, 'AnalogDeadzone', config['AnalogDeadzone'])
 	Config.set(section, 'AnalogPeak', "32768,32768")
 	Config.set(section, 'Mempak switch', "")
 	Config.set(section, 'Rumblepak switch', "")
