@@ -88,6 +88,11 @@ def getKodiConfig(currentControllers):
     return config
 
 def writeKodiConfig(controllersFromES):
+    # if there is no controller, don't remove the current generated one
+    # it allows people to start kodi at startup when having only bluetooth joysticks
+    # or this allows people to plug the last used joystick
+    if len(controllersFromES) == 0:
+        return
     directory = os.path.dirname(recalboxFiles.kodiJoystick)
     if not os.path.exists(directory):
         os.makedirs(directory)
