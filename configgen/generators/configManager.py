@@ -7,10 +7,12 @@ from settings.unixSettings import UnixSettings
 
 class ConfigManager():
 
-    def configure(self, system, emulator='default', core='default', ratio='auto'):
+    def configure(self, system, emulator='default', core='default', ratio='auto', netplay=None):
         recalSettings = UnixSettings(recalboxFiles.recalboxConf)
         globalSettings = recalSettings.loadAll('global')
         system.config['specials'] = recalSettings.load('system.emulators.specialkeys', 'default')
+        if netplay is not None:
+            globalSettings['netplaymode'] = netplay
         self.updateConfiguration(system, globalSettings)
         self.updateConfiguration(system, recalSettings.loadAll(system.name))
         self.updateForcedConfig(system, emulator, core, ratio)

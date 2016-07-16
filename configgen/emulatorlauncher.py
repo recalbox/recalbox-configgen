@@ -116,7 +116,7 @@ def main(args):
     if systemName in emulators:
         system = emulators[systemName]
         systemManager = ConfigManager()
-        systemManager.configure(system, args.emulator, args.core, args.ratio)
+        systemManager.configure(system, args.emulator, args.core, args.ratio, args.netplay)
 
         # Save dir
         dirname = os.path.join(recalboxFiles.savesDir, system.name)
@@ -179,6 +179,7 @@ if __name__ == '__main__':
     parser.add_argument("-core", help="force emulator core", type=str, required=False)
     parser.add_argument("-ratio", help="force game ratio", type=str, required=False)
     parser.add_argument("-demo", help="mode demo", type=bool, required=False)
+    parser.add_argument("-netplay", help="host/client", type=str, required=False)
 
     args = parser.parse_args()
     exitcode = main(args)

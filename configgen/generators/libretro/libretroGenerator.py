@@ -28,7 +28,13 @@ class LibretroGenerator(Generator):
         retroarchCore = recalboxFiles.retroarchCores + system.config['core'] + recalboxFiles.libretroExt
 
         # the command to run
-        commandline = '{} -L "{}" --config "{}" "{}"'.format(recalboxFiles.retroarchBin, retroarchCore, system.config['configfile'], rom)
+        if 'netplaymode' in system.config:
+            if system.config['netplaymode'] == 'host':
+                commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], "--host", "-v", rom]
+            elif system.config['netplaymode'] == 'client':
+                commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], "--connect", system.config['netplay.server.address'], "-v", rom]
+        else:
+            commandline = '{} -L "{}" --config "{}" "{}"'.format(recalboxFiles.retroarchBin, retroarchCore, system.config['configfile'], rom)
+            commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], rom]
 
-        commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], rom]
         return Command.Command(videomode=system.config['videomode'], array=commandArray)
