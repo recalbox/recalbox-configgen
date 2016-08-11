@@ -26,15 +26,32 @@ class LibretroGenerator(Generator):
 
         # Retroarch core on the filesystem
         retroarchCore = recalboxFiles.retroarchCores + system.config['core'] + recalboxFiles.libretroExt
+        romName = os.path.basename(rom)
 
         # the command to run
+        commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile']]
+        
+        # Custom configs - per core
+        customCfg = "/recalbox/share/system/configs/retroarch/{}.cfg".format(system.name)
+        if os.path.isfile(customCfg):
+            commandArray.extend(["--append", customCfg])
+        
+        # Custom configs - per game
+        customGameCfg = "/recalbox/share/system/configs/retroarch/{}/{}.cfg".format(system.name, romName)
+        if os.path.isfile(customCfg):
+            commandArray.extend(["--append", customGameCfg])
+        
+        # Overlay management
+        overlayFile = "/recalbox/share/roms/{}/{}.cfg".format(system.name, romName)
+        if os.path.isfile(overlayFile):
+            commandArray.extend(["--append", overlayFile])
+            
+         # Netplay mode
         if 'netplaymode' in system.config:
             if system.config['netplaymode'] == 'host':
-                commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], "--host", "-v", rom]
+                commandArray.append("--host")
             elif system.config['netplaymode'] == 'client':
-                commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], "--connect", system.config['netplay.server.address'], "-v", rom]
-        else:
-            commandline = '{} -L "{}" --config "{}" "{}"'.format(recalboxFiles.retroarchBin, retroarchCore, system.config['configfile'], rom)
-            commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile'], rom]
-
+                commandArray.extend(["--connect", system.config['netplay.server.address']])
+        
+        commandArray.append(rom)
         return Command.Command(videomode=system.config['videomode'], array=commandArray)
