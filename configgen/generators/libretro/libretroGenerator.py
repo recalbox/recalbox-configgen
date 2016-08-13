@@ -33,17 +33,17 @@ class LibretroGenerator(Generator):
         configToAppend = []
         
         # Custom configs - per core
-        customCfg = "/recalbox/share/system/configs/retroarch/{}.cfg".format(system.name)
+        customCfg = "{}/{}.cfg".format(recalboxFiles.retroarchRoot, system.name)
         if os.path.isfile(customCfg):
             configToAppend.append(customCfg)
         
         # Custom configs - per game
-        customGameCfg = "/recalbox/share/system/configs/retroarch/{}/{}.cfg".format(system.name, romName)
+        customGameCfg = "{}/{}/{}.cfg".format(recalboxFiles.retroarchRoot, system.name, romName)
         if os.path.isfile(customGameCfg):
             configToAppend.append(customGameCfg)
         
         # Overlay management
-        overlayFile = "/recalbox/share/roms/{}/{}.cfg".format(system.name, romName)
+        overlayFile = "{}/{}/{}.cfg".format(recalboxFiles.OVERLAYS, system.name, romName)
         if os.path.isfile(overlayFile):
             configToAppend.append(overlayFile)
         
