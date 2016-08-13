@@ -30,21 +30,26 @@ class LibretroGenerator(Generator):
 
         # the command to run
         commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile']]
+        configToAppend = []
         
         # Custom configs - per core
         customCfg = "/recalbox/share/system/configs/retroarch/{}.cfg".format(system.name)
         if os.path.isfile(customCfg):
-            commandArray.extend(["--append", customCfg])
+            configToAppend.append(customCfg)
         
         # Custom configs - per game
         customGameCfg = "/recalbox/share/system/configs/retroarch/{}/{}.cfg".format(system.name, romName)
-        if os.path.isfile(customCfg):
-            commandArray.extend(["--append", customGameCfg])
+        if os.path.isfile(customGameCfg):
+            configToAppend.append(customGameCfg)
         
         # Overlay management
         overlayFile = "/recalbox/share/roms/{}/{}.cfg".format(system.name, romName)
         if os.path.isfile(overlayFile):
-            commandArray.extend(["--append", overlayFile])
+            configToAppend.append(overlayFile)
+        
+        # Generate the append
+        if configToAppend:
+            commandArray.extend(["--appendconfig", "|".join(configToAppend)])
             
          # Netplay mode
         if 'netplaymode' in system.config:
