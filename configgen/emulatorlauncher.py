@@ -61,7 +61,7 @@ emulators["dreamcast"] = Emulator(name='dreamcast', emulator='reicast')
 emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
-emulators["fba_libretro"] = Emulator(name='fbalibretro', emulator='libretro', core='fba')
+emulators["fba_libretro"] = Emulator(name='fba_libretro', emulator='libretro', core='fba')
 # Computers
 emulators["msx"] = Emulator(name='msx', emulator='libretro', core='bluemsx')
 emulators["msx1"] = Emulator(name='msx1', emulator='libretro', core='bluemsx')

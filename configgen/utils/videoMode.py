@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 import os
+import sys
+import recalboxFiles
+from settings.unixSettings import UnixSettings
 
 # Set a specific video mode
 def setVideoMode(videomode):
@@ -15,4 +18,9 @@ def isSupported(index, mode="CEA", drive="HDMI"):
 
 # Switch to prefered mode
 def setPreffered():
-    os.system("tvservice -p")
+    recalSettings = UnixSettings(recalboxFiles.recalboxConf)
+    esVideoMode = recalSettings.load('system.es.videomode')
+    if esVideoMode is None:
+        os.system("tvservice -p")
+    else:
+        os.system("tvservice -e '{}'".format(esVideoMode))

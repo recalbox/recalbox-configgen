@@ -5,6 +5,7 @@ CONF = HOME + '/configs'
 SAVES = '/recalbox/share/saves'
 SCREENSHOTS = '/recalbox/share/screenshots'
 BIOS = '/recalbox/share/bios'
+OVERLAYS = '/recalbox/share/overlays'
 
 esInputs = HOME + '/.emulationstation/es_input.cfg'
 esSettings = HOME + '/.emulationstation/es_settings.cfg'
