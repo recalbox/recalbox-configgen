@@ -73,6 +73,8 @@ emulators["atarist"] = Emulator(name='atarist', emulator='libretro', core='hatar
 emulators["zxspectrum"] = Emulator(name='zxspectrum', emulator='libretro', core='fuse')
 emulators["odyssey2"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
 emulators["zx81"] = Emulator(name='zx81', emulator='libretro', core='81')
+emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
+emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
 emulators["ngpc"] = Emulator(name='ngpc', emulator='libretro', core='mednafen_ngp')
@@ -92,8 +94,7 @@ emulators["psx"] = Emulator(name='psx', emulator='libretro', core='pcsx_rearmed'
 emulators["cavestory"] = Emulator(name='cavestory', emulator='libretro', core='nxengine')
 emulators["imageviewer"] = Emulator(name='imageviewer', emulator='libretro', core='imageviewer')
 emulators["scummvm"] = Emulator(name='scummvm', emulator='scummvm', videomode='default')
-emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
-emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
+emulators["colecovision"] = Emulator(name='colecovision', emulator='libretro', core='bluemsx')
 
 emulators["kodi"] = Emulator(name='kodi', emulator='kodi', videomode='default')
 emulators["moonlight"] = Emulator(name='moonlight', emulator='moonlight')

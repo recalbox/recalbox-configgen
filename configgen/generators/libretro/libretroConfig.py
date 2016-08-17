@@ -9,6 +9,7 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 libretroSettings = UnixSettings(recalboxFiles.retroarchCustom, separator=' ')
+coreSettings = UnixSettings(recalboxFiles.retroarchCoreCustom, separator=' ')
 
 
 # return true if the option is considered enabled (for boolean options)
@@ -36,6 +37,13 @@ systemToRetroachievements = {'snes', 'nes', 'gba', 'gb', 'gbc', 'megadrive', 'pc
 
 # Define systems not compatible with rewind option
 systemNoRewind = {'virtualboy', 'sega32x', 'segacd', 'psx', 'fba_libretro', 'vectrex', 'zxspectrum', 'odyssey2', 'mame'};
+
+# Define system emulated by bluemsx core
+systemToBluemsx = {'msx': '"MSX2"', 'msx1': '"MSX2"', 'msx2': '"MSX2"', 'colecovision': '"COL - ColecoVision"' };
+
+# Define the libretro device type corresponding to the libretro cores, when needed.
+systemToP1Device = {'msx': '257', 'msx1': '257', 'msx2': '257', 'colecovision': '513' };
+systemToP2Device = {'msx': '257', 'msx1': '257', 'msx2': '257', 'colecovision': '513' };
 
 # Netplay modes
 systemNetplayModes = {'host', 'client'}
@@ -122,6 +130,12 @@ def createLibretroConfig(system):
     else:
         retroarchConfig['video_scale_integer'] = 'false'
 
+    if(system.name in systemToBluemsx):
+        if system.config['core'] == 'bluemsx':
+            coreSettings.save('bluemsx_msxtype', systemToBluemsx[system.name])
+            retroarchConfig['input_libretro_device_p1'] = systemToP1Device[system.name]
+            retroarchConfig['input_libretro_device_p2'] = systemToP2Device[system.name]
+
     # Netplay management
     if 'netplaymode' in system.config and system.config['netplaymode'] in systemNetplayModes:
         # Security : hardcore mode disables save states, which would kill netplay
@@ -144,3 +158,4 @@ def createLibretroConfig(system):
 def writeLibretroConfigToFile(config):
     for setting in config:
         libretroSettings.save(setting, config[setting])
+
