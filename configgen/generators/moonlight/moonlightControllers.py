@@ -29,7 +29,7 @@ mlMapping = {   'a' :             {'button': 'btn_east'},
                 'right' :         {'button': 'btn_dpad_right'},
                 'joystick1left' : {'axis': 'abs_x'},
                 'joystick1up' :   {'axis': 'abs_y'},
-                'joystick12eft' : {'axis': 'abs_rx'},
+                'joystick2left' : {'axis': 'abs_rx'},
                 'joystick2up' :   {'axis': 'abs_ry'}
 }
 
