@@ -25,5 +25,5 @@ class DosBoxGenerator(Generator):
             commandArray.append("""{}""".format(gameConfFile))
         else:
             commandArray.append("-conf")
-            commandArray.append("""{}""".format("/recalbox/share/system/configs/dosbox/dosbox.conf"))
+            commandArray.append("""{}""".format(recalboxFiles.dosboxConfig))
         return Command.Command(videomode='default', array=commandArray, env={"SDL_VIDEO_GL_DRIVER":"/usr/lib/libGLESv2.so"})

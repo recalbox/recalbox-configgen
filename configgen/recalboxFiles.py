@@ -64,4 +64,7 @@ ppssppBin = '/usr/bin/PPSSPPSDL'
 ppssppControls = CONF + '/ppsspp/PSP/SYSTEM/controls.ini'
 ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
 
+dosboxCustom = CONF + '/dosbox'
+dosboxConfig = dosboxCustom + '/dosbox.conf'
+
 logdir = HOME + '/logs/'
