@@ -73,7 +73,7 @@ emulators["atarist"] = Emulator(name='atarist', emulator='libretro', core='hatar
 emulators["zxspectrum"] = Emulator(name='zxspectrum', emulator='libretro', core='fuse')
 emulators["odyssey2"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
 emulators["zx81"] = Emulator(name='zx81', emulator='libretro', core='81')
-emulators["pc"] = Emulator(name='pc', emulator='dosbox', videomode='default')
+emulators["dos"] = Emulator(name='dos', emulator='dosbox', videomode='default')
 emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
 #
 emulators["ngp"] = Emulator(name='ngp', emulator='libretro', core='mednafen_ngp')
