@@ -18,13 +18,10 @@ class ViceGenerator(Generator):
 	# Find rom path
         romPath = os.path.dirname(rom)
         romName = os.path.splitext(os.path.basename(rom))[0]
-        # Get rom name without extension
-        print romPath
-        print romName
 
-           
-        commandArray = ["x64", 
-			" -autostart ""{}""".format(romPath),
-			"""{}""".format(romName)]
+
+        commandArray = [recalboxFiles.viceBin, 
+			"-config", recalboxFiles.viceConfig,
+			"-autostart", rom]
 			
-        return Command.Command(videomode='default', array=commandArray)
+        return Command.Command(videomode='default', array=commandArray,  env={"SDL_VIDEO_GL_DRIVER": "/usr/lib/libGLESv2.so"})

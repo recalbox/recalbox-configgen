@@ -8,6 +8,7 @@ import os
 import Command
 from generators.Generator import Generator
 from generators.linapple.linappleConfig import LinappleConfig
+import recalboxFiles
 
 class LinappleGenerator(Generator):
     '''
@@ -32,7 +33,7 @@ class LinappleGenerator(Generator):
         self.path_user = path_user
         self.resources = ['Master.dsk']
         self.filename = 'linapple.conf'
-        self.cmdArray = [ '/usr/bin/linapple' ]
+        self.cmdArray = [ recalboxFiles.linappleBin ]
 
     def check_resources(self):
         '''

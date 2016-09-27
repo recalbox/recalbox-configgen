@@ -7,9 +7,11 @@ SCREENSHOTS = '/recalbox/share/screenshots'
 BIOS = '/recalbox/share/bios'
 OVERLAYS = '/recalbox/share/overlays'
 
+
 esInputs = HOME + '/.emulationstation/es_input.cfg'
 esSettings = HOME + '/.emulationstation/es_settings.cfg'
 recalboxConf = HOME + '/recalbox.conf'
+logdir = HOME + '/logs/'
 
 retroarchRoot = CONF + '/retroarch'
 retroarchCustom = retroarchRoot + '/retroarchcustom.cfg'
@@ -23,11 +25,14 @@ shadersExt = '.gplsp'
 libretroExt = '_libretro.so'
 screenshotsDir = "/recalbox/share/screenshots/"
 savesDir = "/recalbox/share/saves/"
+
 fbaRoot = CONF + '/fba/'
 fbaCustom = fbaRoot + 'fba2x.cfg'
 fbaCustomOrigin = fbaRoot + 'fba2x.cfg.origin'
 fba2xBin = '/usr/bin/fba2x'
 
+
+mupenBin = '/usr/bin/mupen64plus'
 mupenConf = CONF + '/mupen64/'
 mupenCustom = mupenConf + "mupen64plus.cfg"
 mupenInput = mupenConf + "InputAutoCfg.ini"
@@ -64,7 +69,27 @@ ppssppBin = '/usr/bin/PPSSPPSDL'
 ppssppControls = CONF + '/ppsspp/PSP/SYSTEM/controls.ini'
 ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
 
+dosboxBin = '/usr/bin/doxbox'
 dosboxCustom = CONF + '/dosbox'
 dosboxConfig = dosboxCustom + '/dosbox.conf'
 
-logdir = HOME + '/logs/'
+linappleBin = '/usr/bin/linapple'
+
+scummvmBin = '/usr/bin/scummvm'
+scummvmSaves = SAVES + '/scummvm'
+
+viceBin = '/usr/bin/x64'
+viceConfig = CONF + "/vice/vice.conf"
+
+# Please keep this one at the end, and complete with your new binaries
+recalboxBins = [dosboxBin,
+				fba2xBin,
+				kodiBin,
+				retroarchBin,
+				linappleBin,
+				moonlightBin,
+				mupenBin,
+				ppssppBin,
+				reicastBin,
+				scummvmBin,
+				viceBin]

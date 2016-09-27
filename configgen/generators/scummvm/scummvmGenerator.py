@@ -19,13 +19,11 @@ class ScummVMGenerator(Generator):
         romPath = os.path.dirname(rom)
         romName = os.path.splitext(os.path.basename(rom))[0]
         # Get rom name without extension
-        print romPath
-        print romName
-        commandArray = ["scummvm", 
+        commandArray = [recalboxFiles.scummvmBin, 
 			"--joystick=0", 
 			"--screenshotspath="+recalboxFiles.screenshotsDir, 
 			"--extrapath=/usr/share/scummvm",
-			"--savepath="+recalboxFiles.savesDir+"scummvm",
+			"--savepath="+recalboxFiles.scummvmSaves,
 			"--path=""{}""".format(romPath),
 			"""{}""".format(romName)]
 			
