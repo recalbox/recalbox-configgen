@@ -60,6 +60,10 @@ reicastConfigInit = HOME_INIT + 'configs/reicast/emu.cfg'
 reicastSaves = SAVES
 reicastBios = BIOS
 
+dolphinBin = '/usr/bin/dolphin-emu-nogui'
+dolphinConfig = CONF + "/dolphin-emu"
+dolphinData = SAVES + "/dolphin-emu"
+
 ppssppBin = '/usr/bin/PPSSPPSDL'
 ppssppControls = CONF + '/ppsspp/PSP/SYSTEM/controls.ini'
 ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
