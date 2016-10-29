@@ -161,4 +161,4 @@ def getInputDriver(controllers):
     return 'udev'
 
 # list of controllers that works only with sdl2 driver
-sdl2driverControllers = ['Bluetooth Wireless Controller', 'szmy-power', 'XiaoMi Bluetooth Wireless GameController', 'ipega Bluetooth Gamepad']
+sdl2driverControllers = ['Bluetooth Wireless Controller', 'szmy-power', 'XiaoMi Bluetooth Wireless GameController', 'ipega Bluetooth Gamepad', 'ipega Bluetooth Gamepad ']
