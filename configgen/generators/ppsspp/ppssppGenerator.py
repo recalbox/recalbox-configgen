@@ -28,5 +28,5 @@ class PPSSPPGenerator(Generator):
 
         # the command to run  
         #~ commandArray = [recalboxFiles.ppssppBin, rom, "--escape-exit"]
-        commandArray = [recalboxFiles.ppssppBin, rom]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], rom]
         return Command.Command(videomode=system.config['videomode'], array=commandArray, env={"XDG_CONFIG_HOME":recalboxFiles.CONF, "SDL_VIDEO_GL_DRIVER": "/usr/lib/libGLESv2.so"}, delay=1)

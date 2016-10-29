@@ -9,5 +9,5 @@ class KodiGenerator(Generator):
     # Configure kodi inputs and return the command to run
     def generate(self, system, rom, playersControllers):
         kodiConfig.writeKodiConfig(playersControllers)
-        commandArray = [recalboxFiles.kodiBin]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']]]
         return Command.Command(videomode=system.config['videomode'], array=commandArray)
