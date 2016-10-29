@@ -13,6 +13,7 @@ from generators.moonlight.moonlightGenerator import MoonlightGenerator
 from generators.mupen.mupenGenerator import MupenGenerator
 from generators.ppsspp.ppssppGenerator import PPSSPPGenerator
 from generators.reicast.reicastGenerator import ReicastGenerator
+from generators.dolphin.dolphinGenerator import DolphinGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.vice.viceGenerator import ViceGenerator
@@ -35,6 +36,7 @@ generators = {
     'mupen64plus': MupenGenerator(),
     'vice': ViceGenerator(),
     'reicast': ReicastGenerator(),
+    'dolphin': DolphinGenerator(),
     'ppsspp': PPSSPPGenerator()
 }
 
@@ -49,6 +51,8 @@ emulators["gb"] = Emulator(name='gb', emulator='libretro', core='gambatte')
 emulators["gbc"] = Emulator(name='gbc', emulator='libretro', core='gambatte')
 emulators["fds"] = Emulator(name='fds', emulator='libretro', core='nestopia')
 emulators["virtualboy"] = Emulator(name='virtualboy', emulator='libretro', core='vb')
+emulators["gamecube"] = Emulator(name='gamecube', emulator='dolphin')
+emulators["wii"] = Emulator(name='wii', emulator='dolphin')
 # Sega
 emulators["sg1000"] = Emulator(name='sg1000', emulator='libretro', core='genesisplusgx')
 emulators["mastersystem"] = Emulator(name='mastersystem', emulator='libretro', core='picodrive')
@@ -105,11 +109,11 @@ def main(args):
     playersControllers = dict()
     if not args.demo:
         # Read the controller configuration
-        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p1devicepath,
-                                                              args.p2index, args.p2guid, args.p2name, args.p2devicepath,
-                                                              args.p3index, args.p3guid, args.p3name, args.p3devicepath,
-                                                              args.p4index, args.p4guid, args.p4name, args.p4devicepath,
-                                                              args.p5index, args.p5guid, args.p5name, args.p5devicepath)
+        playersControllers = controllers.loadControllerConfig(args.p1index, args.p1guid, args.p1name, args.p1devicepath, args.p1nbaxes,
+                                                              args.p2index, args.p2guid, args.p2name, args.p2devicepath, args.p2nbaxes,
+                                                              args.p3index, args.p3guid, args.p3name, args.p3devicepath, args.p3nbaxes,
+                                                              args.p4index, args.p4guid, args.p4name, args.p4devicepath, args.p4nbaxes,
+                                                              args.p5index, args.p5guid, args.p5name, args.p5devicepath, args.p5nbaxes)
 
     systemName = args.system
     # Main Program
@@ -158,22 +162,27 @@ if __name__ == '__main__':
     parser.add_argument("-p1guid", help="player1 controller SDL2 guid", type=str, required=False)
     parser.add_argument("-p1name", help="player1 controller name", type=str, required=False)
     parser.add_argument("-p1devicepath", help="player1 controller device", type=str, required=False)
+    parser.add_argument("-p1nbaxes", help="player1 controller number of axes", type=str, required=False)
     parser.add_argument("-p2index", help="player2 controller index", type=int, required=False)
     parser.add_argument("-p2guid", help="player2 controller SDL2 guid", type=str, required=False)
     parser.add_argument("-p2name", help="player2 controller name", type=str, required=False)
     parser.add_argument("-p2devicepath", help="player2 controller device", type=str, required=False)
+    parser.add_argument("-p2nbaxes", help="player2 controller number of axes", type=str, required=False)
     parser.add_argument("-p3index", help="player3 controller index", type=int, required=False)
     parser.add_argument("-p3guid", help="player3 controller SDL2 guid", type=str, required=False)
     parser.add_argument("-p3name", help="player3 controller name", type=str, required=False)
     parser.add_argument("-p3devicepath", help="player3 controller device", type=str, required=False)
+    parser.add_argument("-p3nbaxes", help="player3 controller number of axes", type=str, required=False)
     parser.add_argument("-p4index", help="player4 controller index", type=int, required=False)
     parser.add_argument("-p4guid", help="player4 controller SDL2 guid", type=str, required=False)
     parser.add_argument("-p4name", help="player4 controller name", type=str, required=False)
     parser.add_argument("-p4devicepath", help="player4 controller device", type=str, required=False)
+    parser.add_argument("-p4nbaxes", help="player4 controller number of axes", type=str, required=False)
     parser.add_argument("-p5index", help="player5 controller index", type=int, required=False)
     parser.add_argument("-p5guid", help="player5 controller SDL2 guid", type=str, required=False)
     parser.add_argument("-p5name", help="player5 controller name", type=str, required=False)
-    parser.add_argument("-p5devicepath", help="player5 controller device", type=str, required=False)    
+    parser.add_argument("-p5devicepath", help="player5 controller device", type=str, required=False)
+    parser.add_argument("-p5nbaxes", help="player5 controller number of axes", type=str, required=False)
     parser.add_argument("-system", help="select the system to launch", type=str, required=True)
     parser.add_argument("-rom", help="rom absolute path", type=str, required=True)
     parser.add_argument("-emulator", help="force emulator", type=str, required=False)
