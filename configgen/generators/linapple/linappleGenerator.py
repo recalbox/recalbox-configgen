@@ -33,7 +33,6 @@ class LinappleGenerator(Generator):
         self.path_user = path_user
         self.resources = ['Master.dsk']
         self.filename = 'linapple.conf'
-        self.cmdArray = [ recalboxFiles.recalboxBins[system.config['emulator']] ]
 
     def check_resources(self):
         '''
@@ -96,7 +95,7 @@ class LinappleGenerator(Generator):
 
         # Save changes 
         config.save(filename=usr_conf)
-        return Command.Command(videomode=system.config['videomode'], array=self.cmdArray)
+        return Command.Command(videomode=system.config['videomode'], array=[ recalboxFiles.recalboxBins[system.config['emulator']] ])
 
     def config_upgrade(self, version):
         '''
