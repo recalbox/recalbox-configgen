@@ -86,14 +86,16 @@ viceBin = '/usr/bin/x64'
 viceConfig = CONF + "/vice/vice.conf"
 
 # Please keep this one at the end, and complete with your new binaries
-recalboxBins = [dosboxBin,
-				fba2xBin,
-				kodiBin,
-				retroarchBin,
-				linappleBin,
-				moonlightBin,
-				mupenBin,
-				ppssppBin,
-				reicastBin,
-				scummvmBin,
-				viceBin]
+recalboxBins = {"dosbox" : dosboxBin,
+				"fba2x" :fba2xBin,
+				"kodi" : kodiBin,
+				"libretro" : retroarchBin,
+				"linapple" : linappleBin,
+				"moonlight" : moonlightBin,
+				"mupen64plus" : mupenBin,
+				"ppsspp" : ppssppBin,
+				"reicast" : reicastBin,
+				"scummvm" : scummvmBin,
+				"vice" : viceBin,
+				"dolphin" : dolphinBin
+}
