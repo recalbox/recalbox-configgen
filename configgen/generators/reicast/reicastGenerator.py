@@ -36,7 +36,7 @@ class ReicastGenerator(Generator):
             cfgfile.close()
                 
         # the command to run  
-        commandArray = [recalboxFiles.reicastBin, rom]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], rom]
         # Here is the trick to make reicast find files :
         # emu.cfg is in $XDG_CONFIG_DIRS or $XDG_CONFIG_HOME. The latter is better
         # VMU will be in $XDG_DATA_HOME because it needs rw access -> /recalbox/share/saves/dreamcast

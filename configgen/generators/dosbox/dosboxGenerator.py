@@ -15,7 +15,7 @@ class DosBoxGenerator(Generator):
         batFile = gameDir + "/dosbox.bat"
         gameConfFile = gameDir + "/dosbox.cfg"
            
-        commandArray = [recalboxFiles.dosboxBin, 
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], 
 			"-userconf", 
 			"-exit", 
 			"""{}""".format(batFile),

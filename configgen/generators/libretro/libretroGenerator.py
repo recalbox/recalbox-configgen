@@ -29,7 +29,7 @@ class LibretroGenerator(Generator):
         romName = os.path.basename(rom)
 
         # the command to run
-        commandArray = [recalboxFiles.retroarchBin, "-L", retroarchCore, "--config", system.config['configfile']]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], "-L", retroarchCore, "--config", system.config['configfile']]
         configToAppend = []
         
         # Custom configs - per core

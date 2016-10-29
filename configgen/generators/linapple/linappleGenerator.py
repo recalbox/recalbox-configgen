@@ -33,7 +33,7 @@ class LinappleGenerator(Generator):
         self.path_user = path_user
         self.resources = ['Master.dsk']
         self.filename = 'linapple.conf'
-        self.cmdArray = [ recalboxFiles.linappleBin ]
+        self.cmdArray = [ recalboxFiles.recalboxBins[system.config['emulator']] ]
 
     def check_resources(self):
         '''

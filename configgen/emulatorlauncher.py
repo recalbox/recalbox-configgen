@@ -2,6 +2,7 @@
 
 import argparse
 import time
+import sys
 from sys import exit
 from Emulator import Emulator
 import generators
@@ -128,7 +129,16 @@ def main(args):
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         
+        
+        if system.config['emulator'] not in recalboxFiles.recalboxBins:
+            strErr = "ERROR : {} is not a known emulator".format(system.config['emulator'])
+            print >> sys.stderr, strErr
+            exit(2)
+        
         command = generators[system.config['emulator']].generate(system, args.rom, playersControllers)
+        # The next line is commented and will eventually be used instead of the previous one
+        # if we even want the binary to be set from here rather than from the generator
+        # command.array.insert(0, recalboxFiles.recalboxBins[system.config['emulator']])
         print(command.array)
         return runner.runCommand(command)
 

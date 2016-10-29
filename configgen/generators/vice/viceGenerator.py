@@ -15,13 +15,12 @@ class ViceGenerator(Generator):
             # Using recalbox config file
             #system.config['configfile'] = recalboxFiles.mupenCustom
             pass
-	# Find rom path
+        # Find rom path
         romPath = os.path.dirname(rom)
         romName = os.path.splitext(os.path.basename(rom))[0]
 
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], 
+                        "-config", recalboxFiles.viceConfig,
+                        "-autostart", rom]
 
-        commandArray = [recalboxFiles.viceBin, 
-			"-config", recalboxFiles.viceConfig,
-			"-autostart", rom]
-			
         return Command.Command(videomode='default', array=commandArray,  env={"SDL_VIDEO_GL_DRIVER": "/usr/lib/libGLESv2.so"})
