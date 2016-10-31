@@ -14,6 +14,12 @@ def writeMupenConfig(system, controllers):
 	if system.config['videomode'] != 'default':
 		group, mode, drive = system.config['videomode'].split()
 		setRealResolution(group, mode, drive)
+	
+	#Draw or not FPS
+	if system.config['showFPS'] == 'true':
+		mupenSettings.save('ShowFPS', 'True')
+	else:
+		mupenSettings.save('ShowFPS', 'False')
 
 	
 def writeHotKeyConfig(controllers):

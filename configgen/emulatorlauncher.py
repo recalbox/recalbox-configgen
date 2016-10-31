@@ -121,6 +121,7 @@ def main(args):
     # A generator will configure its emulator, and return a command
     if systemName in emulators:
         system = emulators[systemName]
+        system.lateInit()
         systemManager = ConfigManager()
         systemManager.configure(system, args.emulator, args.core, args.ratio, args.netplay)
 
