@@ -9,7 +9,6 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 ppssppSettings = UnixSettings(recalboxFiles.ppssppConfig, separator=' ')
-print recalboxFiles.ppssppConfig
 
 # return true if the option is considered enabled (for boolean options)
 def enabled(key, dict):
