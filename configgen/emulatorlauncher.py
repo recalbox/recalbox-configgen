@@ -18,7 +18,6 @@ from generators.dolphin.dolphinGenerator import DolphinGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.vice.viceGenerator import ViceGenerator
-from generators.configManager import ConfigManager
 import controllersConfig as controllers
 import utils.runner as runner
 import signal
@@ -121,8 +120,7 @@ def main(args):
     # A generator will configure its emulator, and return a command
     if systemName in emulators:
         system = emulators[systemName]
-        systemManager = ConfigManager()
-        systemManager.configure(system, args.emulator, args.core, args.ratio, args.netplay)
+        system.configure(args.emulator, args.core, args.ratio, args.netplay)
 
         # Save dir
         dirname = os.path.join(recalboxFiles.savesDir, system.name)

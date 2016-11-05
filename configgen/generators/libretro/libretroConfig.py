@@ -152,6 +152,12 @@ def createLibretroConfig(system):
             retroarchConfig['netplay_ip_address']        = recalboxConfig.get('netplay.server.ip', "")
             retroarchConfig['netplay_client_swap_input'] = "true"
 
+    # Display FPS
+    if enabled('showFPS', recalboxConfig):
+        retroarchConfig['fps_show'] = 'true'
+    else:
+        retroarchConfig['fps_show'] = 'false'
+        
     return retroarchConfig
 
 

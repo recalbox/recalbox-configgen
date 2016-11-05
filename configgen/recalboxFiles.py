@@ -77,8 +77,10 @@ reicastBios = BIOS
 dolphinConfig = CONF + "/dolphin-emu"
 dolphinData = SAVES + "/dolphin-emu"
 
-ppssppControls = CONF + '/ppsspp/PSP/SYSTEM/controls.ini'
+ppssppConf = CONF + '/ppsspp/PSP/SYSTEM'
+ppssppControls = ppssppConf + '/controls.ini'
 ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
+ppssppConfig = ppssppConf + '/ppsspp.ini'
 
 dosboxCustom = CONF + '/dosbox'
 dosboxConfig = dosboxCustom + '/dosbox.conf'
