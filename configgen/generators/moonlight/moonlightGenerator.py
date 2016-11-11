@@ -17,6 +17,8 @@ class MoonlightGenerator(Generator):
         # stream -remote -keydir ${moonlight_keydir} -${moonlight_screen} -${moonlight_fps} -mapping ${moonlight_mapping} -app \"$game\" ${moonlight_ip}"
         # commandArray = [recalboxFiles.moonlightBin, 'stream','-remote', '-keydir', recalboxFiles.moonlightCustom + '/keydir', '-720',  '-60fps']
         commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], 'stream','-config',  recalboxFiles.moonlightConfig]
+        if 'args' in system.config and system.config['args'] is not None:
+             commandArray.extend(system.config['args'])
         for mapping in config:
             commandArray.append('-mapping')
             commandArray.append(mapping)

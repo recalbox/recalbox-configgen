@@ -58,5 +58,9 @@ class LibretroGenerator(Generator):
             elif system.config['netplaymode'] == 'client':
                 commandArray.extend(["--connect", system.config['netplay.server.address']])
         
+        # Optionnal arguments
+        if 'args' in system.config and system.config['args'] is not None:
+             commandArray.extend(system.config['args'])
+             
         commandArray.append(rom)
         return Command.Command(videomode=system.config['videomode'], array=commandArray)

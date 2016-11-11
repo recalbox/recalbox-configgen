@@ -23,5 +23,8 @@ class Fba2xGenerator(Generator):
             # Write configuration to retroarchcustom.cfg
             fba2xConfig.writeFBAConfig(system)
 
-        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], "--configfile", system.config['configfile'], '--logfile', recalboxFiles.logdir+"/fba2x.log", rom]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], "--configfile", system.config['configfile'], '--logfile', recalboxFiles.logdir+"/fba2x.log"]
+        if 'args' in system.config and system.config['args'] is not None:
+            commandArray.extend(system.config['args'])
+        commandArray.append(rom)
         return Command.Command(videomode=system.config['videomode'], array=commandArray)
