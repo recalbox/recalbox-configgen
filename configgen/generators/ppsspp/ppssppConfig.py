@@ -36,6 +36,5 @@ def createPPSSPPConfig(system):
 
 
 def writePPSSPPConfigToFile(config):
-    print(config)
     for setting in config:
         ppssppSettings.save(setting, config[setting])
