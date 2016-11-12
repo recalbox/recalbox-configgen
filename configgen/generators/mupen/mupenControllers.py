@@ -2,6 +2,7 @@
 import sys
 import os
 import ConfigParser
+from controllersConfig import Input
 from xml.dom import minidom
 
 sys.path.append(
@@ -58,7 +59,23 @@ def defineControllerKeys(controller):
 	# config holds the final pad configuration in the mupen style
 	# ex: config['DPad U'] = "button(1)"
 	config = dict()
-        config['AnalogDeadzone'] = mupenmapping['AnalogDeadzone']
+	config['AnalogDeadzone'] = mupenmapping['AnalogDeadzone']
+	
+	# Dirty hack : the input.xml adds 2 directions per joystick, ES handles just 1
+	fakeSticks = { 'joystick2up' : 'joystick2down'
+			, 'joystick2left' : 'joystick2right'}
+	print "Banzaiiiii"
+	# Cheat on the controller
+	for realStick, fakeStick in fakeSticks.iteritems():
+		if realStick in controller.inputs:
+			print fakeStick + "-> " + realStick
+			inputVar =  Input(fakeStick
+					, controller.inputs[realStick].type
+					, controller.inputs[realStick].id
+					, str(-int(controller.inputs[realStick].value))
+					, controller.inputs[realStick].code)
+			controller.inputs[fakeStick] = inputVar
+	
 	for inputIdx in controller.inputs:
 		input = controller.inputs[inputIdx]
 		if input.name in mupenmapping and mupenmapping[input.name] != "":
