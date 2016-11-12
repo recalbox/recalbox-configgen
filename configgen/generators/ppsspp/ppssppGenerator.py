@@ -26,7 +26,10 @@ class PPSSPPGenerator(Generator):
                 break
 
         # the command to run  
-        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], rom]
+        commandArray = [recalboxFiles.recalboxBins[system.config['emulator']]]
+        if 'args' in system.config and system.config['args'] is not None:
+            commandArray.extend(system.config['args'])
+        commandArray.append(rom)
         # The next line is a reminder on how to quit PPSSPP with just the HK
         #commandArray = [recalboxFiles.recalboxBins[system.config['emulator']], rom, "--escape-exit"]
         return Command.Command(videomode=system.config['videomode'], array=commandArray, env={"XDG_CONFIG_HOME":recalboxFiles.CONF, "SDL_VIDEO_GL_DRIVER": "/usr/lib/libGLESv2.so", "SDL_VIDEO_EGL_DRIVER": "/usr/lib/libGLESv2.so"}, delay=1)

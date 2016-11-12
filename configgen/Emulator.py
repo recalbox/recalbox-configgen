@@ -3,6 +3,7 @@ import os
 import recalboxFiles
 from settings.unixSettings import UnixSettings
 import xml.etree.ElementTree as ET
+import shlex
 
 class Emulator():
 
@@ -19,6 +20,7 @@ class Emulator():
         self.config['configfile'] = configfile
         self.config['netplay']    = None
         self.config['showFPS']    = showFPS
+        self.config['args']       = None
         
     def configure(self, emulator='default', core='default', ratio='auto', netplay=None):
         recalSettings = UnixSettings(recalboxFiles.recalboxConf)
@@ -45,6 +47,13 @@ class Emulator():
         # Draw FPS
         if self.config['showFPS'] is None or self.config['showFPS'] not in ['false', 'true']:
             self.updateDrawFPS()
+        # Optionnal emulator args ONLY if security is disabled
+        recalSettings = UnixSettings(recalboxFiles.recalboxConf)
+        security = recalSettings.load("system.security.enabled")
+        if (security != "1" and'args' in settings and settings['args'] != ''):
+            self.config['args'] = shlex.split(settings['args'])
+        else:
+            self.config['args'] = None
 
     def updateShaders(self, shaderSet):
         if shaderSet != None and shaderSet != 'none':
@@ -67,4 +76,3 @@ class Emulator():
         if value not in ['false', 'true']:
             value = 'false'
         self.config['showFPS'] = value
-        
