@@ -58,7 +58,7 @@ class Emulator():
     def updateShaders(self, shaderSet):
         if shaderSet != None and shaderSet != 'none':
             shaderfile = recalboxFiles.shaderPresetRoot + '/' + shaderSet + '.cfg'
-            systemShader = UnixSettings(shaderfile).load(system.name)
+            systemShader = UnixSettings(shaderfile).load(self.name)
             if systemShader != None:
                 self.config['shaders'] = systemShader
 
