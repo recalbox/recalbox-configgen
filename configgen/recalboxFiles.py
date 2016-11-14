@@ -75,7 +75,8 @@ reicastSaves = SAVES
 reicastBios = BIOS
 
 dolphinConfig = CONF + "/dolphin-emu"
-dolphinData = SAVES + "/dolphin-emu"
+dolphinData   = SAVES + "/dolphin-emu"
+dolphinIni    = dolphinConfig + '/Dolphin.ini'
 
 ppssppConf = CONF + '/ppsspp/PSP/SYSTEM'
 ppssppControls = ppssppConf + '/controls.ini'
@@ -84,7 +85,6 @@ ppssppConfig = ppssppConf + '/ppsspp.ini'
 
 dosboxCustom = CONF + '/dosbox'
 dosboxConfig = dosboxCustom + '/dosbox.conf'
-
 
 scummvmSaves = SAVES + '/scummvm'
 
