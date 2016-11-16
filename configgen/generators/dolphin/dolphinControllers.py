@@ -6,13 +6,16 @@ import recalboxFiles
 # Create the controller configuration file
 def generateControllerConfig(system, playersControllers):
     if system.name == "wii":
-        generateControllerConfig_wii(playersControllers)
+        if 'emulatedwiimotes' in system.config and system.config['emulatedwiimotes'] == '1':
+            generateControllerConfig_emulatedwiimotes(playersControllers)
+        else:
+            generateControllerConfig_realwiimotes("WiimoteNew.ini", "Wiimote")
     elif system.name == "gamecube":
         generateControllerConfig_gamecube(playersControllers)
     else:
         raise ValueError("Invalid system name : '" + system.name + "'")
 
-def generateControllerConfig_wii(playersControllers):
+def generateControllerConfig_emulatedwiimotes(playersControllers):
     wiiMapping = {
         'a':      'Buttons/2',  'b':        'Buttons/A',
         'x':      'Buttons/1',  'y':        'Buttons/B',
@@ -51,7 +54,18 @@ def generateControllerConfig_gamecube(playersControllers):
         'C-Stick/Left':    'C-Stick/Right'
     }
     generateControllerConfig_any(playersControllers, "GCPadNew.ini", "GCPad", gamecubeMapping, gamecubeReverseAxes)
-    
+
+def generateControllerConfig_realwiimotes(filename, anyDefKey):
+    configFileName = "{}/{}".format(recalboxFiles.dolphinConfig, filename)
+    f = open(configFileName, "w")
+    nplayer = 1
+    while nplayer <= 4:
+        f.write("[" + anyDefKey + str(nplayer) + "]" + "\n")
+        f.write("Source = 2\n")
+        nplayer += 1
+    f.write
+    f.close()
+
 def generateControllerConfig_any(playersControllers, filename, anyDefKey, anyMapping, anyReverseAxes):
     configFileName = "{}/{}".format(recalboxFiles.dolphinConfig, filename)
     f = open(configFileName, "w")
