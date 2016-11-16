@@ -18,8 +18,11 @@ def writeMupenConfig(system, controllers):
 	#Draw or not FPS
 	if system.config['showFPS'] == 'true':
 		mupenSettings.save('ShowFPS', 'True')
+                # show_fps is used for Video-Glide64mk2
+                mupenSettings.save('show_fps', '4')
 	else:
 		mupenSettings.save('ShowFPS', 'False')
+                mupenSettings.save('show_fps', '8')
 
 	
 def writeHotKeyConfig(controllers):
