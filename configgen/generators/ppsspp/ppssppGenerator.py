@@ -3,7 +3,6 @@ import Command
 #~ import reicastControllers
 import recalboxFiles
 from generators.Generator import Generator
-import ppssppControllers
 import ppssppConfig
 import shutil
 import os.path
@@ -22,7 +21,9 @@ class PPSSPPGenerator(Generator):
                 # we only care about player 1
                 if controller.player != "1":
                     continue
-                ppssppControllers.generateControllerConfig(controller)
+                cfgFile = open(recalboxFiles.ppssppControls, "w")
+                cfgFile.write(controller.generateSDLGameDBLine())
+                cfgFile.close()
                 break
 
         # the command to run  

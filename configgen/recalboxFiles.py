@@ -78,7 +78,7 @@ dolphinConfig = CONF + "/dolphin-emu"
 dolphinData = SAVES + "/dolphin-emu"
 
 ppssppConf = CONF + '/ppsspp/PSP/SYSTEM'
-ppssppControls = ppssppConf + '/controls.ini'
+ppssppControls = CONF + '/ppsspp/gamecontrollerdb.txt'
 ppssppControlsInit = HOME_INIT + 'configs/ppsspp/PSP/SYSTEM/controls.ini'
 ppssppConfig = ppssppConf + '/ppsspp.ini'
 

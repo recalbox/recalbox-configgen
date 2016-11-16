@@ -28,6 +28,50 @@ class Controller:
             self.inputs = dict()
         else:
             self.inputs = inputs
+            
+    def generateSDLGameDBLine(self):
+        nameMapping = {
+            'a'             :'b',
+            'b'             :'a',
+            'x'             :'y',
+            'y'             :'x',
+            'start'         :'start',
+            'select'        :'back',
+            'pageup'        :'leftshoulder',
+            'pagedown'      :'rightshoulder',
+            'l2'            :'lefttrigger',
+            'r2'            :'righttrigger',
+            'l3'            :'leftstick',
+            'r3'            :'rightstick',
+            'up'            :'dpup',
+            'down'          :'dpdown',
+            'left'          :'dpleft',
+            'right'         :'dpright',
+            'joystick1up'   :'lefty',
+            'joystick1left' :'leftx',
+            'joystick2up'   :'righty',
+            'joystick2left' :'rightx',
+            'hotkey'        :'guide'
+        }
+        typePrefix = {
+            'axis'   : 'a',
+            'button' : 'b',
+            'hat'    : 'h0.' # Force dpad 0 until ES handles others
+        }
+        
+        if not self.inputs:
+            return None
+            
+        strOut = "{},{},platform:Linux,".format(self.guid, self.configName)
+        
+        for idx, input in self.inputs.iteritems():
+            if input.name in nameMapping and input.type in typePrefix:
+                if input.type == 'hat':
+                    strOut += "{}:{}{},".format(nameMapping[input.name], typePrefix[input.type], input.value)
+                else:
+                    strOut += "{}:{}{},".format(nameMapping[input.name], typePrefix[input.type], input.id)
+        
+        return strOut
 
 
 # Load all controllers from the es_input.cfg
