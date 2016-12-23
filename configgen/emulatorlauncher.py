@@ -18,6 +18,7 @@ from generators.dolphin.dolphinGenerator import DolphinGenerator
 from generators.scummvm.scummvmGenerator import ScummVMGenerator
 from generators.dosbox.dosboxGenerator import DosBoxGenerator
 from generators.vice.viceGenerator import ViceGenerator
+from generators.advancemame.advMameGenerator import AdvMameGenerator
 import controllersConfig as controllers
 import utils.runner as runner
 import signal
@@ -37,7 +38,8 @@ generators = {
     'vice': ViceGenerator(),
     'reicast': ReicastGenerator(),
     'dolphin': DolphinGenerator(),
-    'ppsspp': PPSSPPGenerator()
+    'ppsspp': PPSSPPGenerator(),
+    'advancemame' : AdvMameGenerator()
 }
 
 # List emulators with their cores rest mupen64, scummvm
@@ -66,6 +68,7 @@ emulators["neogeo"] = Emulator(name='neogeo', emulator='fba2x')
 emulators["mame"] = Emulator(name='mame', emulator='libretro', core='mame078')
 emulators["fba"] = Emulator(name='fba', emulator='fba2x')
 emulators["fba_libretro"] = Emulator(name='fba_libretro', emulator='libretro', core='fba')
+emulators["advancemame"] = Emulator(name='advancemame', emulator='advmame')
 # Computers
 emulators["msx"] = Emulator(name='msx', emulator='libretro', core='bluemsx')
 emulators["msx1"] = Emulator(name='msx1', emulator='libretro', core='bluemsx')
