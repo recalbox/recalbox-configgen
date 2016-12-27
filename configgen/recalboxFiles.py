@@ -25,6 +25,7 @@ recalboxBins = {'dosbox'      : '/usr/bin/dosbox'
               , 'scummvm'     : '/usr/bin/scummvm'
               , 'vice'        : '/usr/bin/x64'
               , 'dolphin'     : '/usr/bin/dolphin-emu-nogui'
+              , 'advancemame' : '/usr/bin/advmame'
 }
 
 
@@ -89,3 +90,6 @@ dosboxConfig = dosboxCustom + '/dosbox.conf'
 scummvmSaves = SAVES + '/scummvm'
 
 viceConfig = CONF + "/vice/vice.conf"
+
+advancemameConfig = CONF + '/advancemame/advmame.rc'
+advancemameConfigOrigin = CONF + '/advancemame/advmame.rc.origin'
