@@ -71,8 +71,11 @@ class Emulator():
             self.config['ratio'] = ratio
 
     def updateDrawFPS(self):
-        esConfig = ET.parse(recalboxFiles.esSettings)
-        value = esConfig.find("./bool[@name='DrawFramerate']").attrib["value"]
+        try:
+            esConfig = ET.parse(recalboxFiles.esSettings)
+            value = esConfig.find("./bool[@name='DrawFramerate']").attrib["value"]
+        except:
+            value = 'false'
         if value not in ['false', 'true']:
             value = 'false'
         self.config['showFPS'] = value
