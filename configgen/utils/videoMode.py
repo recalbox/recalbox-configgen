@@ -30,4 +30,4 @@ def setPreffered():
     if esVideoMode is None:
         os.system("tvservice -p")
     else:
-        os.system("tvservice -e '{}'".format(esVideoMode))
+        setVideoMode(esVideoMode)
