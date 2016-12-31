@@ -18,6 +18,7 @@ setup(name='recalbox-configgen',
         'configgen.generators.ppsspp',
         'configgen.generators.reicast',
         'configgen.generators.dolphin',
+        'configgen.generators.advancemame',
         'configgen.settings',
         'configgen.utils']
       )
