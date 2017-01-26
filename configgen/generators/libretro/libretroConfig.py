@@ -165,3 +165,24 @@ def writeLibretroConfigToFile(config):
     for setting in config:
         libretroSettings.save(setting, config[setting])
 
+
+def updateLibretroConfig(version):
+    # Version is unsued so far, but who knows, one day
+    try: 
+        # Read files
+        sourceSettings = UnixSettings(recalboxFiles.retroarchInitCustomOrigin, separator=' ')
+        sourceConf = sourceSettings.loadFile()
+        destSettings = UnixSettings(recalboxFiles.retroarchCustomOrigin, separator=' ')
+        destConf = destSettings.loadFile()
+        
+        # Compare missing keys
+        for key, value in sourceConf.iteritems():
+            if key not in destConf: destConf[key] = value
+        # Save
+        for key, value in destConf.iteritems():
+            destSettings.save(key, value)
+            
+        return True
+    except:
+        print "Libretro update failed !"
+        return False

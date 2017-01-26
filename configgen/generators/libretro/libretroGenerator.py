@@ -10,6 +10,20 @@ import os.path
 
 class LibretroGenerator(Generator):
     # Main entry of the module
+    def config_upgrade(self, version):
+        '''
+        Upgrade the user's configuration file with new values added to the
+        system configuration file upgraded by S11Share:do_upgrade()
+        
+        Args: 
+            version (str): New Recalbox version
+            
+        Returns (bool):
+            Returns True if this Generators sucessfully handled the upgrade.
+        '''
+        return libretroConfig.updateLibretroConfig(version)
+    
+    
     # Configure retroarch and return a command
     def generate(self, system, rom, playersControllers):
         # Settings recalbox default config file if no user defined one
