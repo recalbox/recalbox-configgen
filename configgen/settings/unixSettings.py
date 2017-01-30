@@ -59,3 +59,18 @@ class UnixSettings():
                         if m:
                             res[m.group(1)] = m.group(2);
         return res
+
+    def loadFile(self):
+        result = dict()
+        separ = self.separator
+        if separ is not '':
+            separ += "?"
+        with open(self.settingsFile) as lines:
+            for line in lines:
+                m = re.match(r"^(.*)" + separ + "=" + separ + '"?(.+)"?', line)
+                if m:
+                    key, value = line.split('=', 1)
+                    key = key.strip()
+                    value = value.strip()
+                    result[key] = value
+        return result
