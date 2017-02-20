@@ -11,6 +11,7 @@ def runCommand(command):
     global proc
     if command.videomode != 'default':
         videoMode.setVideoMode(command.videomode)
+        time.sleep(0.5)
     command.env.update(os.environ)
     proc = subprocess.Popen(command.array, stdout=subprocess.PIPE, env=command.env)
     exitcode = -1
