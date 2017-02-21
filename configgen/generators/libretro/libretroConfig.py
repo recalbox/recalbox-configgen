@@ -172,16 +172,20 @@ def updateLibretroConfig(version):
         # Read files
         sourceSettings = UnixSettings(recalboxFiles.retroarchInitCustomOrigin, separator=' ')
         sourceConf = sourceSettings.loadFile()
+        destFiles = [recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom]
         destSettings = UnixSettings(recalboxFiles.retroarchCustomOrigin, separator=' ')
         destConf = destSettings.loadFile()
         
-        # Compare missing keys
-        for key, value in sourceConf.iteritems():
-            if key not in destConf: destConf[key] = value
-        # Save
-        for key, value in destConf.iteritems():
-            destSettings.save(key, value)
-        
+        for file in destFiles:
+            destSettings = UnixSettings(file, separator=' ')
+            destConf = destSettings.loadFile()
+            # Compare missing keys
+            for key, value in sourceConf.iteritems():
+                if key not in destConf: destConf[key] = value
+            # Save
+            for key, value in destConf.iteritems():
+                destSettings.save(key, value)
+            
         print("LibretroConfig 's configuration successfully upgraded")
         return True
     except:
