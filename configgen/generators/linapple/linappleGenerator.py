@@ -5,6 +5,7 @@ Created on Mar 6, 2016
 '''
 
 import os
+import shutil
 import Command
 from generators.Generator import Generator
 from generators.linapple.linappleConfig import LinappleConfig
@@ -57,7 +58,7 @@ class LinappleGenerator(Generator):
                 return False
             usr_filename = os.path.join(self.path_user, r)
             if not os.path.exists(usr_filename):
-                os.symlink(sys_filename, usr_filename)
+                shutil.copyfile(sys_filename, usr_filename)
 
         return True
 
@@ -131,6 +132,7 @@ class LinappleGenerator(Generator):
 
         # Save config file (original/updated) to user's directory
         config.save(filename=usr_conf)
+        print("{} 's configuration successfully upgraded".format(self.__class__.__name__))
         return True
 
 # Local Variables:
