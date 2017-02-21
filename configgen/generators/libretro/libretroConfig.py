@@ -181,7 +181,8 @@ def updateLibretroConfig(version):
         # Save
         for key, value in destConf.iteritems():
             destSettings.save(key, value)
-            
+        
+        print("LibretroConfig 's configuration successfully upgraded")
         return True
     except:
         print "Libretro update failed !"
