@@ -173,8 +173,6 @@ def updateLibretroConfig(version):
         sourceSettings = UnixSettings(recalboxFiles.retroarchInitCustomOrigin, separator=' ')
         sourceConf = sourceSettings.loadFile()
         destFiles = [recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom]
-        destSettings = UnixSettings(recalboxFiles.retroarchCustomOrigin, separator=' ')
-        destConf = destSettings.loadFile()
         
         for file in destFiles:
             destSettings = UnixSettings(file, separator=' ')
