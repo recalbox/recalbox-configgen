@@ -78,7 +78,7 @@ emulators["amstradcpc"] = Emulator(name='amstradcpc', emulator='libretro', core=
 emulators["apple2"] = Emulator(name='apple2', emulator='linapple', videomode='default')
 emulators["atarist"] = Emulator(name='atarist', emulator='libretro', core='hatari')
 emulators["zxspectrum"] = Emulator(name='zxspectrum', emulator='libretro', core='fuse')
-emulators["odyssey2"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
+emulators["o2em"] = Emulator(name='odyssey2', emulator='libretro', core='o2em')
 emulators["zx81"] = Emulator(name='zx81', emulator='libretro', core='81')
 emulators["dos"] = Emulator(name='dos', emulator='dosbox', videomode='default')
 emulators["c64"] = Emulator(name='c64', emulator='vice', core='x64')
@@ -142,6 +142,10 @@ def main(args):
         # command.array.insert(0, recalboxFiles.recalboxBins[system.config['emulator']])
         print(command.array)
         return runner.runCommand(command)
+    
+    else:
+        sys.stderr.write("Unknown system: {}".format(systemName))
+        return 1
 
 def config_upgrade(version):
     '''
