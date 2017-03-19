@@ -175,6 +175,7 @@ def updateLibretroConfig(version):
         destFiles = [recalboxFiles.retroarchCustomOrigin, recalboxFiles.retroarchCustom]
         
         for file in destFiles:
+            if not os.path.isfile(file) : continue
             destSettings = UnixSettings(file, separator=' ')
             destConf = destSettings.loadFile()
             # Compare missing keys
