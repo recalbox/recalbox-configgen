@@ -30,28 +30,29 @@ class Controller:
             self.inputs = inputs
             
     def generateSDLGameDBLine(self):
+        # Making a dirty assumption here : if a dpad is an axis, then it shouldn't have any analog joystick
         nameMapping = {
-            'a'             :'b',
-            'b'             :'a',
-            'x'             :'y',
-            'y'             :'x',
-            'start'         :'start',
-            'select'        :'back',
-            'pageup'        :'leftshoulder',
-            'pagedown'      :'rightshoulder',
-            'l2'            :'lefttrigger',
-            'r2'            :'righttrigger',
-            'l3'            :'leftstick',
-            'r3'            :'rightstick',
-            'up'            :'dpup',
-            'down'          :'dpdown',
-            'left'          :'dpleft',
-            'right'         :'dpright',
-            'joystick1up'   :'lefty',
-            'joystick1left' :'leftx',
-            'joystick2up'   :'righty',
-            'joystick2left' :'rightx',
-            'hotkey'        :'guide'
+            'a'             : { 'button' : 'b' },
+            'b'             : { 'button' : 'a' },
+            'x'             : { 'button' : 'y' },
+            'y'             : { 'button' : 'x' },
+            'start'         : { 'button' : 'start' },
+            'select'        : { 'button' : 'back' },
+            'pageup'        : { 'button' : 'leftshoulder' },
+            'pagedown'      : { 'button' : 'rightshoulder' },
+            'l2'            : { 'button' : 'lefttrigger', 'axis' : 'lefttrigger' },
+            'r2'            : { 'button' : 'righttrigger', 'axis' : 'righttrigger' },
+            'l3'            : { 'button' : 'leftstick' },
+            'r3'            : { 'button' : 'rightstick' },
+            'up'            : { 'button' : 'dpup',    'hat' : 'dpup', 'axis' : 'lefty' },
+            'down'          : { 'button' : 'dpdown',  'hat' : 'dpdown' },
+            'left'          : { 'button' : 'dpleft',  'hat' : 'dpleft', 'axis' : 'leftx' },
+            'right'         : { 'button' : 'dpright', 'hat' : 'dpright' },
+            'joystick1up'   : { 'axis' : 'lefty' },
+            'joystick1left' : { 'axis' : 'leftx' },
+            'joystick2up'   : { 'axis' : 'righty' },
+            'joystick2left' : { 'axis' : 'rightx' },
+            'hotkey'        : { 'button' : 'guide' }
         }
         typePrefix = {
             'axis'   : 'a',
@@ -65,11 +66,11 @@ class Controller:
         strOut = "{},{},platform:Linux,".format(self.guid, self.configName)
         
         for idx, input in self.inputs.iteritems():
-            if input.name in nameMapping and input.type in typePrefix:
+            if input.name in nameMapping and input.type in typePrefix and input.type in nameMapping[input.name] :
                 if input.type == 'hat':
-                    strOut += "{}:{}{},".format(nameMapping[input.name], typePrefix[input.type], input.value)
+                    strOut += "{}:{}{},".format(nameMapping[input.name][input.type], typePrefix[input.type], input.value)
                 else:
-                    strOut += "{}:{}{},".format(nameMapping[input.name], typePrefix[input.type], input.id)
+                    strOut += "{}:{}{},".format(nameMapping[input.name][input.type], typePrefix[input.type], input.id)
         
         return strOut
 
